@@ -33,7 +33,13 @@
     background-size: cover !important;
 }
 
+form.search-form{
+    width: max-content;
+}
 
+form.search-form {
+    display: inline-flex;
+}
 
 /*
 *
