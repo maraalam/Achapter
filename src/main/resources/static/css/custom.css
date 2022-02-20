@@ -1,8 +1,8 @@
 /* usa este fichero para personalizar tus vistas */
 
 .iwthumb {
-    height: 32px;
-    width: 32px;
+    height: 28px;
+    width: 28px;
 }
 
 .errTable tr>td:first-child {
@@ -20,7 +20,9 @@
 }
 
 /* propio*/
-
+.pfp {
+    white-space:nowrap;
+}
 
 /*
 *
