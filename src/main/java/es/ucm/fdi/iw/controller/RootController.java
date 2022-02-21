@@ -28,4 +28,9 @@ public class RootController {
     public String prestamos(Model model) {
         return "prestamos";
     }
+
+    @GetMapping("/posts")
+    public String posts(Model model) {
+        return "posts";
+    }
 }
