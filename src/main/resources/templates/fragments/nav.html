@@ -24,7 +24,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Inicio</a>
+                            <a class="nav-link" th:href="@{/index}">Inicio</a>
                         </li>
 
                         <li class="nav-item">
@@ -40,47 +40,45 @@
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Perfil</a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Mis Posts</a></li>
-                                <li><a class="dropdown-item" href="#">Biblioteca</a></li>
-                                <li><a class="dropdown-item" href="#">Préstamos</a></li>
-                                <li><a class="dropdown-item" href="#">Listas de lectura</a></li>
-                                <li><a class="dropdown-item" href="#">Objetivos y estadísticas</a></li>
-                                
-                                <li><hr class="dropdown-divider"></li>
-
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Mensajería</a>
-                        </li>
-
                         <th:block th:if="${session.u}">
                             <li class="nav-item mx-3">
                                 <a class="nav-link" th:if="${session.u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
 
-                            <li class="nav-item mx-2">
-                                <a class="nav-link pfp" th:href="@{/user/{id}(id=${session.u.id})}">
-                                    <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${session.u.id})}">
-                                    <span th:text="${session.u.username}">Pepe</span>
-                                </a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Mensajería</a>
                             </li>
+
                             <li class="nav-item align-self-center me-4">
                                 <button type="button" class="btn btn-outline-primary btn-sm position-relative">
                                     ✉️ <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
                                 </button>
                             </li>
-                            <li class="nav-item align-self-center">
-                                <form th:action="@{/logout}" method="post">
-                                    <button type="submit" class="btn btn-outline-secondary btn-sm">logout</button>
-                                </form>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle pfp" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${session.u.id})}">
+                                    <span th:text="${session.u.username}">Pepe</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id})}">Mis Posts</a></li>
+                                    <li><a class="dropdown-item" href="#">Biblioteca</a></li>
+                                    <li><a class="dropdown-item" href="#">Préstamos</a></li>
+                                    <li><a class="dropdown-item" href="#">Listas de lectura</a></li>
+                                    <li><a class="dropdown-item" href="#">Objetivos y estadísticas</a></li>
+
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    <li>
+                                        <form th:action="@{/logout}" method="post">
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">logout</button>
+                                        </form>
+                                        <!--<a class="dropdown-item" href="#">Log out</a>-->
+                                    </li>
+                                </ul>
                             </li>
                         </th:block>
+
                         <th:block th:unless="${session.u}">
                             <li class="nav-item mx-2">
                                 <a class="nav-link" th:href="@{/login}" href="/login">Login</a>
