@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    
+    <title>Mensajeria</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+    <main class="flex-shrink-0" >
+   
+
+    <!-- left Messages -->
+    <section id="leftMessages">
+       
+        <h4> Mensajes de las personas que sigues y tu sigues</h4>
+        <br> <br>
+        
+        <div class="container" >
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                    <div class="widget panel"  style="width:700px; border:1px solid grey;">
+                        <div class="panel-body" >
+                        
+                            <ul class="list-table" >
+                                <li style="width:70px;">
+                                    <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
+                                </li>
+                                <li class="text-left">
+                                    <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                    <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                    <small class="text-muted" >1 day ago</small>
+                                </li>
+                                <h4> <span class="badge bg-secondary" style = "float: right; margin: 2%">4</span></h4>
+                            </ul>
+                        </div>
+                
+                    
+                </div>      
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                    <div class="widget panel"  style="width:700px; border:1px solid grey;">
+                        <div class="panel-body" >
+                        
+                            <ul class="list-table" >
+                                <li style="width:70px;">
+                                    <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" width="65px" height="65px">
+                                </li>
+                                <li class="text-left">
+                                    <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                    <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                    <small class="text-muted">1 day ago</small>
+                                </li>
+                                <h4> <span class="badge bg-secondary" style = "float: right; margin: 2%">4</span></h4>
+                            </ul>
+                        </div>
+                
+                    
+                </div>      
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                    <div class="widget panel"  style="width:700px; border:1px solid grey;">
+                        <div class="panel-body" >
+                        
+                            <ul class="list-table" >
+                                <li style="width:70px;">
+                                    <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="" width="65px" height="65px">
+                                </li>
+                                <li class="text-left">
+                                    <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                    <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                    <small class="text-muted">1 day ago</small>
+                                </li>
+                                <h4> <span class="badge bg-secondary" style = "float: right; margin: 2%">4</span></h4>
+                            </ul>
+                        </div>
+                
+                    
+                </div>      
+            </div>
+           
+        </div>
+      
+    </section>
+
+
+    <section id="rightMessages" >
+        
+        <h4> Chats Grupales (Clubs de lectura)</h4>
+        <br> <br>
+
+        <div class="container" >
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                    <div class="widget panel"  style="width:700px;  border:1px solid grey;">
+                        <div class="panel-body" >
+                        
+                            <ul class="list-table" >
+                                <li style="width:70px;">
+                                    <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" width="65px" height="65px">
+                                </li>
+                                <li class="text-left">
+                                    <h5 class="semibold ellipsis nm">Nombre Club de lectura</h5>
+                                    
+                                </li>
+                                <h4> <span class="badge bg-secondary" style = "float: right ; margin: 2%">4</span></h4>
+                                
+                            </ul>
+                        </div>
+                
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                            <small class="text-muted">1 day ago</small>
+                        </li>  
+                    </ul>
+                </div>
+
+                    
+            </div>
+           
+     
+           
+        </div>
+    </section>
+
+  
+   
+        
+        
+        
+
+       
+    </main>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>

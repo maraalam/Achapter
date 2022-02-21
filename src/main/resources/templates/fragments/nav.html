@@ -24,7 +24,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                         <li class="nav-item active">
-                            <a class="nav-link" th:href="@{/index}">Inicio</a>
+                            <a class="nav-link" th:href="@{/}">Inicio</a>
                         </li>
 
                         <li class="nav-item">
@@ -40,17 +40,19 @@
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
 
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/mensajeria}" href="mensajeria">Mensajeria</a>
+                        </li>
+                            
                         <th:block th:if="${session.u}">
                             <li class="nav-item mx-3">
                                 <a class="nav-link" th:if="${session.u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Mensajería</a>
-                            </li>
+                           
 
                             <li class="nav-item align-self-center me-4">
-                                <button type="button" class="btn btn-outline-primary btn-sm position-relative">
+                                <button type="button" class="btn btn-outline-primary btn-sm position-relative"  href="">
                                     ✉️ <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
                                 </button>
                             </li>
