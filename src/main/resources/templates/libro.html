@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>IW: Libro</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+    
+    <h3> Búsqueda</h3>
+    <main class="flex-shrink-0">
+        <div class="container" >
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                    <div class="widget panel"  style="width:900px; border:1px solid grey;">
+                        <div class="panel-body" >
+                            <section id="leftMessages">
+                                <ul class="list-table" >
+                                    <div class="box-img-hover" style="float:left">
+                                        <img src="https://i.pinimg.com/564x/1e/60/15/1e60154f5b08660131e3268873d7927c.jpg" width="250" height="400" >
+                                        
+                                    </div>
+                                    
+                                </ul>
+                                <ul>
+                                    <div class="d-flex flex-row" style="float:left" >
+        
+                                        <div class="ml-auto mr-lg-4">
+                                            <div id="sorting" class="border rounded p-1 m-1">  <select name="sort" id="sort">
+                                                    <option value="popularity"><b>Terminado</b></option>
+                                                    <option value="prcie"><b>Leer</b></option>
+                                                    <option value="rating"><b>Quiero leer</b></option>
+                                                </select> </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </section>
+                            <section id="rightMessages" >
+                                <h2> Libro</h2>
+                                <h4> Autor del libro</h4>
+                                <h5> Fecha de publicación</h5>
+                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                            
+                                                            <!-- Géneros más buscados  -->
+                                    <div class="products-box">
+                                        <div class="container">
+
+                                            <div class="row special-list">
+                                                <div class="col-lg-4 col-md-6 ">
+                                                    <div class="products-single fix">
+                                                        <button type="button" class="btn btn-genre"> Género 1</button>
+                                                    </div>
+                                                </div>
+                                
+                                                <div class="col-lg-4 col-md-6 ">
+                                                    <div class="products-single fix">
+                                                        <button type="button" class="btn btn-genre"> Género 2</button>
+                                                    </div>
+                                                </div>
+                                
+                                                <div class="col-lg-4 col-md-6 ">
+                                                    <div class="products-single fix">
+                                                        <button type="button" class="btn btn-genre"> Género 3</button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Products  -->
+                            
+                            </section>
+                            
+                        </div>
+                
+                    
+                </div>      
+            </div>
+        </div>
+
+        <section>
+            <div class="d-flex flex-row" style="float:right" >
+        
+                <div class="ml-auto mr-lg-4">
+                    <div id="sorting" class="border rounded p-1 m-1">  <select name="sort" id="sort">
+                            <option value="popularity"><b>Agregar a Lista Lectura</b></option>
+                            <option value="prcie"><b>Leer</b></option>
+                            <option value="rating"><b>Quiero leer</b></option>
+                        </select> </div>
+                </div>
+            </div>
+        </section>
+         <!-- Saga -->
+
+        <div class="products-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="title-all ">
+                            <h1>Más de la Saga</h1>
+                        </div>
+                    </div>
+                </div>
+                
+    
+                <div class="row special-list">
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <a class="cart" href="#">Add to Want to Read</a>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h3>Nombre del libro</h3>
+                                <h5> Por Autor</h5>
+                                <div class="product-rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star mr-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img src="https://i.pinimg.com/564x/1e/60/15/1e60154f5b08660131e3268873d7927c.jpg" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <a class="cart" href="#">Add to Want to Read</a>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h3>Nombre del libro</h3>
+                                <h5> Por Autor</h5>
+                                <div class="product-rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star mr-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img src="https://i.pinimg.com/736x/8e/b7/28/8eb728528c62707d083381a47c7cbf93.jpg" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <a class="cart" href="#">Add to Want to Read</a>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h3>Nombre del libro</h3>
+                                <h5> Por Autor</h5>
+                                <div class="product-rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star mr-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <a class="cart" href="#">Add to Want to Read</a>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h3>Nombre del libro</h3>
+                                <h5> Por Autor</h5>
+                                <div class="product-rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star mr-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Mas populares  -->
+        
+        <section id="products" style="float:left">
+            <h1>Comentarios de tus amigos</h1>
+            <div class="container" >
+                <div class="row">
+                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                        <div class="widget panel"  style="width:700px;">
+                            <div class="panel-body" >
+                            <br>
+                                <ul class="list-table" >
+                                    <li style="width:70px;">
+                                        <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" width="65px" height="65px">
+                                    </li>
+                                    <li class="text-left">
+                                        <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                    </li>
+                                    <li class="text-right" style="width:70px;">
+                                        <button type="button" class="btn btn-sm btn-success">Like</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                <small class="text-muted">1 day ago</small>
+                            </li>  
+                        </ul>
+                    </div>
+    
+                        
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+                        <div class="widget panel"  style="width:700px;">
+                            <div class="panel-body" >
+                                <br>
+                                <ul class="list-table" >
+                                    <li style="width:70px;">
+                                        <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
+                                    </li>
+                                    <li class="text-left">
+                                        <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                    </li>
+                                    <li class="text-right" style="width:70px;">
+                                        <button type="button" class="btn btn-sm btn-success">Like</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                <small class="text-muted">1 day ago</small>
+                            </li>  
+                        </ul>
+                    </div>
+    
+                        
+                </div>
+    
+                <div class="row">
+                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+                        <div class="widget panel"  style="width:700px;">
+                            <div class="panel-body" >
+                                <br>
+                                <ul class="list-table" >
+                                    <li style="width:70px;">
+                                        <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" width="65px" height="65px">
+                                    </li>
+                                    <li class="text-left">
+                                        <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                    </li>
+                                    <li class="text-right" style="width:70px;">
+                                        <button type="button" class="btn btn-sm btn-success">Like</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                <small class="text-muted">1 day ago</small>
+                            </li>  
+                        </ul>
+                    </div>
+    
+                        
+                </div>
+               
+            </div>
+        </section>
+    </main>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>
