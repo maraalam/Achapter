@@ -23,4 +23,9 @@ public class RootController {
     public String index(Model model) {
         return "index";
     }
+
+    @GetMapping("/prestamos")
+    public String prestamos(Model model) {
+        return "prestamos";
+    }
 }
