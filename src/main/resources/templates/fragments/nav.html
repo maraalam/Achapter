@@ -22,30 +22,29 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item active">
-                            <a class="nav-link" th:href="@{/index}">Inicio</a>
+                        <li class="nav-item active align-self-center">
+                            <a class="nav-link" th:href="@{/}">Inicio</a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item align-self-center">
                             <a class="nav-link" th:href="@{/posts}" href="/posts">Posts</a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item align-self-center">
                             <a class="nav-link" th:href="@{/prestamos}" href="/prestamos">Préstamos</a>
                         </li>
                             
-                        <form class="form-inline search-form">
+                        <form class="nav-item form-inline search-form align-self-center">
                             <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
 
                         <th:block th:if="${session.u}">
-                            <li class="nav-item mx-3">
+                            <li class="nav-item mx-3 align-self-center">
                                 <a class="nav-link" th:if="${session.u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item align-self-center">
                                 <a class="nav-link" href="#">Mensajería</a>
                             </li>
 
@@ -55,7 +54,7 @@
                                 </button>
                             </li>
 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown align-self-center">
                                 <a class="nav-link dropdown-toggle pfp" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${session.u.id})}">
                                     <span th:text="${session.u.username}">Pepe</span>
@@ -71,16 +70,15 @@
 
                                     <li>
                                         <form th:action="@{/logout}" method="post">
-                                            <button type="submit" class="btn btn-outline-secondary btn-sm">logout</button>
+                                            <button type="submit" class="dropdown-item">Cerrar sesión</button>
                                         </form>
-                                        <!--<a class="dropdown-item" href="#">Log out</a>-->
                                     </li>
                                 </ul>
                             </li>
                         </th:block>
 
                         <th:block th:unless="${session.u}">
-                            <li class="nav-item mx-2">
+                            <li class="nav-item mx-2 align-self-center">
                                 <a class="nav-link" th:href="@{/login}" href="/login">Login</a>
                             </li>
                             <!--/*
