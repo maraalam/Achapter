@@ -34,15 +34,15 @@
                         <li class="nav-item align-self-center">
                             <a class="nav-link" th:href="@{/prestamos}" href="/prestamos">Préstamos</a>
                         </li>
-                            
-                        <form class="nav-item form-inline search-form align-self-center" th:action="@{/buscar}" action="/buscar" method:"get">
+
+                        <form class="nav-item form-inline search-form align-self-center mx-2" th:action="@{/buscar}" action="/buscar" method:"get">
                             <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
                             <button class="btn btn-outline-success" type="submit"  >Search</button>
                         </form>
                             
                         <th:block th:if="${session.u}">
-                            <li class="nav-item mx-3 align-self-center">
-                                <a class="nav-link" th:if="${session.u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
+                            <li class="nav-item align-self-center" th:if="${session.u.hasRole('ADMIN')}">
+                                <a class="nav-link" th:href="@{/admin/}">Administrar</a>
                             </li>
 
                             <li class="nav-item align-self-center">
@@ -57,15 +57,15 @@
 
                             <li class="nav-item dropdown align-self-center">
                                 <a class="nav-link dropdown-toggle pfp" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${session.u.id})}">
+                                    <img class="iwthumb rounded-2" th:src="@{/user/{id}/pic(id=${session.u.id})}">
                                     <span th:text="${session.u.username}">Pepe</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id})}">Mis Posts</a></li>
-                                    <li><a class="dropdown-item" href="#">Biblioteca</a></li>
-                                    <li><a class="dropdown-item" href="#">Préstamos</a></li>
-                                    <li><a class="dropdown-item" href="#">Listas de lectura</a></li>
-                                    <li><a class="dropdown-item" href="#">Objetivos y estadísticas</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/user/{id}#posts(id=${session.u.id})}">Mis Posts</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/user/{id}#library(id=${session.u.id})}">Biblioteca</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/user/{id}#lends(id=${session.u.id})}">Préstamos</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/user/{id}#lists(id=${session.u.id})}">Listas de lectura</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/user/{id}#stats(id=${session.u.id})}">Objetivos y estadísticas</a></li>
 
                                     <li><hr class="dropdown-divider"></li>
 
