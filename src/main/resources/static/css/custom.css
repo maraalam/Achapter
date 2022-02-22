@@ -725,3 +725,17 @@ h6 {
         margin-top: 2%
     }
 }
+
+/****  Mensajeria***/
+
+#leftMessages{
+    width: 50%;
+    padding: 20px;
+    float: left
+}
+
+#rightMessages{
+    width: 50%;
+    padding: 20px;
+    float: right
+}

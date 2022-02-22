@@ -33,4 +33,14 @@ public class RootController {
     public String posts(Model model) {
         return "posts";
     }
+
+    @GetMapping("/mensajeria")
+    public String mensajeria(Model model) {
+        return "mensajeria";
+    }
+
+    @GetMapping("/libro")
+    public String libro(Model model) {
+        return "libro";
+    }
 }
