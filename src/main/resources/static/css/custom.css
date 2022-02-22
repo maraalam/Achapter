@@ -97,6 +97,7 @@ form.search-form {
     overflow: hidden;
     position: relative;
     margin-bottom: 30px;
+    
 }
 .products-single .box-img-hover{
     overflow: hidden;
@@ -296,7 +297,6 @@ form.search-form {
 .widget .panel, .widget.panel {
     border-bottom-width: 1px;
     border-bottom-color: #cfd9db;
-    overflow: hidden;
 }
 
 .widget {
@@ -743,4 +743,8 @@ h6 {
     width: 50%;
     padding: 20px;
     float: right
+}
+
+.container{
+    padding-top: 2em;
 }
