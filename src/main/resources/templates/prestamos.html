@@ -21,124 +21,200 @@
                 
             </div>
         </section>    
-        <!-- Filtros -->
-
-        <!-- Prestamos disponibles en la plataforma -->
-
-        <!-- Cuando tengamos estructurado el modelo tendremos que usar estructurad de este estilo para reducir código-->
-        <!--<tr th:each="prod: ${prods}">
-            <td th:text="${prod.name}">Onions</td>
-            <td th:text="${prod.price}">2.41</td>
-            <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
-        </tr> -->
-
-        <div class="products-box">
-            <div class="container">
-                <div class="row">
-                    <div class="col-2">
-
-                    </div>
-                    <div class="col-6">
-                        
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="title-all ">
-                                    <h1>Préstamos disponibles</h1>
-                                </div>
-                            </div>
+    
+      
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <section id="sidebar">
+       
+                        <h1> Búsqueda</h1>
+                        <br> <br>
+                        <div class="filter"> <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="true" aria-controls="mobile-filter">Filters<span class="fa fa-filter pl-1"></span></button>
                         </div>
-        
-                        <div class="row" id="user-margin">
-                            <div class="col-lg-12">
-                                <div class="title-all ">
-                                    <h3>Nombre del usuario</h3>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="row special-list">
-                            
-                                <div class="col-sm-3 special-grid">
-                                    <div class="card text-center" style="width: 6rem;">
-                                        <img class="card-img-top card-img-prestamo" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" alt="Portada libro">
-                                        <div class="card-body">
-                                            <h5 class="card-title" id="text-margin">Título</h5>
-                                            <h6 class="card-subtitle" id="text-margin"> Autor</h6>
-                                            <a class="btn btn-success" href="#" role="button">Solicitar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                           
-                                <div class="col-sm-3 special-grid">
-                                    <div class="card text-center" style="width: 6rem;">
-                                        <img class="card-img-top card-img-prestamo" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" alt="Portada libro">
-                                        <div class="card-body">
-                                            <h5 class="card-title" id="text-margin">Título</h5>
-                                            <h6 class="card-subtitle" id="text-margin"> Autor</h6>
-                                            <a class="btn btn-success" href="#" role="button">Solicitar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                          
-                            
-                                <div class="col-sm-3 special-grid">
-                                    <div class="card text-center" style="width: 6rem;">
-                                        <img class="card-img-top card-img-prestamo" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" alt="Portada libro">
-                                        <div class="card-body">
-                                            <h5 class="card-title" id="text-margin">Título</h5>
-                                            <h6 class="card-subtitle" id="text-margin"> Autor</h6>
-                                            <a class="btn btn-success" href="#" role="button">Solicitar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                          
-                        </div>
-                    </div>
-                    <div class="col-4">
                     
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="title-all ">
-                                    <h1>Préstamos de seguidos</h1>
+                        <div class="border-bottom pb-2 ml-2">
+                            <h4 >Filtros</h4>
+                        </div>
+                        <div class="d-flex flex-row">        
+                            <div class="ml-auto mr-lg-4">
+                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
+                                        <option value="libro"><b>Libros</b></option>
+                                        <option value="usuario"><b>Usuarios</b></option>
+                                    </select> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="py-2 border-bottom ml-3">
+                            <div class="d-flex flex-row">        
+                                <div class="ml-auto mr-lg-4">
+                                    <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
+                                            <option value="popularity"><b>Popularidad</b></option>
+                                            <option value="prcie"><b>Fecha</b></option>
+                                            <option value="rating"><b>Rating</b></option>
+                                        </select> </div>
                                 </div>
                             </div>
                         </div>
-        
-                        <div class="row" id="user-margin">
-                            <div class="col-lg-12">
-                                <div class="title-all ">
-                                    <h3>Nombre del usuario</h3>
+                        <div class="py-2 border-bottom ml-3">
+                            <h6 class="font-weight-bold">Autor</h6>
+                            <div id="orange"><span class="fa fa-minus"></span></div>            
+                            <div class="input-group mb-2 border rounded-pill">
+                                <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon3" class="form-control bg-none border-0">
+                                <div class="input-group-append border-0">
+                                <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <form>
+                                        <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Autor1</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Autor2</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Autor3</label> </div>
+                                    </form>
+                                </div>
+                                <div class="col-6">
+                                    <form>
+                                        <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Autor4</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Autor5</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Autor6</label> </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-        
-                        <div class="row special-list">
-                            
-                                <div class="col-sm-3">
-                                    <div class="card text-center" style="width: 18rem;">
-                                        <img class="card-img-top card-img-prestamo" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" alt="Portada libro">
-                                        <div class="card-body">
-                                        <h5 class="card-title" id="text-margin">Título</h5>
-                                        <h6 class="card-subtitle" id="text-margin"> Autor</h6>
-                                        <a class="btn btn-success" href="#" role="button">Solicitar</a>
-                                        </div>
-                                    </div>
+                
+                
+                        <div class="py-2 border-bottom ml-3">
+                            <h6 class="font-weight-bold">Género</h6>
+                            <div id="orange"><span class="fa fa-minus"></span></div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <form>
+                                        <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Género1</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Género2</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Género3</label> </div>
+                                    </form>
                                 </div>
-                            
-                                <div class="col-sm-3">
-                                    <div class="card text-center" style="width: 18rem;">
-                                        <img class="card-img-top card-img-prestamo" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" alt="Portada libro">
-                                        <div class="card-body">
-                                        <h5 class="card-title" id="text-margin">Título</h5>
-                                        <h6 class="card-subtitle" id="text-margin"> Autor</h6>
-                                        <a class="btn btn-success" href="#" role="button">Solicitar</a>
-                                        </div>
-                                    </div>
+                                <div class="col-6">
+                                    <form>
+                                        <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Género4</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Género5</label> </div>
+                                        <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Género6</label> </div>
+                                    </form>
                                 </div>
-                            
+                            </div>
+                        </div>
+                        <div class="py-2 border-bottom ml-3">
+                            <h6 class="font-weight-bold">Fecha de publicación</h6>
+                            <div id="orange"><span class="fa fa-minus"></span></div>
+                            <form>
+                                <div class="form-group"> <input type="checkbox" id="tea"> <label for="tea">2022</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="cookies"> <label for="cookies">2021</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="pastries"> <label for="pastries">2020</label> </div>
+                            </form>
+                        </div>
+                      
+                    </section>
+
+                </div>
+                <div class="col-5 margin-top-prestamo">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="title-all ">
+                                <h1>Préstamos disponibles</h1>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row" id="user-margin">
+                        <div class="col-lg-12">
+                            <div class="title-all ">
+                                <h3>Nombre del usuario</h3>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row special-list">
+                        
+                        <div class="col-lg-4 col-md-6 special-grid best-seller">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
+                                </div>
+                                <div class="why-text">
+                                    <h3> Título </h3>
+                                    <h5> Autor</h5>
+                                </div>
+                            </div>
                         </div>
 
+                        <div class="col-lg-4 col-md-6 special-grid best-seller">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
+                                </div>
+                                <div class="why-text">
+                                    <h3>Título</h3>
+                                    <h5>Autor</h5>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 col-md-6 special-grid best-seller">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
+                                </div>
+                                <div class="why-text">
+                                    <h3>Título</h3>
+                                    <h5>Autor</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-5">
+                    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="title-all ">
+                                <h1>Préstamos de seguidos</h1>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row" id="user-margin">
+                        <div class="col-lg-12">
+                            <div class="title-all ">
+                                <h3>Nombre del usuario</h3>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row special-list"> 
+                        <div class="col-lg-4 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
+                            </div>
+                            <div class="why-text">
+                                <h3>Título</h3>
+                                <h5>Autor</h5>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
+                            </div>
+                            <div class="why-text">
+                                <h3>Título</h3>
+                                <h5>Autor</h5>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
