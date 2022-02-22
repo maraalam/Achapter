@@ -63,6 +63,9 @@ public class User implements Transferable<User.Transfer> {
     @ManyToMany
     private List<User> followers = new ArrayList<>();
 
+    @OneToMany
+    @JoinColumn(name="owner_id") // <-- evita crear User_Book
+    private List<Book> ownedBooks;
     /**
      * Checks whether this user has a given role.
      * @param role to check
