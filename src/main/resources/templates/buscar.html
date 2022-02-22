@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    
+    <title>Búsqueda</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+    <main class="flex-shrink-0" >
+   
+
+    <!-- Sidebar filter section -->
+    <section id="sidebar">
+       
+        <h1> Búsqueda</h1>
+        <br> <br>
+        <div class="filter"> <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="true" aria-controls="mobile-filter">Filters<span class="fa fa-filter pl-1"></span></button>
+        </div>
+    
+        <div class="border-bottom pb-2 ml-2">
+            <h4 >Ordenar</h4>
+        </div>
+        <div class="d-flex flex-row">
+        
+            <div class="ml-auto mr-lg-4">
+                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
+                        <option value="popularity"><b>Popularidad</b></option>
+                        <option value="prcie"><b>Fecha</b></option>
+                        <option value="rating"><b>Rating</b></option>
+                    </select> </div>
+            </div>
+        </div>
+        <div class="border-bottom pb-2 ml-2">
+            <h4 >Filters</h4>
+        </div>
+        <div class="py-2 border-bottom ml-3">
+            <h6 class="font-weight-bold">Categories</h6>
+            <div id="orange"><span class="fa fa-minus"></span></div>
+            <form>
+                <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Todos</label> </div>
+                <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Amigos</label> </div>
+                <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Propios</label> </div>
+            </form>
+        </div>
+        <div class="py-2 border-bottom ml-3">
+            <h6 class="font-weight-bold">Fecha de publicación</h6>
+            <div id="orange"><span class="fa fa-minus"></span></div>
+            <form>
+                <div class="form-group"> <input type="checkbox" id="tea"> <label for="tea">2022</label> </div>
+                <div class="form-group"> <input type="checkbox" id="cookies"> <label for="cookies">2021</label> </div>
+                <div class="form-group"> <input type="checkbox" id="pastries"> <label for="pastries">2020</label> </div>
+            </form>
+        </div>
+      
+    </section>
+
+    <section style="align-self:center;">
+        <div class="container py-4 text-left">
+            <form class="form-inline search-form">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search" style = " width: 700px;">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            
+        </div>
+    </section>
+
+    <section id="products" >
+        
+        <div class="container" >
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                    <div class="widget panel"  style="width:700px;">
+                        <div class="panel-body" >
+                        <br>
+                            <ul class="list-table" >
+                                <li style="width:70px;">
+                                    <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" width="65px" height="65px">
+                                </li>
+                                <li class="text-left">
+                                    <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                </li>
+                                <li class="text-right" style="width:70px;">
+                                    <button type="button" class="btn btn-sm btn-success">Like</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                            <small class="text-muted">1 day ago</small>
+                        </li>  
+                    </ul>
+                </div>
+
+                    
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+                    <div class="widget panel"  style="width:700px;">
+                        <div class="panel-body" >
+                            <br>
+                            <ul class="list-table" >
+                                <li style="width:70px;">
+                                    <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
+                                </li>
+                                <li class="text-left">
+                                    <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                </li>
+                                <li class="text-right" style="width:70px;">
+                                    <button type="button" class="btn btn-sm btn-success">Like</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                            <small class="text-muted">1 day ago</small>
+                        </li>  
+                    </ul>
+                </div>
+
+                    
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+                    <div class="widget panel"  style="width:700px;">
+                        <div class="panel-body" >
+                            <br>
+                            <ul class="list-table" >
+                                <li style="width:70px;">
+                                    <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" width="65px" height="65px">
+                                </li>
+                                <li class="text-left">
+                                    <h5 class="semibold ellipsis nm">Usuario 1</h5>
+                                </li>
+                                <li class="text-right" style="width:70px;">
+                                    <button type="button" class="btn btn-sm btn-success">Like</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                            <small class="text-muted">1 day ago</small>
+                        </li>  
+                    </ul>
+                </div>
+
+                    
+            </div>
+           
+        </div>
+    </section>
+
+  
+   
+        
+        
+        
+
+       
+    </main>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>

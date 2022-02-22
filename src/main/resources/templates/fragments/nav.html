@@ -35,9 +35,9 @@
                             <a class="nav-link" th:href="@{/prestamos}" href="/prestamos">Préstamos</a>
                         </li>
                             
-                        <form class="nav-item form-inline search-form align-self-center">
-                            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        <form class="nav-item form-inline search-form align-self-center" th:action="@{/buscar}" action="/buscar" method:"get">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
+                            <button class="btn btn-outline-success" type="submit"  >Search</button>
                         </form>
                             
                         <th:block th:if="${session.u}">

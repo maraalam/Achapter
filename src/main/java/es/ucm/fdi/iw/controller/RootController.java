@@ -29,6 +29,11 @@ public class RootController {
         return "prestamos";
     }
 
+    @GetMapping("/buscar")
+    public String buscar(Model model) {
+        return "buscar";
+    }
+
     @GetMapping("/posts")
     public String posts(Model model) {
         return "posts";
