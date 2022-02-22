@@ -7,9 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An authorized user of the system.
@@ -50,6 +54,7 @@ public class User implements Transferable<User.Transfer> {
     private boolean enabled;
     private String roles; // split by ',' to separate roles
 
+  
     private String about;
 
 	@OneToMany
@@ -64,8 +69,14 @@ public class User implements Transferable<User.Transfer> {
     private List<User> followers = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name="owner_id") // <-- evita crear User_Book
-    private List<Book> ownedBooks;
+    private Map<String, List<Book>> library= new HashMap<>(); //nombre de la lista con sus libros
+    @OneToMany
+    private Map<Book, Long> libros_leyendo= new HashMap<>(); //nombre de la lista con sus libros (Libros actualmente siendo leidos)
+    @OneToMany
+    private List<Book> libros_enFisico = new ArrayList<>(); //lista de prestamos
+    @OneToMany
+    private List<Map<Book, Long>> listaPuntuaciones   = new ArrayList<>(); // lista de lectura
+    
     /**
      * Checks whether this user has a given role.
      * @param role to check
@@ -79,15 +90,12 @@ public class User implements Transferable<User.Transfer> {
     @Getter
     @AllArgsConstructor
     public static class Transfer {
-		private long id;
-        private String username;
-		private int totalReceived;
-		private int totalSent;
+	
     }
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id,	username, received.size(), sent.size());
+		
 	}
 	
 	@Override
