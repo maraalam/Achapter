@@ -289,21 +289,6 @@ form.search-form {
     width:70%; 
   }
 
-/* Prestamos */
-.card-img-prestamo {
-    width: 100%;
-    height: 15vw;
-    object-fit: cover;
-}
-
-#user-margin {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-#text-margin {
-    margin-bottom: 7px;
-}
 
 /*                                        posts                                       */
 
@@ -735,6 +720,26 @@ h6 {
 }
 
 #rightMessages{
+    width: 50%;
+    padding: 20px;
+    float: right
+}
+
+/**** Prestamos ****/
+
+#left-prestamo{
+    width: 50%;
+    padding: 20px;
+    float: left
+}
+
+#center-prestamo{
+    width: 50%;
+    padding: 20px;
+    float: center
+}
+
+#right-prestamo{
     width: 50%;
     padding: 20px;
     float: right
