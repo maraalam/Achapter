@@ -69,13 +69,17 @@ public class User implements Transferable<User.Transfer> {
     private List<User> followers = new ArrayList<>();
 
     @OneToMany
-    private Map<String, List<Book>> library= new HashMap<>(); //nombre de la lista con sus libros
+    private List< List<Book>> library=  new ArrayList<>(); //lista de cada lista que tiene el usuario en su biblioteca
+    private List< String> library_names=  new ArrayList<>(); //nombre de cada lista
     @OneToMany
-    private Map<Book, Long> libros_leyendo= new HashMap<>(); //nombre de la lista con sus libros (Libros actualmente siendo leidos)
+    private List<Book> libros_leyendo=  new ArrayList<>(); //nombre de la lista con sus libros (Libros actualmente siendo leidos)
+    private List<long> libros_leyendoProgreso=  new ArrayList<>();  //nombre de la lista con sus libros (Libros actualmente siendo leidos)
     @OneToMany
-    private List<Book> libros_enFisico = new ArrayList<>(); //lista de prestamos
+    private List<Book> libros_enFisico = new ArrayList<>(); //lista de para prestamos
+    private List<Book> libros_enFisicoPrestados = new ArrayList<>(); //lista de para prestamos
     @OneToMany
-    private List<Map<Book, Long>> listaPuntuaciones   = new ArrayList<>(); // lista de lectura
+     private List<long> listaPuntuaciones  = new ArrayList<>(); // lista de lectura
+    private List<Book> listaPuntuacionesLibros   = new ArrayList<>(); // lista de lectura
     
     /**
      * Checks whether this user has a given role.
