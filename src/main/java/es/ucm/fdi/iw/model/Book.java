@@ -36,29 +36,26 @@ import lombok.AllArgsConstructor;
 
 
 @Entity
-@NamedQueries({
-	})
 @Data
 public class Book implements Transferable<Book.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String titulo;
+	private String autor;
     private String portada;
-    //private String autor;
     private String saga;
     private String fecha;
     private String descripcion;
     private long puntuación;
 	private int numPaginas;
 
-	private String autor;
-	@ManyToOne
-	private User recipient;
-	private String text;
+
 	
    	@OneToMany
-    private List<Review> ownedBooks;
+    private List<Review> reviewsPropias;
+	//@ManyToMany
+    //private List<String> generos;
 	
 	
 	/**
@@ -67,13 +64,21 @@ public class Book implements Transferable<Book.Transfer> {
 	 */
     @Getter
     @AllArgsConstructor
-	public static class Transfer {
-		
-		long id;
-		public Transfer(Book m) {
-			
-		}
-	}
+    public static class Transfer {
+	private String titulo;
+	private String autor;
+    private String portada;
+    private String saga;
+    private String fecha;
+    private String descripcion;
+    private long puntuación;
+	private int numPaginas;
+        long id;
+        public Transfer(Book m) {
+            
+        }
+    }
+
 
 	@Override
 	public Transfer toTransfer() {
