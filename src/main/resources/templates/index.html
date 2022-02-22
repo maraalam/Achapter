@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="fragments/head :: header" />
-    <title>IW: Welcome</title>
+    <title>Achapter</title>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -19,7 +19,7 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 
-            </div>
+            </div>z
         </div>
 
          <!-- LIBROS MAS POPULARES -->
@@ -37,28 +37,26 @@
     
                 <div class="row special-list">
                     <div class="col-lg-3 col-md-6 special-grid best-seller">
-                        <div class="products-single fix" >
-                           
-                                <div class="box-img-hover">
-                                    <img src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <a class="cart" th:href="@{/libro}" href="/libro">Ver libro</a>
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <a class="cart" href="#">Add to Want to Read</a>
+                                </div>
+                            </div>
+                            <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
+                                <div class="why-text">
+                                    <h3>Nombre del libro</h3>
+                                    <h5> Por Autor</h5>
+                                    <div class="product-rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star mr-0"></i>
                                     </div>
                                 </div>
-                                <div class="why-text" >
-                                    
-                                        <h3>Nombre del libro</h3>
-                                        <h5> Por Autor</h5>
-                                        <div class="product-rating mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star mr-0"></i>
-                                        </div>
-                                    
-                                </div>
-                           
+                            </a>
                         </div>
                     </div>
     
@@ -67,20 +65,22 @@
                             <div class="box-img-hover">
                                 <img src="https://i.pinimg.com/564x/1e/60/15/1e60154f5b08660131e3268873d7927c.jpg" class="img-fluid" alt="Image">
                                 <div class="mask-icon">
-                                    <a class="cart" th:href="@{/libro}" href="/libro">Ver libro</a>
+                                    <a class="cart" href="#">Add to Want to Read</a>
                                 </div>
                             </div>
-                            <div class="why-text">
-                                <h3>Nombre del libro</h3>
-                                <h5> Por Autor</h5>
-                                <div class="product-rating mb-2">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star mr-0"></i>
+                            <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
+                                <div class="why-text">
+                                    <h3>Nombre del libro</h3>
+                                    <h5> Por Autor</h5>
+                                    <div class="product-rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star mr-0"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
     
@@ -111,20 +111,22 @@
                             <div class="box-img-hover">
                                 <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
                                 <div class="mask-icon">
-                                    <a class="cart" th:href="@{/libro}" href="/libro">Ver libro</a>
+                                    <a class="cart" href="#">Add to Want to Read</a>
                                 </div>
                             </div>
-                            <div class="why-text">
-                                <h3>Nombre del libro</h3>
-                                <h5> Por Autor</h5>
-                                <div class="product-rating mb-2">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star mr-0"></i>
+                            <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
+                                <div class="why-text">
+                                    <h3>Nombre del libro</h3>
+                                    <h5> Por Autor</h5>
+                                    <div class="product-rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star mr-0"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
