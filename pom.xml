@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.ucm.fdi.iw</groupId>
-	<artifactId>plantilla</artifactId>                      <!-- cambia esto -->
+	<artifactId>Achapter</artifactId>                      <!-- cambia esto -->
 	<version>0.0.1-SNAPSHOT</version>     
-	<name>plantilla</name>                                  <!-- cambia esto -->
-	<description>Demo project for Spring Boot</description> <!-- cambia esto -->
+	<name>Achapter</name>                                  <!-- cambia esto -->
+	<description>Página web para encontrar tu próxima lectura, o tal vez compartir con tus amigos el progreso de tu actual lectura.</description> <!-- cambia esto -->
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.version>3.8.1</maven.compiler.version>
