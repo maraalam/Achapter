@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Data
-public class Post implements Transferable<Post.Transfer> {
+public class Update implements Transferable<Update.Transfer> {
 
     private static Logger log = LogManager.getLogger(Message.class);
 
@@ -22,8 +22,11 @@ public class Post implements Transferable<Post.Transfer> {
     private Long id;
     @ManyToOne
     private User author;
+    @ManyToOne
+    private Book book;
     private String title;
     private String text;
+    //private ? progreso;
 
     private LocalDateTime dateSent;
 
@@ -36,12 +39,14 @@ public class Post implements Transferable<Post.Transfer> {
     @AllArgsConstructor
     public static class Transfer {
         private String author;
+        private String book;
         private String sent;
         private String title;
         private String text;
         long id;
-        public Transfer(Post m) {
+        public Transfer(Update m) {
             this.author = m.getAuthor().getUsername();
+            this.book = m.getBook().getTitulo();
             this.sent = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(m.getDateSent());
             this.title = m.getTitle();
             this.text = m.getText();
@@ -50,10 +55,11 @@ public class Post implements Transferable<Post.Transfer> {
     }
 
     @Override
-    public Post.Transfer toTransfer() {
-        return new Post.Transfer(author.getUsername(),
+    public Update.Transfer toTransfer() {
+        return new Update.Transfer(author.getUsername(), book.getTitulo(),
                 DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateSent),
                 title, text, id
         );
     }
 }
+
