@@ -12,9 +12,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
@@ -30,7 +27,7 @@ import lombok.AllArgsConstructor;
 			+ "WHERE m.recipient.id = :userId AND m.dateRead = null")
 })
 @Data
-public class Libro implements Transferable<Message.Transfer> {
+public class Book implements Transferable<Book.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")

@@ -50,12 +50,18 @@ public class User implements Transferable<User.Transfer> {
     private boolean enabled;
     private String roles; // split by ',' to separate roles
 
+    private String about;
+
 	@OneToMany
 	@JoinColumn(name = "sender_id")
 	private List<Message> sent = new ArrayList<>();
 	@OneToMany
-	@JoinColumn(name = "recipient_id")	
-	private List<Message> received = new ArrayList<>();		
+	@JoinColumn(name = "recipient_id")
+	private List<Message> received = new ArrayList<>();
+    @ManyToMany     //ManyToMany
+    private List<User> followed = new ArrayList<>();
+    @ManyToMany
+    private List<User> followers = new ArrayList<>();
 
     /**
      * Checks whether this user has a given role.
