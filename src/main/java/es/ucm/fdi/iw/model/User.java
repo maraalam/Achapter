@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -68,17 +66,21 @@ public class User implements Transferable<User.Transfer> {
     @ManyToMany
     private List<User> followers = new ArrayList<>();
 
-    @OneToMany
-    private List< List<Book>> library=  new ArrayList<>(); //lista de cada lista que tiene el usuario en su biblioteca
-    private List< String> library_names=  new ArrayList<>(); //nombre de cada lista
+    @OneToMany(targetEntity = Book.class)
+    private List<List<Book>> library=  new ArrayList<>(); //lista de cada lista que tiene el usuario en su biblioteca
+    @OneToMany(targetEntity = Book.class)
+    private List<String> library_names=  new ArrayList<>(); //nombre de cada lista
     @OneToMany
     private List<Book> libros_leyendo=  new ArrayList<>(); //nombre de la lista con sus libros (Libros actualmente siendo leidos)
-    private List<long> libros_leyendoProgreso=  new ArrayList<>();  //nombre de la lista con sus libros (Libros actualmente siendo leidos)
+    @OneToMany(targetEntity = Book.class)
+    private List<Long> libros_leyendoProgreso=  new ArrayList<>();  //nombre de la lista con sus libros (Libros actualmente siendo leidos)
     @OneToMany
     private List<Book> libros_enFisico = new ArrayList<>(); //lista de para prestamos
-    private List<Book> libros_enFisicoPrestados = new ArrayList<>(); //lista de para prestamos
     @OneToMany
-     private List<long> listaPuntuaciones  = new ArrayList<>(); // lista de lectura
+    private List<Book> libros_enFisicoPrestados = new ArrayList<>(); //lista de para prestamos
+    @OneToMany(targetEntity = Book.class)
+    private List<Long> listaPuntuaciones  = new ArrayList<>(); // lista de lectura
+    @OneToMany
     private List<Book> listaPuntuacionesLibros   = new ArrayList<>(); // lista de lectura
     
     /**
@@ -99,7 +101,7 @@ public class User implements Transferable<User.Transfer> {
 
 	@Override
     public Transfer toTransfer() {
-		
+		return null;
 	}
 	
 	@Override
