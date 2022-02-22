@@ -147,7 +147,13 @@ Además, un usuario a través del perfil de otro usuario podrá:
 - Seguir al usuario del perfil.
   
 - Escribirle un post.
-  
+
+### Administración [Achapter: administración](http://localhost:8080/admin/)
+En esta vista el administrador puede revisar los reportes que le llegan de los usuarios y acceder mediante botones a otras vistas que le permiten:
+- Añadir libros a la aplicación.
+- Editar libros de la aplicación.
+- Eliminar libros de la aplicación.
+- Banear usuarios.
 
 ### Préstamos [Achapter: préstamos](http://localhost:8080/prestamos)
 
