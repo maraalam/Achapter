@@ -4,59 +4,44 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Entity
+@Data
 public class Progreso implements Transferable<Progreso.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; //primary key of the dataset
-    private String titulo;
-	private String autor;
-    private String portada;
-    private String saga;
-    private String fecha;
-    private String descripcion;
-    private long puntuación;
-	private int numPaginas;
+    private String libro;
+    private Long porcentaje;
+    private Long numPaginas;
 
 
 	
-   	@OneToMany(targetEntity=Review.class)  
-    private List<Review> reviewsPropias;
-	//@ManyToMany
-    //private List<String> generos;
-	
-	
-	/**
-	 * Objeto para persistir a/de JSON
-	 * @author mfreire
-	 */
+
     @Getter
     @AllArgsConstructor
     public static class Transfer {
-	private String titulo;
-	private String autor;
-    private String portada;
-    private String saga;
-    private String fecha;
-    private String descripcion;
-    private long puntuación;
-	private int numPaginas;
+
+    private Long porcentaje;
+    private Long numPaginas;
         long id;
-        public Transfer(Book b) {
-            this.titulo = b.getTitulo();
-            this.autor = b.getAutor();
-            this.portada = b.getPortada();
-            this.saga = b.getSaga();
-            this.fecha = b.getFecha();
-            this.descripcion = b.getDescripcion();
-            this.puntuación = b.getPuntuación();
-            this.numPaginas = b.getNumPaginas();
+        public Transfer(Progreso p) {
+           
+            this.porcentaje = p.getPorcentaje();
+            this.numPaginas= p.getNumPaginas();
+            this.id = p.getId();
         }
     }
 
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(titulo, autor, portada, saga, fecha,
-        descripcion, puntuación, numPaginas, id );
+		return null;
     }
 }
