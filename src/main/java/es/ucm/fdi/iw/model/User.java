@@ -70,19 +70,20 @@ public class User implements Transferable<User.Transfer> {
     private List<List<Book>> library=  new ArrayList<>(); //lista de cada lista que tiene el usuario en su biblioteca
     @OneToMany(targetEntity = Book.class)
     private List<String> library_names=  new ArrayList<>(); //nombre de cada lista
+    
     @OneToMany
     private List<Book> libros_leyendo=  new ArrayList<>(); //nombre de la lista con sus libros (Libros actualmente siendo leidos)
     @OneToMany(targetEntity = Book.class)
     private List<Long> libros_leyendoProgreso=  new ArrayList<>();  //nombre de la lista con sus libros (Libros actualmente siendo leidos)
+
+
     @OneToMany
     private List<Book> libros_enFisico = new ArrayList<>(); //lista de para prestamos
     @OneToMany
     private List<Book> libros_enFisicoPrestados = new ArrayList<>(); //lista de para prestamos
-    @OneToMany(targetEntity = Book.class)
-    private List<Long> listaPuntuaciones  = new ArrayList<>(); // lista de lectura
     @OneToMany
-    private List<Book> listaPuntuacionesLibros   = new ArrayList<>(); // lista de lectura
-    
+    private List<Review> listaReviews  = new ArrayList<>(); // lista de lectura
+  
     /**
      * Checks whether this user has a given role.
      * @param role to check
@@ -96,12 +97,15 @@ public class User implements Transferable<User.Transfer> {
     @Getter
     @AllArgsConstructor
     public static class Transfer {
-	
+		private long id;
+        private String username;
+		private int totalReceived;
+		private int totalSent;
     }
 
 	@Override
     public Transfer toTransfer() {
-		return null;
+		return new Transfer(id,	username, received.size(), sent.size());
 	}
 	
 	@Override
