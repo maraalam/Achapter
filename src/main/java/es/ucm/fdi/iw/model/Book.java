@@ -45,23 +45,19 @@ public class Book implements Transferable<Book.Transfer> {
 	private String autor;
     private String portada;
     private String saga;
+    private String volumen;
+    private String ISBN;
     private String fecha;
     private String descripcion;
     private long puntuación;
 	private int numPaginas;
-
-
 	
    	@OneToMany(targetEntity=Review.class)  
     private List<Review> reviewsPropias;
+
 	//@ManyToMany
     //private List<String> generos;
 	
-	
-	/**
-	 * Objeto para persistir a/de JSON
-	 * @author mfreire
-	 */
     @Getter
     @AllArgsConstructor
     public static class Transfer {

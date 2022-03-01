@@ -51,9 +51,10 @@ public class User implements Transferable<User.Transfer> {
 
     private boolean enabled;
     private String roles; // split by ',' to separate roles
-
-  
     private String about;
+
+    //Libros en progreso    
+    private Library library;
 
 	@OneToMany
 	@JoinColumn(name = "sender_id")
@@ -65,18 +66,7 @@ public class User implements Transferable<User.Transfer> {
     private List<User> followed = new ArrayList<>();
     @ManyToMany
     private List<User> followers = new ArrayList<>();
-
-    @OneToMany(targetEntity = Book.class)
-    private List<List<Book>> library=  new ArrayList<>(); //lista de cada lista que tiene el usuario en su biblioteca
-    @OneToMany(targetEntity = Book.class)
-    private List<String> library_names=  new ArrayList<>(); //nombre de cada lista
     
-    @OneToMany
-    private List<Book> libros_leyendo=  new ArrayList<>(); //nombre de la lista con sus libros (Libros actualmente siendo leidos)
-    @OneToMany(targetEntity = Book.class)
-    private List<Long> libros_leyendoProgreso=  new ArrayList<>();  //nombre de la lista con sus libros (Libros actualmente siendo leidos)
-
-
     @OneToMany
     private List<Book> libros_enFisico = new ArrayList<>(); //lista de para prestamos
     @OneToMany
