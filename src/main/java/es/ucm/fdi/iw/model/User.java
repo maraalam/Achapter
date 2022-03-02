@@ -6,12 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * An authorized user of the system.
@@ -53,7 +50,8 @@ public class User implements Transferable<User.Transfer> {
     private String roles; // split by ',' to separate roles
     private String about;
 
-    //Libros en progreso    
+    //Libros en progreso
+    @OneToOne
     private Library library;
 
 	@OneToMany
@@ -62,17 +60,21 @@ public class User implements Transferable<User.Transfer> {
 	@OneToMany
 	@JoinColumn(name = "recipient_id")
 	private List<Message> received = new ArrayList<>();
-    @ManyToMany     //ManyToMany
+    @ManyToMany
     private List<User> followed = new ArrayList<>();
     @ManyToMany
     private List<User> followers = new ArrayList<>();
     
     @OneToMany
-    private List<Book> libros_enFisico = new ArrayList<>(); //lista de para prestamos
+    @JoinColumn(name = "owner_id")
+    private List<PhysicBook> owned = new ArrayList<>(); //lista de libros en posesión
     @OneToMany
-    private List<Book> libros_enFisicoPrestados = new ArrayList<>(); //lista de para prestamos
+    @JoinColumn(name = "owner_id") // Esta creo q no hace falta, porque se puede preguntar cuáles libros tienen
+                                   // destinatario == null con la de arriba
+    private List<PhysicBook> leased = new ArrayList<>(); //lista de libros en posesión, prestados
     @OneToMany
-    private List<Review> listaReviews  = new ArrayList<>(); // lista de lectura
+    @JoinColumn(name = "author_id")
+    private List<Review> reviews  = new ArrayList<>(); // lista de lectura
   
     /**
      * Checks whether this user has a given role.

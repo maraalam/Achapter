@@ -1,15 +1,10 @@
 package es.ucm.fdi.iw.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
 
 
 @Entity
@@ -18,10 +13,12 @@ public class Progreso implements Transferable<Progreso.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; //primary key of the dataset
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Book book;
     private Long porcentaje;
     private Long numPaginas;
-
-
 	
 
     @Getter
@@ -30,7 +27,7 @@ public class Progreso implements Transferable<Progreso.Transfer> {
 
     private Long porcentaje;
     private Long numPaginas;
-        long id;
+    long id;
         public Transfer(Progreso p) {
            
             this.porcentaje = p.getPorcentaje();

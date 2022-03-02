@@ -1,62 +1,35 @@
 package es.ucm.fdi.iw.model;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.AllArgsConstructor;
-
 
 @Entity
 @Data
 public class Book implements Transferable<Book.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id; //primary key of the dataset
+    private long id; // primary key of the dataset
+    private String ISBN;
     private String titulo;
-	private String autor;
+    private String autor;
     private String portada;
     private String saga;
     private String volumen;
-    private String ISBN;
-    private String fecha;
+    private String generos; // split by ','
+    private LocalDate fecha;
     private String descripcion;
     private long puntuación;
-	private int numPaginas;
-	
-   	@OneToMany(targetEntity=Review.class)  
-    private List<Review> reviewsPropias;
+    private int numPaginas;
 
-	//@ManyToMany
-    //private List<String> generos;
+   	@OneToMany(targetEntity=Review.class)
+    @JoinColumn(name = "book_id")
+    private List<Review> reviewsPropias;
 	
     @Getter
     @AllArgsConstructor
@@ -75,7 +48,7 @@ public class Book implements Transferable<Book.Transfer> {
             this.autor = b.getAutor();
             this.portada = b.getPortada();
             this.saga = b.getSaga();
-            this.fecha = b.getFecha();
+            this.fecha = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
             this.descripcion = b.getDescripcion();
             this.puntuación = b.getPuntuación();
             this.numPaginas = b.getNumPaginas();
@@ -85,7 +58,8 @@ public class Book implements Transferable<Book.Transfer> {
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(titulo, autor, portada, saga, fecha,
-        descripcion, puntuación, numPaginas, id );
+		return new Transfer(titulo, autor, portada, saga,
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(fecha),
+                descripcion, puntuación, numPaginas, id );
     }
 }

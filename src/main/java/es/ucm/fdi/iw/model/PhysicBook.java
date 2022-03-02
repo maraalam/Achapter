@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
 @Entity
 @Data
 public class PhysicBook implements Transferable<PhysicBook.Transfer> {
@@ -18,7 +17,7 @@ public class PhysicBook implements Transferable<PhysicBook.Transfer> {
     @ManyToOne
     private Book libro;
     @ManyToOne
-    private User propietario;
+    private User owner;
     @ManyToOne
     private User destinatario;
     private LocalDate fechaPrestamo;
@@ -39,7 +38,7 @@ public class PhysicBook implements Transferable<PhysicBook.Transfer> {
         long id;
         public Transfer(PhysicBook b) {
             this.libro = b.getLibro().getISBN();
-            this.propietario = b.getPropietario().getUsername();
+            this.propietario = b.getOwner().getUsername();
             this.destinatario = b.getDestinatario().getUsername();
             this.fechaPrestamo = b.getFechaPrestamo() == null ?
                     null : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFechaPrestamo());
@@ -51,7 +50,7 @@ public class PhysicBook implements Transferable<PhysicBook.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(libro.getISBN(), propietario.getUsername(), destinatario.getUsername(),
+        return new Transfer(libro.getISBN(), owner.getUsername(), destinatario.getUsername(),
                 DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(fechaPrestamo),
                 DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(fechaDevolucion), id );
     }
