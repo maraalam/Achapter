@@ -11,11 +11,12 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name="Book")
 public class Book implements Transferable<Book.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; // primary key of the dataset
-    private String ISBN;
+    private String isbn;
     private String titulo;
     private String autor;
     private String portada;
@@ -52,6 +53,7 @@ public class Book implements Transferable<Book.Transfer> {
             this.descripcion = b.getDescripcion();
             this.puntuación = b.getPuntuación();
             this.numPaginas = b.getNumPaginas();
+            this.id = b.getId();
         }
     }
 

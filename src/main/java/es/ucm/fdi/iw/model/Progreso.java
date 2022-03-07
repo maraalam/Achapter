@@ -39,6 +39,6 @@ public class Progreso implements Transferable<Progreso.Transfer> {
 
 	@Override
 	public Transfer toTransfer() {
-		return null;
+		return new Transfer(porcentaje, numPaginas, id);
     }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<script >
+    function getBooks(){
+    document.getElementById('output').innerHTML=""; //limpia la pagina antes de usarla
+    fetch("http://openlibrary.org/search.json?q=" + "harry")
+    .then(a => a.json())/*convertir la salida json a un objeto (diccionario)*/
+    .then(response =>
+    {for(var i=o;i<10;i++)
+        { "harry"+="<h2>" + response.docs[i].title+"</h2>" 
+        + response.docs[i].author_name[0] + "<br><img src='http://covers.openlibrary.org/b/isbn/" + response.docs[i].isbn[0] +
+        +"-M.jpg'><br>";
+        }
+    });
+}
+
+</script> 
+
+<input id="input">
+<button onclick="getBooks()">Get boooks!</button>
+<input type = "button" onclick = "getBooks()" value = "Display">  
+<br>
+<div id="output"></div>
+
+
+</html>

@@ -37,7 +37,7 @@ public class PhysicBook implements Transferable<PhysicBook.Transfer> {
         private String fechaDevolucion;
         long id;
         public Transfer(PhysicBook b) {
-            this.libro = b.getLibro().getISBN();
+            this.libro = b.getLibro().getIsbn();
             this.propietario = b.getOwner().getUsername();
             this.destinatario = b.getDestinatario().getUsername();
             this.fechaPrestamo = b.getFechaPrestamo() == null ?
@@ -50,7 +50,7 @@ public class PhysicBook implements Transferable<PhysicBook.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(libro.getISBN(), owner.getUsername(), destinatario.getUsername(),
+        return new Transfer(libro.getIsbn(), owner.getUsername(), destinatario.getUsername(),
                 DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(fechaPrestamo),
                 DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(fechaDevolucion), id );
     }

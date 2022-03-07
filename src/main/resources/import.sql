@@ -5,3 +5,5 @@ VALUES (1, TRUE, 'ADMIN,USER', 'a',
 INSERT INTO IWUser (id, enabled, roles, username, password)
 VALUES (2, TRUE, 'USER', 'b',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
+INSERT INTO Book (id, autor, isbn, titulo)
+VALUES (3,'Titulo1, "autor1', "isbn1");
