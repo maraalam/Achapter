@@ -12,6 +12,11 @@ import java.util.List;
 @Entity
 @Data
 @Table(name="Book")
+@NamedQueries({
+    @NamedQuery(name="Book.byTitle",
+            query="SELECT u FROM Book u "
+                    + "WHERE u.titulo = :title")
+})
 public class Book implements Transferable<Book.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +24,13 @@ public class Book implements Transferable<Book.Transfer> {
     private String isbn;
     private String titulo;
     private String autor;
-    private String portada;
     private String saga;
     private String volumen;
     private String generos; // split by ','
-    private LocalDate fecha;
+    private String fecha;
     private String descripcion;
     private long puntuación;
-    private int numPaginas;
+    private int numpaginas;
 
    	@OneToMany(targetEntity=Review.class)
     @JoinColumn(name = "book_id")
@@ -37,22 +41,20 @@ public class Book implements Transferable<Book.Transfer> {
     public static class Transfer {
 	private String titulo;
 	private String autor;
-    private String portada;
     private String saga;
     private String fecha;
     private String descripcion;
     private long puntuación;
-	private int numPaginas;
+	private int numpaginas;
         long id;
         public Transfer(Book b) {
             this.titulo = b.getTitulo();
             this.autor = b.getAutor();
-            this.portada = b.getPortada();
             this.saga = b.getSaga();
-            this.fecha = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
+            this.fecha = b.getFecha(); //DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
             this.descripcion = b.getDescripcion();
             this.puntuación = b.getPuntuación();
-            this.numPaginas = b.getNumPaginas();
+            this.numpaginas = b.getNumpaginas();
             this.id = b.getId();
         }
     }
@@ -60,8 +62,8 @@ public class Book implements Transferable<Book.Transfer> {
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(titulo, autor, portada, saga,
-                DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(fecha),
-                descripcion, puntuación, numPaginas, id );
+		return new Transfer(titulo, autor, saga,
+                fecha,
+                descripcion, puntuación, numpaginas, id );
     }
 }

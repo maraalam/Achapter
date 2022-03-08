@@ -17,20 +17,24 @@
         <!-- Bootstrap Static Header -->
         <div style="background: url(/img/headerBook.png)" class="jumbotron bg-cover text-white">
             <div class="container py-5 text-center">
-                <form class="form-inline search-form">
+                <!-- <form class="form-inline search-form">
                     <input  class="form-control" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit" >Search</button>
 
                     
-                </form>
+                </form>-->
                 
+                <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12" >
+                    <input id="search-box" type="text" class="form-control" placeholder="Search Books!..." aria-label="Search">
+                    <button id="search" class="btn btn-outline-success" type="submit" onclick="">Search</button>
+                </div>
+
             </div>
         </div>
         
-        <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
-            <input id="search-box" type="text" class="form-control" placeholder="Search Books!...">
-            <button id="search" class="btn btn-primary" onclick="">Search</button>
-        </div>
+        
+
+        
 
         <table>
             <tr th:each="book: ${books}">
@@ -255,6 +259,32 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 
+        <script>
+            // ver https://openlibrary.org/dev/docs/api/books
+            // no requieren "api key", pero necesitas 1 consulta adicional por autor
+            function fetchBookData(isbn, targetImg) {
+                go(`https://openlibrary.org/isbn/${isbn}.json`, "GET", {}, {}).then(bookInfo => {
+                    authorLookups = bookInfo.authors.map(a =>
+                        go(`https://openlibrary.org${a.key}.json`, "GET", {}, {}));
+                    console.log(`title: ${bookInfo.title}`);
+                    //targetImg.src = `https://covers.openlibrary.org/b/id/${bookInfo.covers[0]}-M.jpg`;
+                    readImageUrlData(`https://covers.openlibrary.org/b/id/${bookInfo.covers[0]}-M.jpg`, targetImg);
+                    Promise.all(authorLookups).then(authorInfos => {
+                        for (let a of authorInfos) {
+                            console.log(`Author: ${a.name}`);
+                        }
+                    });
+                })
+            }
+    
+            // click en boton de cargar datos libro
+            document.querySelector("#fetchBook").onclick = e => {
+                let isbn = document.querySelector("#isbn").value;
+                console.log("fetching ", isbn);
+                fetchBookData(isbn, document.querySelector("#portada"));
+            };
+        </script>
+        
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
