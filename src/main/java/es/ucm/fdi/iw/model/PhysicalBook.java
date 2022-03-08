@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Data
-public class PhysicBook implements Transferable<PhysicBook.Transfer> {
+public class PhysicalBook implements Transferable<PhysicalBook.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; //primary key of the dataset
@@ -36,7 +36,7 @@ public class PhysicBook implements Transferable<PhysicBook.Transfer> {
         private String fechaPrestamo;
         private String fechaDevolucion;
         long id;
-        public Transfer(PhysicBook b) {
+        public Transfer(PhysicalBook b) {
             this.libro = b.getLibro().getISBN();
             this.propietario = b.getOwner().getUsername();
             this.destinatario = b.getDestinatario().getUsername();

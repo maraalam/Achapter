@@ -67,11 +67,11 @@ public class User implements Transferable<User.Transfer> {
     
     @OneToMany
     @JoinColumn(name = "owner_id")
-    private List<PhysicBook> owned = new ArrayList<>(); //lista de libros en posesión
+    private List<PhysicalBook> owned = new ArrayList<>(); //lista de libros en posesión
     @OneToMany
     @JoinColumn(name = "owner_id") // Esta creo q no hace falta, porque se puede preguntar cuáles libros tienen
                                    // destinatario == null con la de arriba
-    private List<PhysicBook> leased = new ArrayList<>(); //lista de libros en posesión, prestados
+    private List<PhysicalBook> leased = new ArrayList<>(); //lista de libros en posesión, prestados
     @OneToMany
     @JoinColumn(name = "author_id")
     private List<Review> reviews  = new ArrayList<>(); // lista de lectura
