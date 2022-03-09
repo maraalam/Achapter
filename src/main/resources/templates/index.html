@@ -19,7 +19,26 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 
-            </div>z
+                <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12" >
+                    <input id="search-box" type="text" class="form-control" placeholder="Search Books!..." aria-label="Search">
+                    <button id="search" class="btn btn-outline-success" type="submit" onclick="">Search</button>
+                </div>
+
+            </div>
+        </div>
+        
+
+
+
+        <div class="book-list" >
+            <div id="list-output" class="">
+              <div class="row">
+                <!-- card  -->
+    
+              </div>
+    
+            </div>
+          </div>
         </div>
 
          <!-- LIBROS MAS POPULARES -->
@@ -34,20 +53,24 @@
                     </div>
                 </div>
                 
-    
+                
+
                 <div class="row special-list">
-                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                                  
+                    <div  th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
                         <div class="products-single fix">
                             <div class="box-img-hover">
-                                <img src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" class="img-fluid" alt="Image">
+                                <div id="imgPortada" class="" ></div>
+                                <img th:src="${book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"  height="100%"   />
                                 <div class="mask-icon">
-                                    <a class="cart" href="#">Add to Want to Read</a>
+                                    <a class="cart" href="#">Agregar a mi biblioteca</a>
                                 </div>
                             </div>
                             <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
                                 <div class="why-text">
-                                    <h3>Nombre del libro</h3>
-                                    <h5> Por Autor</h5>
+                                    
+                                    <h3  th:text="${book.titulo}" >Nombre del libro</h3>
+                                    <h5  th:text="${book.autor}"  > Por Autor</h5>
                                     <div class="product-rating mb-2">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -57,78 +80,10 @@
                                     </div>
                                 </div>
                             </a>
-                        </div>
+                         </div>
                     </div>
     
-                    <div class="col-lg-3 col-md-6 special-grid best-seller">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="https://i.pinimg.com/564x/1e/60/15/1e60154f5b08660131e3268873d7927c.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <a class="cart" href="#">Add to Want to Read</a>
-                                </div>
-                            </div>
-                            <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                <div class="why-text">
-                                    <h3>Nombre del libro</h3>
-                                    <h5> Por Autor</h5>
-                                    <div class="product-rating mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star mr-0"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-    
-                    <div class="col-lg-3 col-md-6 special-grid best-seller">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="https://i.pinimg.com/736x/8e/b7/28/8eb728528c62707d083381a47c7cbf93.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <a class="cart" href="#">Add to Want to Read</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h3>Nombre del libro</h3>
-                                <h5> Por Autor</h5>
-                                <div class="product-rating mb-2">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star mr-0"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="col-lg-3 col-md-6 special-grid best-seller">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <a class="cart" href="#">Add to Want to Read</a>
-                                </div>
-                            </div>
-                            <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                <div class="why-text">
-                                    <h3>Nombre del libro</h3>
-                                    <h5> Por Autor</h5>
-                                    <div class="product-rating mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star mr-0"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -186,7 +141,50 @@
         <!-- End Products  -->
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+        <!--
+        <script>
+            // ver https://openlibrary.org/dev/docs/api/books
+            // no requieren "api key", pero necesitas 1 consulta adicional por autor
 
+            function fetchBookData(isbn, targetImg) {
+                go(`https://openlibrary.org/isbn/${isbn}.json`, "GET", {}, {}).then(bookInfo => {
+                    authorLookups = bookInfo.authors.map(a =>
+                        go(`https://openlibrary.org${a.key}.json`, "GET", {}, {}));
+                    console.log(`title: ${bookInfo.title}`);
+                    //targetImg.src = `https://covers.openlibrary.org/b/id/${bookInfo.covers[0]}-M.jpg`;
+                    readImageUrlData(`https://covers.openlibrary.org/b/id/${bookInfo.covers[0]}-M.jpg`, targetImg);
+                    Promise.all(authorLookups).then(authorInfos => {
+                        for (let a of authorInfos) {
+                            console.log(`Author: ${a.name}`);
+                        }
+                    });
+                })
+            }
+
+            function fetchBookIMG(isbn) {
+                var outputList = document.getElementById("imgPortada");
+                let targetImg;
+                go(`https://openlibrary.org/isbn/${isbn}.json`, "GET", {}, {}).then(bookInfo => {
+                    authorLookups = bookInfo.authors.map(a =>
+                        go(`https://openlibrary.org${a.key}.json`, "GET", {}, {}));
+                    console.log(`title: ${bookInfo.title}`);
+                    //targetImg.src = `https://covers.openlibrary.org/b/id/${bookInfo.covers[0]}-M.jpg`;
+                    readImageUrlData(`https://covers.openlibrary.org/b/id/${bookInfo.covers[0]}-M.jpg`, targetImg);
+                    
+                })
+                outputList.innerHTML = ""; //empty html output
+                outputList.innerHTML ='<img src="${targetImg}" class="card-img" alt="...">';
+                console.log(outputList);
+            }
+    
+            // click en boton de cargar datos libro
+            document.querySelector("#fetchBook").onclick = e => {
+                let isbn = document.querySelector("#isbn").value;
+                console.log("fetching ", isbn);
+                fetchBookData(isbn, document.querySelector("#portada"));
+            };
+        </script>
+        -->
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />

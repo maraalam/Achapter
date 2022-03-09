@@ -24,8 +24,10 @@ public class Book implements Transferable<Book.Transfer> {
     private String generos; // split by ','
     private LocalDate fecha;
     private String descripcion;
+    private String imag;
     private long puntuación;
-    private int numPaginas;
+   
+    private int numpaginas;
 
    	@OneToMany(targetEntity=Review.class)
     @JoinColumn(name = "book_id")
@@ -40,6 +42,7 @@ public class Book implements Transferable<Book.Transfer> {
     private String saga;
     private String fecha;
     private String descripcion;
+    private String imag;
     private long puntuación;
 	private int numPaginas;
         long id;
@@ -51,15 +54,17 @@ public class Book implements Transferable<Book.Transfer> {
             this.fecha = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
             this.descripcion = b.getDescripcion();
             this.puntuación = b.getPuntuación();
-            this.numPaginas = b.getNumPaginas();
+            this.numpaginas = b.getNumpaginas();
+            this.imag = b.getImag();
+            this.id = b.getId();
         }
     }
 
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(titulo, autor, portada, saga,
-                DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(fecha),
-                descripcion, puntuación, numPaginas, id );
+		return new Transfer(titulo, autor, saga,
+                fecha,
+                descripcion, imag, puntuación, numpaginas, id );
     }
 }
