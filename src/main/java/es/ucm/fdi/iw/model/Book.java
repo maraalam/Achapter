@@ -22,7 +22,7 @@ public class Book implements Transferable<Book.Transfer> {
     private String saga;
     private String volumen;
     private String generos; // split by ','
-    private LocalDate fecha;
+    private String fecha;
     private String descripcion;
     private String imag;
     private long puntuación;
@@ -44,14 +44,14 @@ public class Book implements Transferable<Book.Transfer> {
     private String descripcion;
     private String imag;
     private long puntuación;
-	private int numPaginas;
+	private int numpaginas;
         long id;
         public Transfer(Book b) {
             this.titulo = b.getTitulo();
             this.autor = b.getAutor();
             this.portada = b.getPortada();
             this.saga = b.getSaga();
-            this.fecha = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
+            this.fecha = b.getFecha();//DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
             this.descripcion = b.getDescripcion();
             this.puntuación = b.getPuntuación();
             this.numpaginas = b.getNumpaginas();
@@ -63,7 +63,7 @@ public class Book implements Transferable<Book.Transfer> {
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(titulo, autor, saga,
+		return new Transfer(titulo, autor, portada, saga,
                 fecha,
                 descripcion, imag, puntuación, numpaginas, id );
     }
