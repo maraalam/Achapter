@@ -54,6 +54,9 @@
                 <li class="nav-item h6">
                     <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="false">Objetivos y estadísticas</a>
                 </li>
+                <li class="nav-item h6">
+                    <a class="nav-link" id="stats-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Ajustes de perfil</a>
+                </li>
             </ul>
 
 
@@ -83,6 +86,18 @@
                 <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
                     <p>Estadísticas</p>
                 </div>
+
+                <!--perfil-->
+                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <h2>Actualizar foto de perfil</h2>
+                    
+                    <input type="file" id="f_avatar" accept="image/jpeg,image/png">
+                    <img id="avatar" alt="foto de perfil" hidden/>
+                    <form th:action="@{/user/__${user.id}__/pic}">
+                        <button id="postAvatar">Subir foto</button>
+                    </form>
+  
+                </div>
             </div>
 
             <!-- para enviar mensajes; algo feo -->
@@ -107,6 +122,20 @@
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
         }
+
+        // click en boton de enviar avatar
+        document.querySelector("#postAvatar").onclick = e => {
+            alert("me ejecuto");
+            e.preventDefault();
+            alert("me ejecuto 2");
+            let url = document.querySelector("#postAvatar").parentNode.action;
+            let img = document.querySelector("#avatar");
+            let file = document.querySelector("#f_avatar");
+            postImage(img, url, "photo").then(() => {
+                let cacheBuster = "?" + new Date().getTime();
+                document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
+            });
+        };
     </script>
 
     <!-- JavaScript, for the tabs-->

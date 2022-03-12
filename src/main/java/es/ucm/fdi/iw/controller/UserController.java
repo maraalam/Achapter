@@ -217,7 +217,7 @@ public class UserController {
 		log.info("Updating photo for user {}", id);
 		File f = localData.getFile("user", ""+id);
 		if (photo.isEmpty()) {
-			log.info("failed to upload photo: emtpy file?");
+			log.info("failed to upload photo: empty file?");
 		} else {
 			try (BufferedOutputStream stream =
 					new BufferedOutputStream(new FileOutputStream(f))) {
@@ -302,4 +302,22 @@ public class UserController {
 		messagingTemplate.convertAndSend("/user/"+u.getUsername()+"/queue/updates", json);
 		return "{\"result\": \"message sent.\"}";
 	}	
+
+	@PostMapping("/{id}/photo")
+    @ResponseBody
+    public String postPhoto(@RequestParam("photo") MultipartFile photo,@PathVariable("id") String id){
+        File f = localData.getFile("user", id);
+        if (!photo.isEmpty()) {
+            try (BufferedOutputStream stream =
+                new BufferedOutputStream(new FileOutputStream(f))) {
+                byte[] bytes = photo.getBytes();
+                stream.write(bytes);
+            } catch (Exception e) {
+                return "Error uploading " + id + " => " + e.getMessage();
+            }
+        } else {
+            return "You failed to upload a photo for " + id + ": empty?";
+        }
+        return "You successfully uploaded " + id + " into " + f.getAbsolutePath() + "!";
+    }
 }

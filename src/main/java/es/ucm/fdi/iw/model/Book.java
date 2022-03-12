@@ -63,8 +63,7 @@ public class Book implements Transferable<Book.Transfer> {
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(titulo, autor, portada, saga,
-                fecha,
+		return new Transfer(titulo, autor, portada, saga,fecha,
                 descripcion, imag, puntuación, numpaginas, id );
     }
 }
