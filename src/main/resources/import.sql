@@ -24,5 +24,8 @@ INSERT INTO Book (id, autor, descripcion, fecha, generos, imag, isbn, numpaginas
 VALUES(4, 'Brandon Sanderson', 'La aclamada continuación de El camino de los reyes es, como el primer volumen..', '2015-08-27', '["Fiction"]', 
 'http://books.google.com/books/content?id=8w-YCgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', '0439064864', 1248, 4, 'El Archivo de las Tormentas', 'Palabras radiantes (El Archivo de las Tormentas 2)', '2');
 
+INSERT INTO POST (id, date_sent, text, title, author_id)
+VALUES (3, CURRENT_DATE, 'oh no, se han caído otro árbol, pero...', '1213', 2);
+
 INSERT INTO POST (id, DATE_SENT, TEXT, TITLE,AUTHOR_ID)
-VALUES (1, DATE('2019-09-01'), 'hola como estas', 'saludos', 1);
+VALUES (1, CURRENT_DATE, 'hola como estas', 'saludos', 1);

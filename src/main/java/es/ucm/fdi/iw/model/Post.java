@@ -12,6 +12,10 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Data
+@NamedQueries({
+        @NamedQuery(name = "Posts.all",
+                query = "SELECT p FROM Post p ORDER BY p.dateSent DESC")
+})
 public class Post implements Transferable<Post.Transfer> {
 
     private static Logger log = LogManager.getLogger(Message.class);
