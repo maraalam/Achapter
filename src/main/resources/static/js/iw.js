@@ -171,6 +171,7 @@ function readImageFileData(file, targetImg) {
 function postImage(img, endpoint, name, filename) {
     // from https://stackoverflow.com/a/30470303/15472
     function toBlob(dataurl) {
+        console.log(dataurl);
         let arr = dataurl.split(','),
             mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]),

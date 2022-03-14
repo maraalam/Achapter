@@ -92,7 +92,7 @@
                     <h2>Actualizar foto de perfil</h2>
                     
                     <input type="file" id="f_avatar" accept="image/jpeg,image/png">
-                    <img id="avatar" alt="foto de perfil" hidden/>
+                    <img id="avatar" alt="foto de perfil"/>
                     <form th:action="@{/user/__${user.id}__/pic}">
                         <button id="postAvatar">Subir foto</button>
                     </form>
@@ -125,12 +125,11 @@
 
         // click en boton de enviar avatar
         document.querySelector("#postAvatar").onclick = e => {
-            alert("me ejecuto");
             e.preventDefault();
-            alert("me ejecuto 2");
             let url = document.querySelector("#postAvatar").parentNode.action;
             let img = document.querySelector("#avatar");
             let file = document.querySelector("#f_avatar");
+            console.log(url, img, file);
             postImage(img, url, "photo").then(() => {
                 let cacheBuster = "?" + new Date().getTime();
                 document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
