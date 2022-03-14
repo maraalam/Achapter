@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import es.ucm.fdi.iw.model.Book;
+import es.ucm.fdi.iw.model.Post;
 
 /**
  *  Non-authenticated requests only.
@@ -83,6 +84,19 @@ public class RootController {
         return Arrays.asList(
             b, b2
         );*/
+
+    }
+    // User u = entityManager.createNamedQuery("User.byUsername", User.class)
+
+    @ModelAttribute("generos")
+    public List<String> getGenerosList() {
+        return entityManager.createQuery("SELECT DISTINCT generos FROM Book b", String.class).getResultList();
+
+    }
+
+    @ModelAttribute("posts")
+    public List<Post> getPostsList() {
+        return entityManager.createQuery("select b from Post b", Post.class).getResultList();
 
     }
 

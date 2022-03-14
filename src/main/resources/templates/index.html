@@ -102,39 +102,13 @@
                 
     
                 <div class="row special-list">
-                    <div class="col-lg-4 col-md-6 ">
+                    <div  th:each="genero: ${generos}" class="col-lg-4 col-md-6 ">
                         <div class="products-single fix">
-                            <button type="button" class="btn btn-genre"> Género 1</button>
+                            <button th:text="${genero}"  type="button" class="btn btn-genre"> Género 1</button>
                         </div>
                     </div>
     
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="products-single fix">
-                            <button type="button" class="btn btn-genre"> Género 2</button>
-                        </div>
-                    </div>
-    
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="products-single fix">
-                            <button type="button" class="btn btn-genre"> Género 3</button>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="products-single fix">
-                            <button type="button" class="btn btn-genre"> Género 4</button>
-                        </div>
-                    </div>
-    
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="products-single fix">
-                            <button type="button" class="btn btn-genre"> Género 5</button>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="products-single fix">
-                            <button type="button" class="btn btn-genre"> Género 5</button>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
