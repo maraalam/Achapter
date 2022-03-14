@@ -56,6 +56,8 @@ public class RootController {
 
     @GetMapping("/posts")
     public String posts(Model model) {
+        List<Post> posts = entityManager.createNamedQuery("Posts.all").getResultList();
+        model.addAttribute("postList", posts);
         return "posts";
     }
 

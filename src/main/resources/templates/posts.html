@@ -10,64 +10,64 @@
 <body class="d-flex flex-column h-100">
     <header th:replace="fragments/nav.html :: nav"></header>
     <main class="flex-shrink-0" >
-    <div class="container">
-        <div class="row">
-            <!--Columna filtros md(en pantallas pequeñas las dos columnas se convierten en filas)-->
-            <div class="col-md-3">
+        <div class="container">
+            <div class="row">
+                <!--Columna filtros md(en pantallas pequeñas las dos columnas se convierten en filas)-->
+                <div class="col-md-3">
 
-                <!-- Sidebar filter section -->
-                <section class="filters">            
-                    <h1> Posts</h1>
-                    <br> <br>
-                    <div class="border-bottom pb-2 ml-2">
-                        <h4 >Filtros</h4>
-                    </div>
-                    <div class="d-flex flex-row">
-                    
-                        <div class="ml-auto mr-lg-4">
-                            <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
-                                    <option value="popularity"><b>Popularity</b></option>
-                                    <option value="prcie"><b>Fecha</b></option>
-                                    <option value="rating"><b>Rating</b></option>
-                                </select> </div>
+                    <!-- Sidebar filter section -->
+                    <section class="filters">
+                        <h1> Posts</h1>
+                        <br> <br>
+                        <div class="border-bottom pb-2 ml-2">
+                            <h4 >Filtros</h4>
                         </div>
-                    </div>
-                    <div class="py-2 border-bottom ml-3">
-                        <h6 class="font-weight-bold">Categories</h6>
-                        <div id="orange"><span class="fa fa-minus"></span></div>
-                        <form>
-                            <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Todos</label> </div>
-                            <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Amigos</label> </div>
-                            <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Propios</label> </div>
-                        </form>
-                    </div>
-                    <div class="py-2 border-bottom ml-3">
-                        <h6 class="font-weight-bold">Fecha de publicación</h6>
-                        <div id="orange"><span class="fa fa-minus"></span></div>
-                        <form>
-                            <div class="form-group"> <input type="checkbox" id="tea"> <label for="tea">2022</label> </div>
-                            <div class="form-group"> <input type="checkbox" id="cookies"> <label for="cookies">2021</label> </div>
-                            <div class="form-group"> <input type="checkbox" id="pastries"> <label for="pastries">2020</label> </div>
-                        </form>
-                    </div>
-                
-                </section>
-            </div>
-            
-            <div class="col-md-9">
-                <section>
-                    <div class="input-group mb-2 border rounded-pill">
-                        <input type="search" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0">
-                        <div class="input-group-append border-0">
-                        <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </section>
+                        <div class="d-flex flex-row">
 
-                    
+                            <div class="ml-auto mr-lg-4">
+                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
+                                        <option value="popularity"><b>Popularidad</b></option>
+                                        <option value="date"><b>Fecha</b></option>
+                                        <option value="rating"><b>Rating</b></option>
+                                    </select> </div>
+                            </div>
+                        </div>
+                        <div class="py-2 border-bottom ml-3">
+                            <h6 class="font-weight-bold">Categories</h6>
+                            <div id="categories"><span class="fa fa-minus"></span></div>
+                            <form>
+                                <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Todos</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Amigos</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Propios</label> </div>
+                            </form>
+                        </div>
+                        <div class="py-2 border-bottom ml-3">
+                            <h6 class="font-weight-bold">Fecha de publicación</h6>
+                            <div id="fecha"><span class="fa fa-minus"></span></div>
+                            <form>
+                                <div class="form-group"> <input type="checkbox" id="tea"> <label for="tea">2022</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="cookies"> <label for="cookies">2021</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="pastries"> <label for="pastries">2020</label> </div>
+                            </form>
+                        </div>
+
+                    </section>
+                </div>
+
+                <div class="col-md-9">
+                    <section>
+                        <div class="input-group mb-2 border rounded-pill">
+                            <input type="search" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0">
+                            <div class="input-group-append border-0">
+                                <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </section>
+
                     <div class="container" >
-                        <div class="row">
-                            <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                        <div class="row" th:each="post : ${postList}">
+                            <div th:replace="fragments/post.html :: post(${post})"></div>
+                            <!--<div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
                                 <div class="widget panel"  style="width:700px;">
                                     <div class="panel-body" >
                                     <br>
@@ -84,16 +84,18 @@
                                         </ul>
                                     </div>
                                     <br>
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
-                                        <small class="text-muted">1 day ago</small>
-                                    </li>  
-                                </ul>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                            <small class="text-muted">1 day ago</small>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-
-                                
+                            -->
                         </div>
+
+                        <!--
                         <div class="row">
                             <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
                                 <div class="widget panel"  style="width:700px;">
@@ -116,11 +118,12 @@
                                     <li class="list-group-item">
                                         <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
                                         <small class="text-muted">1 day ago</small>
-                                    </li>  
+                                    </li>
                                 </ul>
                             </div>
 
-                                
+
+                        </div>
                         </div>
 
                         <div class="row">
@@ -145,25 +148,23 @@
                                     <li class="list-group-item">
                                         <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
                                         <small class="text-muted">1 day ago</small>
-                                    </li>  
+                                    </li>
                                 </ul>
                             </div>
 
-                                
+
                         </div>
-                    
+                        </div>
+                        -->
                     </div>
+                </div>
+
             </div>
-    
+
         </div>
-
-    </div>
-       
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     </main>
-
     <th:block th:replace="fragments/footer.html :: footer" />
-</body>
 
+</body>
 </html>

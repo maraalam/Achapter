@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+
+<head>
+    <title>Post fragment - rest intentionally left empty</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <!-- esqueleto post -->
+    <div th:fragment="post(post)" class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+        <div class="widget panel"  style="width:700px;">
+            <div class="panel-body" >
+                <br>
+                <ul class="list-table" >
+                    <li style="width:70px;">
+                        <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" width="65px" height="65px">
+                    </li>
+                    <li class="text-left">
+                        <h5 class="semibold ellipsis nm" th:text="${post.author.username}">Usuario 1</h5>
+                    </li>
+                    <li class="text-right" style="width:70px;">
+                        <button type="button" class="btn btn-sm btn-success">Like</button>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p class="nm" th:text="${post.text}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                    <small class="text-muted" th:text="${post.dateSent}">1 day ago</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
