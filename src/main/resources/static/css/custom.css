@@ -109,6 +109,8 @@ form.search-form {
     margin: 0 auto;
     text-align: center;
     display: block;
+    height: auto;
+    width: 100%;
 }
 .type-lb{
     position: absolute;
@@ -135,15 +137,10 @@ form.search-form {
     padding: 15px;
 }
 .why-text h4{
-    font-size: 16px;
-    font-weight: 700;
-    padding-bottom: 15px;
+    font-size: 1.3em !important;
 }
 .why-text h5{
-    font-size: 18px;
-    font-family: 'Montserrat', sans-serif;
-    padding: 0px;
-    font-weight: 600;
+    font-size: 1.1em !important;
 }
 .mask-icon{
     width: 100%;

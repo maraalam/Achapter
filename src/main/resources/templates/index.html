@@ -20,9 +20,6 @@
                 </form>
             </div>
         </div>
-        
-
-
 
         <div class="book-list" >
             <div id="list-output" class="">
@@ -49,13 +46,12 @@
                 
                 
 
-                <div class="row special-list">
-                                  
+                <div class="row special-list">              
                     <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
                         <div class="products-single fix">
                             <div class="box-img-hover">
                                 <div id="imgPortada" class="" ></div>
-                                <img th:src="${book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"  height="100%"   />
+                                <img th:src="${book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
                                 <div class="mask-icon">
                                     <a class="cart" href="#">Agregar a mi biblioteca</a>
                                 </div>
