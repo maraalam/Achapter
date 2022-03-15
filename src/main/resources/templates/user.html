@@ -15,7 +15,7 @@
             <!-- Información básica del usuario -->
             <div class="d-flex align-items-center">
                 <div class="img-wrapper">
-                    <img class="rounded-circle m-3" th:src="@{/user/{id}/pic(id=${session.u.id})}">
+                    <img class="iwprof rounded-circle m-3" th:src="@{/user/{id}/pic(id=${session.u.id})}">
                 </div>
                 <div class="mx-3 w-100">
                     <div class="mx-4">
@@ -92,7 +92,7 @@
                     <h2>Actualizar foto de perfil</h2>
                     
                     <input type="file" id="f_avatar" accept="image/jpeg,image/png">
-                    <img id="avatar" alt="foto de perfil"/>
+                    <img id="avatar" alt="foto de perfil" hidden/>
                     <form th:action="@{/user/__${user.id}__/pic}">
                         <button id="postAvatar">Subir foto</button>
                     </form>
@@ -138,9 +138,9 @@
             let file = document.querySelector("#f_avatar");
             console.log(url, img, file);
             postImage(img, url, "photo").then(() => {
-                alert(url)
                 let cacheBuster = "?" + new Date().getTime();
                 document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
+                document.querySelector("div.img-wrapper>img.iwprof").src = url + cacheBuster;
             });
         };
     </script>
