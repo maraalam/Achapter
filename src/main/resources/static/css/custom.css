@@ -29,6 +29,12 @@
     height: 280px;
 }
 
+#new-post {
+    width: 700px;
+    height: 100px;
+    resize: none;
+}
+
 /*
 *
 * ==========================================

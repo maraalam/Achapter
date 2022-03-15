@@ -25,7 +25,7 @@
                     </div>
                     <div class="d-flex flex-row">        
                         <div class="ml-auto mr-lg-4">
-                            <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
+                            <div id="type" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
                                     <option value="libro"><b>Libros</b></option>
                                     <option value="usuario"><b>Usuarios</b></option>
                                 </select> </div>
@@ -129,7 +129,7 @@
                         
 
                         <div class="row special-list">
-                            <div  th:each="book: ${librosSearch}" class="col-lg-3 col-md-6 special-grid best-seller" >
+                            <div  th:each="book: ${searchBook}" class="col-lg-3 col-md-6 special-grid best-seller" >
                                 <div class="products-single fix">
                                     <div class="box-img-hover">
                                         <div id="imgPortada" class="" ></div>

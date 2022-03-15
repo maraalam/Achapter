@@ -16,7 +16,9 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name="Book.byTitulo",
                 query="SELECT DISTINCT b FROM Book b "
-                + "WHERE b.titulo = :titulo")
+                + "WHERE b.titulo LIKE :titulo"),
+        @NamedQuery(name="Book.allGenre",
+                query="SELECT DISTINCT b.generos FROM Book b ")
 })
 public class Book implements Transferable<Book.Transfer> {
     @Id

@@ -28,4 +28,7 @@ INSERT INTO POST (id, date_sent, text, title, author_id)
 VALUES (3, CURRENT_DATE, 'oh no, se han caído otro árbol, pero...', '1213', 2);
 
 INSERT INTO POST (id, DATE_SENT, TEXT, TITLE,AUTHOR_ID)
-VALUES (1, CURRENT_DATE, 'hola como estas', 'saludos', 1);
+VALUES (1, CURRENT_DATE, 'hola como estas', 'saludos', 2);
+
+INSERT INTO POST (id, DATE_SENT, TEXT, TITLE,AUTHOR_ID)
+VALUES (15, CURRENT_DATE, 'hola como estasw', 'saludos', 2);

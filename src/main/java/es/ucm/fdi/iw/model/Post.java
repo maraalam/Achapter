@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Data
 @NamedQueries({
-        @NamedQuery(name = "Posts.all",
+        @NamedQuery(name = "Post.all",
                 query = "SELECT p FROM Post p ORDER BY p.dateSent DESC")
 })
 public class Post implements Transferable<Post.Transfer> {
