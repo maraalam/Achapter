@@ -184,6 +184,7 @@ function postImage(img, endpoint, name, filename) {
             type: mime
         });
     }
+    alert(img.src);
     let imageBlob = toBlob(img.src);
     let fd = new FormData();
     fd.append(name, imageBlob, filename);

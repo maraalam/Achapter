@@ -123,6 +123,13 @@
                 .catch(e => console.log("sad", e))
         }
 
+        document.querySelector("#f_avatar").onchange = e => {
+            let img = document.querySelector("#avatar");
+            let fileInput = document.querySelector("#f_avatar");
+            console.log(img, fileInput);
+            readImageFileData(fileInput.files[0], img);
+        };
+
         // click en boton de enviar avatar
         document.querySelector("#postAvatar").onclick = e => {
             e.preventDefault();
@@ -131,6 +138,7 @@
             let file = document.querySelector("#f_avatar");
             console.log(url, img, file);
             postImage(img, url, "photo").then(() => {
+                alert(url)
                 let cacheBuster = "?" + new Date().getTime();
                 document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
             });
