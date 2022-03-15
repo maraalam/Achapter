@@ -15,11 +15,24 @@
         <div style="background: url(/img/headerBook.png)" class=" m-0 row justify-content-center align-items-center jumbotron bg-cover text-white">
             <div class="container py-5 text-center">   
                 <form class="form-inline search-form">
-                    <input id="search-box" type="text" class="form-control" placeholder="Search Books!..." aria-label="Search">
-                    <button id="search" class="btn btn-success" type="submit" onclick="">Search</button>
+                    <!---
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    -->
                 </form>
+                
+              
+
             </div>
         </div>
+        
+        <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
+            <input id="search-box" type="text" class="form-control" placeholder="Search Books!...">
+            <button id="search" class="btn btn-primary" onclick="">Search</button>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+        <script src="js/index.js"></script>
 
         <div class="book-list" >
             <div id="list-output" class="">

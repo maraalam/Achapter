@@ -2,6 +2,7 @@ package es.ucm.fdi.iw.controller;
 import java.util.List;
 import javax.persistence.EntityManager;
 
+import es.ucm.fdi.iw.model.Post;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.model.Book;
-import es.ucm.fdi.iw.model.Post;
 
 /**
  *  Non-authenticated requests only.
@@ -39,7 +45,6 @@ public class RootController {
 
 	@GetMapping("/")
     public String index(Model model) {
-     
         //model.addAttribute("libros", bookservice.mockBooks());
         return "index";
     }
@@ -49,15 +54,8 @@ public class RootController {
         return "prestamos";
     }
 
-    @GetMapping("/buscar")
-    public String buscar(Model model) {
-        return "buscar";
-    }
-
     @GetMapping("/posts")
     public String posts(Model model) {
-        List<Post> posts = entityManager.createNamedQuery("Posts.all").getResultList();
-        model.addAttribute("postList", posts);
         return "posts";
     }
 
@@ -71,10 +69,17 @@ public class RootController {
         return "libro";
     }
 
+    @GetMapping("/buscar")
+    public String buscar(Model model, @RequestParam("query")String consulta) {
+        log.info("buscando" + consulta);
+        model.addAttribute("searchBook", entityManager.createNamedQuery("Book.byTitulo", Book.class).setParameter("titulo", consulta).getResultList());
+        return "buscar";
+    }
+
     @ModelAttribute("books")
     public List<Book> getBooksList() {
         return entityManager.createQuery("select b from Book b", Book.class).getResultList();
-       
+
         /*Book b = new Book();
         b.setAutor("Daniela");
         b.setTitulo("Este es el libro de Daniela");
@@ -88,18 +93,18 @@ public class RootController {
         );*/
 
     }
+
     // User u = entityManager.createNamedQuery("User.byUsername", User.class)
 
     @ModelAttribute("generos")
     public List<String> getGenerosList() {
-        return entityManager.createQuery("SELECT DISTINCT generos FROM Book b", String.class).getResultList();
+        return entityManager.createQuery("SELECT DISTINCT b.generos FROM Book b", String.class).getResultList();
 
     }
 
     @ModelAttribute("posts")
-    public List<Post> getPostsList() {
-        return entityManager.createQuery("select b from Post b", Post.class).getResultList();
-
+    public List getPostsList() {
+        return entityManager.createNamedQuery("Post.all").setMaxResults(10).getResultList();
     }
 
 }
