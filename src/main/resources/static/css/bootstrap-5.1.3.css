@@ -7200,6 +7200,8 @@ textarea.form-control-lg {
   margin: 0.5rem !important;
 }
 
+
+
 .m-3 {
   margin: 1rem !important;
 }
@@ -7352,6 +7354,10 @@ textarea.form-control-lg {
 
 .mb-2 {
   margin-bottom: 0.5rem !important;
+}
+
+.mb-n2 {
+  margin-bottom: -2.0rem !important;
 }
 
 .mb-3 {

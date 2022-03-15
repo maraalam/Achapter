@@ -110,7 +110,7 @@
             <!--Columna resultados-->          
             <div class="col-md-9">
                 <section>
-                    <div class="input-group mb-2 border rounded-pill">
+                    <div class="input-group mb-n2 border rounded-pill">
                         <input type="search" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0">
                         <div class="input-group-append border-0">
                         <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
@@ -118,18 +118,13 @@
                     </div>
                 </section>
 
-
-
-                
-
-
                 <!-- RESULTADOS DE LA BÚSQUEDA  -->
                 <div class="products-box" >
 
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="title-all ">
-                                    <h1>Libros</h1>
+                                    <h4>Resultados</h4>
                                 </div>
                             </div>
                         </div>
@@ -148,8 +143,8 @@
                                     <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
                                         <div class="why-text">
                                             
-                                            <h3  th:text="${book.titulo}" >Nombre del libro</h3>
-                                            <h5  th:text="${book.autor}"  > Por Autor</h5>
+                                            <h5  th:text="${book.titulo}" >Nombre del libro</h5>
+                                            <h6  th:text="${book.autor}"  > Por Autor</h6>
                                             <div class="product-rating mb-2">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
