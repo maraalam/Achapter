@@ -9,6 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.model.Book;
 import es.ucm.fdi.iw.model.Post;
@@ -51,6 +57,11 @@ public class RootController {
 
     @GetMapping("/buscar")
     public String buscar(Model model) {
+        /*
+        Book u = entityManager.createNamedQuery("Book.byTitulo", Book.class)
+        .setParameter("titulo", )
+        .getSingleResult();
+        */
         return "buscar";
     }
 
@@ -102,4 +113,28 @@ public class RootController {
 
     }
 
+
+
+    
+@RequestMapping("/buscar")
+public String buscar(Model model, @RequestParam("query")String consulta) {
+    log.info("buscando" + consulta);
+   model.addAttribute("searchBook", entityManager.createNamedQuery("Book.byTitulo", Book.class).setParameter("titulo", consulta).getResultList());
+   return "buscar";
+}
+
+
+    /*
+    @RequestMapping("/list_contact")
+    public String listContact(Model model) {
+         
+        ContactBusiness business = new ContactBusiness();
+        List<Contact> contactList = business.getContactList();
+         
+        model.addAttribute("contacts", contactList);       
+         
+        return "contact";
+    }
+    */
+//@GetMapping("/buscar?query={id}")
 }
