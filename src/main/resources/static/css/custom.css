@@ -37,7 +37,8 @@
 *
 */
 .bg-cover {
-    background-size: cover !important;
+    background-size: cover !important; 
+    height: 20em;
 }
 
 form.search-form{
@@ -387,6 +388,10 @@ form.search-form {
     display: inline-block
 }
 
+.search-form{
+    width: 40%;
+}
+
 #green {
     color: #5cca60
 }
@@ -459,7 +464,6 @@ h6 {
     #search {
         width: 300px;
         padding: 5px;
-        padding-left: 20px
     }
 
     .search-nav-item {
@@ -520,7 +524,6 @@ h6 {
     #search {
         width: 300px;
         padding: 5px;
-        padding-left: 20px
     }
 
     .search-nav-item {
@@ -584,7 +587,6 @@ h6 {
     #search {
         width: 300px;
         padding: 5px;
-        padding-left: 20px
     }
 
     .search-nav-item {
@@ -636,7 +638,6 @@ h6 {
     #search {
         width: 240px;
         padding: 5px;
-        padding-left: 20px
     }
 
     .fa-search {

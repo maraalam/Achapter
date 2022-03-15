@@ -12,18 +12,12 @@
     <main class="flex-shrink-0">
         
         <!-- Bootstrap Static Header -->
-        <div style="background: url(/img/headerBook.png)" class="jumbotron bg-cover text-white">
-            <div class="container py-5 text-center">
+        <div style="background: url(/img/headerBook.png)" class=" m-0 row justify-content-center align-items-center jumbotron bg-cover text-white">
+            <div class="container py-5 text-center">   
                 <form class="form-inline search-form">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                
-                <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12" >
                     <input id="search-box" type="text" class="form-control" placeholder="Search Books!..." aria-label="Search">
-                    <button id="search" class="btn btn-outline-success" type="submit" onclick="">Search</button>
-                </div>
-
+                    <button id="search" class="btn btn-success" type="submit" onclick="">Search</button>
+                </form>
             </div>
         </div>
         
@@ -57,7 +51,7 @@
 
                 <div class="row special-list">
                                   
-                    <div  th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
+                    <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
                         <div class="products-single fix">
                             <div class="box-img-hover">
                                 <div id="imgPortada" class="" ></div>
@@ -81,9 +75,7 @@
                                 </div>
                             </a>
                          </div>
-                    </div>
-    
-                    
+                    </div>     
                 </div>
             </div>
         </div>

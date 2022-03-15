@@ -15,14 +15,16 @@
         <div class="row">
             <!--Columna filtros md(en pantallas pequeñas las dos columnas se convierten en filas)-->
             <div class="col-md-3">
+
                 <!-- Sidebar filter section -->
                 <section class="filters">        
                     <h1>Búsqueda</h1>
                     <br><br>
                 
                     <div class="border-bottom pb-2 ml-2">
-                        <h4 >Filtros</h4>
+                        <h4>Filtros</h4>
                     </div>
+
                     <div class="d-flex flex-row">        
                         <div class="ml-auto mr-lg-4">
                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
@@ -102,6 +104,7 @@
                     </div>
                 
                 </section>
+                
             </div>
 
             <!--Columna resultados-->          
@@ -115,9 +118,14 @@
                     </div>
                 </section>
 
+
+
+                
+
+
                 <!-- RESULTADOS DE LA BÚSQUEDA  -->
                 <div class="products-box" >
-                    <div>
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="title-all ">
@@ -128,90 +136,21 @@
                         
 
                         <div class="row special-list">
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" class="img-fluid" alt="Image">
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
-                                        </div>
-                                    </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                    <div class="why-text">
-                                        <h3>Nombre del libro</h3>
-                                        <h5> Por Autor</h5>
-                                        <div class="product-rating mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star mr-0"></i>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
+                            <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
                                 <div class="products-single fix">
                                     <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/564x/1e/60/15/1e60154f5b08660131e3268873d7927c.jpg" class="img-fluid" alt="Image">
+                                        <div id="imgPortada" class="" ></div>
+                                        <img th:src="${book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"  height="100%"   />
                                         <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
+                                            <a class="cart" href="#">Agregar a mi biblioteca</a>
                                         </div>
                                     </div>
                                     <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
                                         <div class="why-text">
-                                            <h3>Nombre del libro</h3>
-                                            <h5> Por Autor</h5>
-                                            <div class="product-rating mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star mr-0"></i>
-                                            </div>
-                                        </div>
-                                        </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/736x/8e/b7/28/8eb728528c62707d083381a47c7cbf93.jpg" class="img-fluid" alt="Image">
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
-                                        </div>
-                                    </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                        <div class="why-text">
-                                            <h3>Nombre del libro</h3>
-                                            <h5> Por Autor</h5>
-                                            <div class="product-rating mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star mr-0"></i>
-                                            </div>
-                                        </div>
-                                        </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
-                                        </div>
-                                    </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                        <div class="why-text">
-                                            <h3>Nombre del libro</h3>
-                                            <h5> Por Autor</h5>
+                                            
+                                            <h3  th:text="${book.titulo}">Nombre del libro</h3>
+                                            <h5  th:text="${book.autor}"> Por Autor</h5>
                                             <div class="product-rating mb-2">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
@@ -221,10 +160,10 @@
                                             </div>
                                         </div>
                                     </a>
-                                </div>
+                                 </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
                 
             </div>

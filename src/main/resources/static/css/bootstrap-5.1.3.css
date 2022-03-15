@@ -3306,6 +3306,14 @@ textarea.form-control-lg {
   background-color: #198754;
   border-color: #198754;
 }
+
+.btn-success{
+  text-align: center;
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+
 .btn-check:focus + .btn-outline-success, .btn-outline-success:focus {
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.5);
 }
@@ -3466,7 +3474,7 @@ textarea.form-control-lg {
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.25rem 0.5rem;
+  margin : 0.2em;
   font-size: 0.875rem;
   border-radius: 0.2rem;
 }
@@ -7782,6 +7790,7 @@ textarea.form-control-lg {
 .text-opacity-100 {
   --bs-text-opacity: 1;
 }
+
 
 .bg-primary {
   --bs-bg-opacity: 1;
