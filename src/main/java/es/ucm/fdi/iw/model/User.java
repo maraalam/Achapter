@@ -74,10 +74,7 @@ public class User implements Transferable<User.Transfer> {
     private List<PhysicalBook> leased = new ArrayList<>(); //lista de libros en posesión, prestados
     @OneToMany
     @JoinColumn(name = "author_id")
-    private List<Review> reviews  = new ArrayList<>();
-    @OneToMany
-    @JoinColumn(name = "author_id")
-    private List<Post> posts  = new ArrayList<>();
+    private List<Review> reviews  = new ArrayList<>(); // lista de lectura
   
     /**
      * Checks whether this user has a given role.
