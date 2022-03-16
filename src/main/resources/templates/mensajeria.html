@@ -18,7 +18,7 @@
             <br> <br>
 
             <div class="container" >
-                <div class="row" th:each="user : ${friends}">
+                <div class="row" th:each="user : ${friends}"> <!-- returns not only friends but every user -->
                     <div th:replace="fragments/chatSnippet.html :: chatSnippet(${user})"></div>
                 </div>
             </div>

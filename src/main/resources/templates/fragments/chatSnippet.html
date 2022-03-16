@@ -11,7 +11,7 @@
 <div th:fragment="chatSnippet(user)" class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
     <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
         <div class="widget panel"  style="width:700px; border:1px solid grey;">
-            <a class="text-decoration-none link-dark">
+            <a th:href="@{'/user/' + ${user.id} + '/chat'}" class="text-decoration-none link-dark">
                 <div class="panel-body" >
 
                     <ul class="list-table" >
