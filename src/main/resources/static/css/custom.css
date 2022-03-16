@@ -109,7 +109,6 @@ form.search-form {
 .products-single .box-img-hover{
     overflow: hidden;
     position: relative;
-    height: 300px;
 }
 .box-img-hover img{
     margin: 0 auto;
@@ -395,6 +394,10 @@ form.search-form {
     width: 40%;
 }
 
+.search-advanced{
+    box-shadow: 0 !important;
+    margin-left: 3px;
+}
 #green {
     color: #5cca60
 }

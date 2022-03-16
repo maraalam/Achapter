@@ -15,18 +15,22 @@
         <div class="row">
             <!--Columna filtros md(en pantallas pequeñas las dos columnas se convierten en filas)-->
             <div class="col-md-3">
+
                 <!-- Sidebar filter section -->
                 <section class="filters">        
                     <h1>Búsqueda</h1>
                     <br><br>
                 
                     <div class="border-bottom pb-2 ml-2">
-                        <h4 >Filtros</h4>
+                        <h4>Filtros</h4>
                     </div>
+
                     <div class="d-flex flex-row">        
                         <div class="ml-auto mr-lg-4">
-                            <div id="type" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
-                                    <option value="libro"><b>Libros</b></option>
+                            <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
+                                    <option value="libro"><b>Titulo</b></option>
+                                    <option value="libro"><b>ISBN</b></option>
+                                    <option value="libro"><b>Autor</b></option>
                                     <option value="usuario"><b>Usuarios</b></option>
                                 </select> </div>
                         </div>
@@ -35,7 +39,7 @@
                     <div class="py-2 border-bottom ml-3">
                         <div class="d-flex flex-row">        
                             <div class="ml-auto mr-lg-4">
-                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
+                                <div id="type" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
                                         <option value="popularity"><b>Popularidad</b></option>
                                         <option value="prcie"><b>Fecha</b></option>
                                         <option value="rating"><b>Rating</b></option>
@@ -102,14 +106,14 @@
                     </div>
                 
                 </section>
+                
             </div>
 
-            <!--Columna resultados-->       
-               
+            <!--Columna resultados-->          
             <div class="col-md-9">
                 <section>
-                    <div class="input-group mb-2 border rounded-pill">
-                        <input type="search" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0">
+                    <div class="input-group mb-n2 border rounded-pill">
+                        <input id="search-text" onkeyup="buscarLibro()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
                         <div class="input-group-append border-0">
                         <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                         </div>
@@ -118,22 +122,22 @@
 
                 <!-- RESULTADOS DE LA BÚSQUEDA  -->
                 <div class="products-box" >
-                    <div>
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="title-all ">
-                                    <h1>Libros</h1>
+                                    <h4>Resultados</h4>
                                 </div>
                             </div>
                         </div>
                         
 
-                        <div class="row special-list">
-                            <div  th:each="book: ${searchBook}" class="col-lg-3 col-md-6 special-grid best-seller" >
+                        <div class="row special-list" id="results" >
+                            <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
                                 <div class="products-single fix">
                                     <div class="box-img-hover">
-                                        <div id="imgPortada" class="" ></div>
-                                        <img th:src="${book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"  height="100%"   />
+                                        <img th:src="${book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
+
                                         <div class="mask-icon">
                                             <a class="cart" href="#">Agregar a mi biblioteca</a>
                                         </div>
@@ -141,104 +145,8 @@
                                     <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
                                         <div class="why-text">
                                             
-                                            <h3  th:text="${book.titulo}" >Nombre del libro</h3>
-                                            <h5  th:text="${book.autor}"  > Por Autor</h5>
-                                            <div class="product-rating mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star mr-0"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                 </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" class="img-fluid" alt="Image">
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
-                                        </div>
-                                    </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                    <div class="why-text">
-                                        <h3>Nombre del libro</h3>
-                                        <h5> Por Autor</h5>
-                                        <div class="product-rating mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star mr-0"></i>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/564x/1e/60/15/1e60154f5b08660131e3268873d7927c.jpg" class="img-fluid" alt="Image">
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
-                                        </div>
-                                    </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                        <div class="why-text">
-                                            <h3>Nombre del libro</h3>
-                                            <h5> Por Autor</h5>
-                                            <div class="product-rating mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star mr-0"></i>
-                                            </div>
-                                        </div>
-                                        </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/736x/8e/b7/28/8eb728528c62707d083381a47c7cbf93.jpg" class="img-fluid" alt="Image">
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
-                                        </div>
-                                    </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                        <div class="why-text">
-                                            <h3>Nombre del libro</h3>
-                                            <h5> Por Autor</h5>
-                                            <div class="product-rating mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star mr-0"></i>
-                                            </div>
-                                        </div>
-                                        </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Add to Want to Read</a>
-                                        </div>
-                                    </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
-                                        <div class="why-text">
-                                            <h3>Nombre del libro</h3>
-                                            <h5> Por Autor</h5>
+                                            <h5 class="booktitle" th:text="${book.titulo}" >Nombre del libro</h5>
+                                            <h6 th:text="${book.autor}"  > Por Autor</h6>
                                             <div class="product-rating mb-2">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
@@ -249,9 +157,9 @@
                                         </div>
                                     </a>
                                 </div>
-                            </div>
+                            </div>     
                         </div>
-                    </div>
+
                 </div>
                 
             </div>
@@ -259,7 +167,45 @@
     </div>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-       
+    
+    <script th:inline="javascript">
+        function buscarLibro() {
+            console.log("getting books...");
+            var search = document.getElementById("search-text").value;
+            var rows = document.getElementsByClassName("best-seller");
+
+            for(let r of rows){
+                let titulo = r.getElementsByClassName("booktitle")[0].innerHTML;
+                console.log(titulo)
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if (titulo.toLowerCase().search(search.toLowerCase())==-1){
+                    r.style.display = "none";
+                }
+                else{
+                    r.style.display = "block";
+                }
+            }
+        }
+/*
+            document.getElementById("results").innerHTML = '';
+
+            var search = document.getElementById("search-text").value;
+            
+            console.log("Getting books ...");
+            var books = /*[[${books}]]*/ /*'default';/*
+            var filteredBooks = []
+            for(book in books){
+                if(books[book]['titulo'].toLowerCase().search(search.toLowerCase())!=-1){
+                    filteredBooks.push(books[book]);
+                }
+            }
+            console.log(filteredBooks);
+            books = filteredBooks;
+            
+        }*/
+    </script>
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
