@@ -307,9 +307,8 @@ public class UserController {
 
     @PostMapping("/{id}/state")
     @ResponseBody
-	public String postState(@PathVariable long id, 
-			@RequestBody JsonNode o, Model model, HttpSession session) 
-		throws JsonProcessingException {
+	public String postState(@RequestParam("state") MultipartFile state, @PathVariable long id, 
+    HttpServletResponse response, HttpSession session, Model model){
         System.out.println("[AAAA] - Funciona");
 		return "{\"result\": \"state updated.\"}";
 	}	

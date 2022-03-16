@@ -157,7 +157,7 @@
             let url = document.querySelector("#postEstado").parentNode.action;
             let state = document.querySelector("#estado").value;
             console.log(url, state);
-            postState(state, url).then(() =>{
+            postState(state, url, "state").then(() =>{
                 document.getElementById("userState").innerText = state;
             });
         };
