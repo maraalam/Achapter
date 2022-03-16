@@ -36,6 +36,7 @@ public class PhysicalBook implements Transferable<PhysicalBook.Transfer> {
         private String fechaPrestamo;
         private String fechaDevolucion;
         long id;
+        
         public Transfer(PhysicalBook b) {
             this.libro = b.getLibro().getISBN();
             this.propietario = b.getOwner().getUsername();
