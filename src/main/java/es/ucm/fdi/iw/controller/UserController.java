@@ -305,6 +305,13 @@ public class UserController {
 		return "{\"result\": \"message sent.\"}";
 	}
 
+	@GetMapping("/{id}/chat")
+	public String getChat(@PathVariable long id, Model model, HttpSession session) {
+		User u = entityManager.find(User.class, id);
+		model.addAttribute("user", u);
+		return "chat";
+	}
+
 	@PostMapping("{id}/follow")
 	@ResponseBody
 	@Transactional
@@ -316,10 +323,15 @@ public class UserController {
 //		model.addAttribute("user", user); // ???
 
 		List<User> selfFollowed = self.getFollowed();
-		selfFollowed.add(user);
-
-		List<User> userFollowers = user.getFollowers();
-		userFollowers.add(self);
+		if(!selfFollowed.contains(user)) {
+			selfFollowed.add(user);
+			List<User> userFollowers = user.getFollowers();
+			userFollowers.add(self);
+		} else {
+			selfFollowed.remove(user);
+			List<User> userFollowers = user.getFollowers();
+			userFollowers.remove(self);
+		}
 
 		entityManager.persist(user);
 		entityManager.persist(self);

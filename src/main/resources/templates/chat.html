@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Mensajeria</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <main class="flex-shrink-0" >
+
+        <!-- Friends messages -->
+        <section id="leftMessages">
+
+            <h4 th:text="${user.username}">Chat</h4>
+            <br> <br>
+
+            <form th:action="@{/user/__${user.id}__/msg}" method="POST">
+                <input type="text" id="message" placeholder="escribe a este usuario" />
+                <button id="sendmsg" class="btn btn-outline-success" type="submit">Enviar un mensaje</button>
+            </form>
+
+            <div class="container" >
+
+            </div>
+
+        </section>
+
+
+    </main>
+    <th:block th:replace="fragments/footer.html :: footer" />
+    <script>
+        // envio de mensajes con AJAX
+        let b = document.getElementById("sendmsg");
+        b.onclick = (e) => {
+            e.preventDefault();
+            go(b.parentNode.action, 'POST', {
+                message: document.getElementById("message").value
+            })
+                .then(d => console.log("happy", d))
+                .catch(e => console.log("sad", e))
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -3,8 +3,10 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 
 import es.ucm.fdi.iw.model.Post;
+import es.ucm.fdi.iw.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +69,12 @@ public class RootController {
     }
 
     @GetMapping("/mensajeria")
-    public String mensajeria(Model model) {
+    public String mensajeria(Model model, HttpSession session) {
+        model.addAttribute("friends",
+                entityManager.createNamedQuery("User.friends", User.class)
+                        .setParameter("username", ((User)session.getAttribute("u")).getUsername())
+                        .getResultList()
+        );
         return "mensajeria";
     }
 
@@ -93,20 +100,26 @@ public class RootController {
     @ModelAttribute("generos")
     public List<String> getGenerosList() {
         return entityManager.createQuery("SELECT DISTINCT b.generos FROM Book b", String.class).getResultList();
-
     }
 
     @ModelAttribute("posts")
     public List<Post> getPostsList() {
-        return entityManager.createNamedQuery("Post.all").setMaxResults(10).getResultList();
+        return entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).getResultList();
     }
 
+    /*
+    @ModelAttribute("friends")
+    public List<User> getFriendsList(User user) {
+        return entityManager.createNamedQuery("User.friends", User.class)
+                .setParameter("username", user.getUsername())
+                .getResultList();
+    }
+     */
 
     @ModelAttribute("prestamosSinDestinatario")
     public List getPhysicalBooksNoDestList() {
         return entityManager.createNamedQuery("PhysicalBook.allNoDest").setMaxResults(10).getResultList();
     }
-
 
     /*
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
