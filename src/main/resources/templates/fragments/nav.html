@@ -10,21 +10,42 @@
     <!-- barra de navegación bootstrap 5 -->
     <header th:fragment="nav">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <!-- nombre del sitio; es un enlace que lleva a la página ppal -->
-            
-                <a class="navbar-brand container" th:href="@{/}" href="/"> <!-- Logo -->
-                    <img th:src="@{/img/achapterLogo.png}" src="/img/achapterLogo.png" alt="logo AChapter" width="150" height="50" class="d-inline-block align-text-top">
-                </a>
-                <!-- menu hamburguesa si no cabe todo -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                        <li class="nav-item active align-self-center">
-                            <a class="nav-link" th:href="@{/}">Inicio</a>
+            <!-- nombre del sitio; es un enlace que lleva a la página ppal -->        
+            <a class="navbar-brand" th:href="@{/}" href="/"> <!-- Logo -->
+                <img th:src="@{/img/achapterLogo.png}" src="/img/achapterLogo.png" alt="logo AChapter" width="150" height="50" class="d-inline-block align-text-top">
+            </a>
+
+            <!-- menu hamburguesa si no cabe todo -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- menu de navegación -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- menu principal -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item active align-self-left">
+                        <a class="nav-link" th:href="@{/}">Inicio</a>
+                    </li>
+
+                    <li class="nav-item align-self-left">
+                        <a class="nav-link" th:href="@{/posts}" href="/posts">Posts</a>
+                    </li>
+
+                    <li class="nav-item align-self-left">
+                        <a class="nav-link" th:href="@{/prestamos}" href="/prestamos">Préstamos</a>
+                    </li>
+
+                    <form class="nav-item form-inline search-form align-self-left mx-2" th:action="@{/buscar}" action="/buscar" method:"get">
+                        <input id="search-text" onkeyup="buscarLibro()" class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
+                        <button id="button-addon3" type="submit" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                    </form>
+                        
+                    <th:block th:if="${session.u}">
+                        <li class="nav-item align-self-left" th:if="${session.u.hasRole('ADMIN')}">
+                            <a class="nav-link" th:href="@{/admin/}">Administrar</a>
                         </li>
 
                         <li class="nav-item align-self-center">
@@ -108,6 +129,9 @@
             </div>
         </nav>
     </header>
+
+
+
 </body>
 
 </html>
