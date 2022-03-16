@@ -108,53 +108,29 @@
                 
                 <div class="col-md-9">
                     <section>
-                        <div class="input-group mb-2 border rounded-pill">
-                            <input type="search" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0">
+                        <div class="input-group mb-n2 border rounded-pill">
+                            <input id="search-text" onkeyup="buscarLibro()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
                             <div class="input-group-append border-0">
                             <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
                     </section>
+                    <div class="products-box" >
                     <div class="row">
-                        <div class="col-md-6">
-                            <h2>Préstamos disponibles</h2>
-                        
-                            <h3>Nombre del usuario</h3>
-
-                            <div class="row special-list">
-                            
-                                <div class="col-lg-4 col-md-6 special-grid best-seller">
+                        <div class="col-md-7">
+                            <div class="title-all ">
+                                <h4>Prestamos disponibles</h4>
+                            </div>       
+                            <div class="row special-list">                              
+                                <div th:each="prestamo: ${prestamosSinDestinatario}" class="col-lg-4 col-md-6 special-grid best-seller">
                                     <div class="products-single fix">
                                         <div class="box-img-hover">
-                                            <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
+                                            <img th:src="${prestamo.libro.imag}" class="img-fluid" alt="Image">
                                         </div>
                                         <div class="why-text">
-                                            <h3> Título </h3>
-                                            <h5> Autor</h5>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="col-lg-4 col-md-6 special-grid best-seller">
-                                    <div class="products-single fix">
-                                        <div class="box-img-hover">
-                                            <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
-                                        </div>
-                                        <div class="why-text">
-                                            <h3>Título</h3>
-                                            <h5>Autor</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4 col-md-6 special-grid best-seller">
-                                    <div class="products-single fix">
-                                        <div class="box-img-hover">
-                                            <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
-                                        </div>
-                                        <div class="why-text">
-                                            <h3>Título</h3>
-                                            <h5>Autor</h5>
+                                            <h5 class="booktitle" th:text="${prestamo.libro.titulo}"> Título </h5>
+                                            <h6 th:text="${prestamo.libro.autor}"> Autor</h6>
+                                            <h6 th:text="${prestamo.owner.username}"> Propietario</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -162,34 +138,38 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <h2>Préstamos de seguidos</h2>
-                            <h3>Nombre del usuario</h3>
+                            <div class="title-all ">
+                                <h4>Prestamos de seguidos</h4>
+                            </div>
 
                             <div class="row special-list"> 
-                                <div class="col-lg-4 col-md-6 special-grid best-seller">
+                                <div class="col-lg-6 col-md-6 special-grid best-seller">
                                 <div class="products-single fix">
                                     <div class="box-img-hover">
                                         <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
                                     </div>
                                     <div class="why-text">
-                                        <h3>Título</h3>
-                                        <h5>Autor</h5>
+                                        <h5 class="booktitle">Título</h5>
+                                        <h6>Autor</h6>
+                                        <h6>Propietario</h6>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="col-lg-4 col-md-6 special-grid best-seller">
+                            <div class="col-lg-6 col-md-6 special-grid best-seller">
                                 <div class="products-single fix">
                                     <div class="box-img-hover">
                                         <img src="https://i.pinimg.com/564x/1b/21/fc/1b21fc7abc856a93e3dbf65616714a2b.jpg" class="img-fluid" alt="Image">
                                     </div>
                                     <div class="why-text">
-                                        <h3>Título</h3>
-                                        <h5>Autor</h5>
+                                        <h5 class="booktitle">Título</h5>
+                                        <h6>Autor</h6>
+                                        <h6>Propietario</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 

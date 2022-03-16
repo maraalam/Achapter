@@ -101,6 +101,13 @@ public class RootController {
         return entityManager.createNamedQuery("Post.all").setMaxResults(10).getResultList();
     }
 
+
+    @ModelAttribute("prestamosSinDestinatario")
+    public List getPhysicalBooksNoDestList() {
+        return entityManager.createNamedQuery("PhysicalBook.allNoDest").setMaxResults(10).getResultList();
+    }
+
+
     /*
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
     public String submit(@ModelAttribute("Book") Book b, Model model) {
