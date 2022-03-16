@@ -5,47 +5,49 @@ $(document).ready(function() {
     var apiKey = "AIzaSyDtXC7kb6a7xKJdm_Le6_BYoY5biz6s8Lw";
     var placeHldr = '<img src="https://via.placeholder.com/150">';
     var searchData;
-  
-    //listener for search button
+
+    //listener del boton search
     $("#search").click(function() {
-      outputList.innerHTML = ""; //empty html output
+      outputList.innerHTML = ""; //vaciamos html
       document.body.style.backgroundImage = "url('')";
        searchData = $("#search-box").val();
-       //handling empty search input field
+       //si no damos un input para buscar:
        if(searchData === "" || searchData === null) {
          displayError();
        }
       else {
-         
+
          $.ajax({
             url: bookUrl + searchData,
             dataType: "json",
             success: function(response) {
               console.log(response)
               if (response.totalItems === 0) {
-                alert("no result!.. try again")
+                alert("no hay respuesta, vuelve a intentarlo")
               }
               else {
-                $("#title").animate({'margin-top': '5px'}, 1000); //search box animation
+                $("#title").animate({'margin-top': '5px'}, 1000);
                 $(".book-list").css("visibility", "visible");
                 displayResults(response);
               }
             },
             error: function () {
-              alert("Something went wrong.. <br>"+"Try again!");
+              alert("Hubo un error.. <br>"+"Vuelve a intentarlo");
             }
           });
 
-          
+
         }
-        $("#search-box").val(""); //clearn search box
+        $("#search-box").val(""); //limpieza del search box
      });
-  
+
+
      /*
      * function to display result in index.html
      * @param response
      */
      function displayResults(response) {
+      outputList.innerHTML = '<div class="row special-list">';
         for (var i = 0; i < response.items.length; i+=2) {
           item = response.items[i];
           title1 = item.volumeInfo.title;
@@ -54,7 +56,7 @@ $(document).ready(function() {
           bookLink1 = item.volumeInfo.previewLink;
           bookIsbn = item.volumeInfo.industryIdentifiers[1].identifier
           bookImg1 = (item.volumeInfo.imageLinks) ? item.volumeInfo.imageLinks.thumbnail : placeHldr ;
-  
+
           item2 = response.items[i+1];
           title2 = item2.volumeInfo.title;
           author2 = item2.volumeInfo.authors;
@@ -84,28 +86,42 @@ $(document).ready(function() {
        var htmlCard = `<div class="col-lg-6">
          <div class="card" style="">
            <div class="row no-gutters">
-             <div class="col-md-4">
+             <div class="col-md-7">
                <img src="${bookImg}" class="card-img" alt="...">
-             </div>
-             <div class="col-md-8">
+             </div> <br>
+             <div class="col-md-10">
                <div class="card-body">
-                 <h5 class="card-title">${title}</h5>
-                 <p class="card-text">Author: ${author}</p>
-                 <p class="card-text">Publisher: ${publisher}</p>
-                
-                 <form action="/addBook" method="post">
 
-                 <input type="text" th:field="*{Book.titulo}" th:placeholder="Lola"/>
-                 
-                  <button >Save</button>
+                 <div class="why-text">
+                                            <h5 class="booktitle" "> ${title} </h5>
+                                            <h6 > ${author}</h6>
+                                            <h6> ${publisher}</h6>
+                                        </div>
+                
+                                  <form action="addBook" method="post" >
+                  
+                                        <input type="text" id="autor" name="autor" placeholder="autor"  required>
+                                            <input type="text" id="descripcion" name="descripcion" placeholder="Descripcion"  required>
+                                            <input type="text" id="fecha" name="fecha" placeholder="fecha"  required>
+                                            <input type="text" id="generos" name="generos" placeholder="Generos"  required>
+                                            <input type="text" id="ISBN" name="ISBN" placeholder="ISBN"  required>
+                                            <input type="text" id="imag" name="imag" placeholder="imag"  required>
+                                            <input type="text" id="saga" name="saga" placeholder="saga"  required>
+                                            <input type="text" id="titulo" name="titulo" placeholder="titulo"  required>
+                                            <input type="text" id="volumen" name="volumen" placeholder="volumen"  required>
+                                     
+                                          
+                                  
+                                      <button id="sendBook" type="submit" name="submit">Crear</button>
+                                    
             
-              </form>
+                                  </form>
 
                </div>
              </div>
            </div>
          </div>
-       </div>`
+       </div> <br>`
        return htmlCard;
      }
   
@@ -113,7 +129,28 @@ $(document).ready(function() {
      function displayError() {
        alert("search term can not be empty!")
      }
+
+ 
+      document.querySelector("#sendBook").onclick = e => {
+       e.preventDefault();
+       let autor = document.querySelector("#autor");
+        let titulo = document.querySelector("#titulo");
+        let isbn = document.querySelector("#ISBN");
+        let url = document.querySelector("#autor").parentNode.action;
+ 
+        console.log(url, autor, titulo, isbn);
+        postBook(titulo, url, "titulo").then(() =>{
+        document.getElementById("list-output").appendChild = '<h3>'+ titulo + '</h3>';
+    });
+   }
   
+   function postBook(state, endpoint, name) {
+    console.log(name, endpoint, state);
+    let fd = new FormData();
+    fd.append(name, state);
+    return go(endpoint, "POST", fd, {})
+  }
   });
+
   
   

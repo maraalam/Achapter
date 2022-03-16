@@ -10,6 +10,7 @@ import es.ucm.fdi.iw.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HttpServletBean;
 
 import es.ucm.fdi.iw.BookService;
 import es.ucm.fdi.iw.model.Book;
@@ -176,17 +178,36 @@ public class RootController {
     }
     
 */
-@PostMapping("/addBook")
 @Transactional
-    public String submit( @ModelAttribute Book b,  Model model) {
-    
-  
-        model.addAttribute("Book",b );
-        entityManager.persist(b);
-        entityManager.flush();
+@RequestMapping(value="/addBook", method = RequestMethod.POST)
+public String crearBook(
+        @RequestParam("autor") String autor,
+        @RequestParam("descripcion") String descripcion,
+        @RequestParam("fecha") String fecha,
+        @RequestParam("generos") String generos,
+        @RequestParam("ISBN") String ISBN,
+        @RequestParam("imag") String imag,
+        @RequestParam("saga") String saga,
+        @RequestParam("titulo") String titulo,
+        @RequestParam("volumen") String volumen,
+        HttpRequest request, HttpServletBean response,
+        Model model, 
+        HttpSession session){
 
-        return "addBook";
-    }
+            Book b = new Book();
+            b.setAutor(autor);
+            b.setDescripcion(descripcion);
+            b.setFecha(fecha);
+            b.setGeneros(generos);
+            b.setISBN(ISBN);
+            b.setImag(imag);
+            b.setNumpaginas(500);
+            b.setPuntuación(5);
+            b.setSaga(saga);
+            b.setTitulo(titulo);
+            b.setVolumen(volumen);
+            return "redirect:/user-restaurant";
+}
 }
 
 /*
