@@ -10,6 +10,10 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Data
+@NamedQueries({
+    @NamedQuery(name="PhysicalBook.allNoDest",
+        query="SELECT b FROM PhysicalBook b WHERE b.destinatario IS NULL")
+})
 public class PhysicalBook implements Transferable<PhysicalBook.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
