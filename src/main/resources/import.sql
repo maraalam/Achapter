@@ -48,4 +48,10 @@ INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_presta
 VALUES(2, 3, 1, 2, '2022-03-02', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(3, 4, 2, 1, '2022-03-05', null);
+VALUES(3, 4, 2, null, '2022-03-05', null);
+
+INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
+VALUES(4, 4, 2, null, '2022-03-05', null);
+
+INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
+VALUES(5, 2, 1, null, '2022-03-05', null);
