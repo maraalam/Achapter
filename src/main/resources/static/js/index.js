@@ -16,8 +16,7 @@ $(document).ready(function() {
          displayError();
        }
       else {
-         // console.log(searchData);
-         // $.get("https://www.googleapis.com/books/v1/volumes?q="+searchData, getBookData()});
+         
          $.ajax({
             url: bookUrl + searchData,
             dataType: "json",
@@ -36,6 +35,8 @@ $(document).ready(function() {
               alert("Something went wrong.. <br>"+"Try again!");
             }
           });
+
+          
         }
         $("#search-box").val(""); //clearn search box
      });
@@ -91,7 +92,15 @@ $(document).ready(function() {
                  <h5 class="card-title">${title}</h5>
                  <p class="card-text">Author: ${author}</p>
                  <p class="card-text">Publisher: ${publisher}</p>
-                 <a target="_blank" href="${viewUrl}" class="btn btn-secondary">Read Book</a>
+                
+                 <form action="/addBook" method="post">
+
+                 <input type="text" th:field="*{Book.titulo}" th:placeholder="Lola"/>
+                 
+                  <button >Save</button>
+            
+              </form>
+
                </div>
              </div>
            </div>

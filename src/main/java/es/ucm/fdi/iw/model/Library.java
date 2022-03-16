@@ -9,6 +9,8 @@ import java.util.Map;
 @Entity
 public class Library {
     @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @OneToOne
     @JoinColumn(name = "user_id")
