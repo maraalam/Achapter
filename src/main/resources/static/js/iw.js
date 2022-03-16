@@ -190,6 +190,13 @@ function postImage(img, endpoint, name, filename) {
     return go(endpoint, "POST", fd, {})
 }
 
+function postState(state, endpoint) {
+    alert(endpoint);
+    let fd = new FormData();
+    fd.append("state", state);
+    return go(endpoint, "POST", fd, {})
+}
+
 /**
  * Actions to perform once the page is fully loaded
  */

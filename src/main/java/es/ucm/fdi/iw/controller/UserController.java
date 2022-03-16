@@ -305,6 +305,15 @@ public class UserController {
 		return "{\"result\": \"message sent.\"}";
 	}	
 
+    @PostMapping("/{id}/state")
+    @ResponseBody
+	public String postState(@PathVariable long id, 
+			@RequestBody JsonNode o, Model model, HttpSession session) 
+		throws JsonProcessingException {
+        System.out.println("[AAAA] - Funciona");
+		return "{\"result\": \"state updated.\"}";
+	}	
+
 	/*@PostMapping("/{id}/photo")
     @ResponseBody
     public String postPhoto(@RequestParam("photo") MultipartFile photo,@PathVariable("id") String id){
