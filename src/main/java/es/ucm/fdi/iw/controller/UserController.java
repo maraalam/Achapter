@@ -303,7 +303,32 @@ public class UserController {
 
 		messagingTemplate.convertAndSend("/user/"+u.getUsername()+"/queue/updates", json);
 		return "{\"result\": \"message sent.\"}";
-	}	
+	}
+
+	@PostMapping("{id}/follow")
+	@ResponseBody
+	@Transactional
+	public String follow(@PathVariable long id, Model model, HttpSession session) {
+
+		User user = entityManager.find(User.class, id);
+		User self = entityManager.find(
+				User.class, ((User)session.getAttribute("u")).getId());
+		model.addAttribute("user", user); // ???
+
+		List<User> selfFollowers = self.getFollowers();
+
+		selfFollowers.add(user);
+		self.setFollowers(selfFollowers);
+		List<User> userFollowed = user.getFollowed();
+		userFollowed.add(self);
+		user.setFollowed(userFollowed);
+
+		entityManager.persist(user);
+		entityManager.persist(self);
+
+		log.info("User {} now follows user {}", self.getUsername(), user.getUsername());
+		return "{\"result\": \"ok.\"}";
+	}
 
 	/*@PostMapping("/{id}/photo")
     @ResponseBody
