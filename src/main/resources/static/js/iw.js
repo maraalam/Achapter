@@ -90,7 +90,7 @@ function go(url, method, data = {}, headers = false) {
     } else {
         params.headers["X-CSRF-TOKEN"] = config.csrf.value;
     }
-    console.log("sending", url, params)
+
     return fetch(url, params)
         .then(response => {
             const r = response;
@@ -186,17 +186,14 @@ function postImage(img, endpoint, name, filename) {
     }
     let imageBlob = toBlob(img.src);
     let fd = new FormData();
-    console.log(name, filename);
     fd.append(name, imageBlob, filename);
     return go(endpoint, "POST", fd, {})
 }
 
 function postState(state, endpoint, name) {
-    console.log("AQUI");
     console.log(name, endpoint, state);
     let fd = new FormData();
     fd.append(name, state);
-    console.log(fd.get(name));
     return go(endpoint, "POST", fd, {})
 }
 

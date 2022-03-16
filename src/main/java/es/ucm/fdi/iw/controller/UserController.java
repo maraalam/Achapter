@@ -305,11 +305,11 @@ public class UserController {
 		return "{\"result\": \"message sent.\"}";
 	}	
 
-    @PostMapping("/{id}/state")
+    @PostMapping("{id}/state")
     @ResponseBody
-	public String postState(@RequestParam("state") MultipartFile state, @PathVariable long id, 
+	public String postState(@RequestParam("state") Model state, @PathVariable long id, 
     HttpServletResponse response, HttpSession session, Model model){
-        System.out.println("[AAAA] - Funciona");
+        System.out.println("[Test] - Se ejecuta");
 		return "{\"result\": \"state updated.\"}";
 	}	
 
