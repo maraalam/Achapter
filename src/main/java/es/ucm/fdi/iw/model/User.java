@@ -60,9 +60,9 @@ public class User implements Transferable<User.Transfer> {
 	@OneToMany
 	@JoinColumn(name = "recipient_id")
 	private List<Message> received = new ArrayList<>();
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> followed = new ArrayList<>();
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> followers = new ArrayList<>();
     
     @OneToMany

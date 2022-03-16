@@ -24,15 +24,26 @@
                     </div>
                     <div class="d-flex">
                         <div class="flex-column btn btn-light mx-2 rounded-3">
-                            <a class="nav-link" href="#" th:text="${user.username + ' seguidores'}">0 seguidores</a>
+                            <a class="nav-link" href="#" th:text="${user.followers.size() + ' seguidores'}">0 seguidores</a>
                         </div>
                         <div class="flex-column btn btn-light mx-2 rounded-3">
-                            <a class="nav-link" href="#" th:text="${user.username + ' seguidos'}">0 seguidos</a>
+                            <a class="nav-link" href="#" th:text="${user.followed.size() + ' seguidos'}">0 seguidos</a>
                         </div>
                     </div>
                 </div>
-                <div class="button flex-row" th:if="${session.u.id != user.id}">
-                    <button class="btn btn-outline-success">Seguir</button>
+                <div th:if="${session.u.id != user.id}">
+                    <div class="button flex-row">
+                        <form th:action="@{/user/__${user.id}__/follow}" method="POST">
+                            <button id="follow" class="btn btn-outline-success" type="submit"
+                                    th:text="${session.u.followed.contains(user)} ? 'Siguiendo' : 'Seguir'">Seguir</button>
+                            <!-- .contains no funciona -->
+                        </form>
+                    </div>
+                    <div class="button flex-row">
+                        <form th:action="@{/user/__${user.id}__/msg}" method="GET">
+                            <button id="sendmsg" class="btn btn-outline-success" type="submit">Enviar un mensaje</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -54,8 +65,8 @@
                 <li class="nav-item h6">
                     <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="false">Objetivos y estadísticas</a>
                 </li>
-                <li class="nav-item h6">
-                    <a class="nav-link" id="stats-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Ajustes de perfil</a>
+                <li class="nav-item h6" th:if="${session.u.id == user.id}">
+                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Ajustes de perfil</a>
                 </li>
             </ul>
 
@@ -64,7 +75,20 @@
 
                 <!--posts-->
                 <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                    <p>Posts</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys" th:if="${session.u.id == user.id}">
+                            <div class="widget panel" style="width:700px;">
+                                <form>
+                                    <label for="new-post" class="semibold nm" ><h5>What is on your mind</h5></label>
+                                    <textarea id="new-post" placeholder="Write something here"></textarea>
+                                    <button id="publish-post" class="btn btn-outline-success" type="submit">Publicar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" th:each="post : ${user.posts}">
+                        <div th:replace="fragments/post.html :: post(${post})"></div>
+                    </div>
                 </div>
 
                 <!--libros-->
@@ -103,31 +127,22 @@
                     <form th:action="@{/user/__${user.id}__/state}">
                         <button id="postEstado">Actualizar estado</button>
                     </form>
-  
                 </div>
-            </div>
 
-            <!-- para enviar mensajes; algo feo -->
-            <div class="py-5 position-absolute bottom-0 row ">
-                <form th:action="@{/user/__${user.id}__/msg}" method="POST">
-                    <input type="text" id="message" placeholder="escribe a este usuario" />
-                    <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
-                </form>
             </div>
         </div>
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
     <script>
-        // envio de mensajes con AJAX
-        let b = document.getElementById("sendmsg");
+
+        let b = document.getElementById("follow");
         b.onclick = (e) => {
             e.preventDefault();
-            go(b.parentNode.action, 'POST', {
-                    message: document.getElementById("message").value
-                })
+            go(b.parentNode.action, 'POST')
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
+            // hace falta recargar la pagina para q se vea
         }
 
         document.querySelector("#f_avatar").onchange = e => {
