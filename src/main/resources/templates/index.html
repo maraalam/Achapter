@@ -47,6 +47,19 @@
 
          <!-- LIBROS MAS POPULARES -->
 
+         
+	<form id = "bookForm" action="addBook" method="post">
+	<table>
+		<tr>
+		<td><input id="autor" name="autor" placeholder="autor">
+		<td><input id="isbn" name="isbn" placeholder="isbn">
+        <td><input id="titulo" name="titulo" placeholder="titulo">
+		<td><button id="postBook" type="submit">Send</button>                               
+		</tr>
+	</table>
+	</form>
+
+
         <div class="products-box">
             <div class="container">
                 <div class="row">
@@ -163,6 +176,31 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
+    <script>
+        let b = document.getElementById("postBook");
+        b.onclick = (e) => {
+            e.preventDefault();
+           
+ 
+        console.log(url, autor, titulo, isbn);
+
+        //var request = new XMLHttpRequest();
+
+        var url =  'addBook'
+        var myForm = document.getElementById('bookForm');
+        var fd = new FormData()
+        fd.append("titulo",  document.querySelector("#titulo").value);
+        fd.append("autor",  document.querySelector("#autor").value);
+        fd.append("isbn",  document.querySelector("#isbn").value);
+
+        console.log(url)
+         //fd.append(url, autor, titulo, isbn);
+            go(url, 'POST', fd)
+                .then(d => console.log("happy", d))
+                .catch(e => console.log("sad", e))
+            // hace falta recargar la pagina para q se vea
+        }
+    </script>
 </body>
 
 </html>

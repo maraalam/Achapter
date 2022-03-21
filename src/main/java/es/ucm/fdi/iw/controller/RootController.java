@@ -1,10 +1,13 @@
 package es.ucm.fdi.iw.controller;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
+import java.lang.reflect.Field;
 import es.ucm.fdi.iw.model.Post;
 import es.ucm.fdi.iw.model.User;
 import org.apache.logging.log4j.LogManager;
@@ -19,13 +22,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HttpServletBean;
 
-import es.ucm.fdi.iw.BookService;
+
+//import es.ucm.fdi.iw.Repositories.BookRepository;
 import es.ucm.fdi.iw.model.Book;
 import es.ucm.fdi.iw.model.Library;
 
@@ -41,7 +46,8 @@ public class RootController {
     @Autowired 
     private EntityManager entityManager;
 
-  
+    //@Autowired
+    //BookRepository booksRepository;
     /*
     @Autowired
     public RootController() {
@@ -123,6 +129,67 @@ public class RootController {
         return entityManager.createNamedQuery("PhysicalBook.allNoDest").setMaxResults(10).getResultList();
     }
 
+ @PostMapping("/addBook")
+ @ResponseBody
+ @Transactional
+public String crearBook(
+        Model model){
+            log.info("En funcion");
+            Book b = new Book();
+            b.setId(10);
+
+            b.setAutor("Stephanie Meyer");
+           
+            b.setISBN("12345610");
+         
+            b.setNumpaginas(500);
+            b.setPuntuación(5);
+   
+            b.setTitulo("Crepusculo");
+           
+           //Do Something
+            
+           //model.addAttribute(b);
+           entityManager.persist(b);
+
+           for (String tableName : "Book".split(" ")) {
+			// queries all objects
+			List<?> results = entityManager.createQuery(
+					"select x from " + tableName + " x").getResultList();
+			
+			// dumps them via log
+			log.info("Dumping table {}", tableName);
+			for (Object o : results) {
+				log.info("\t{}", o);
+			}
+			
+			// adds them to model
+			model.addAttribute(tableName, results);
+			// adds id-to-text map to model, too
+			Map<String, String> idsToText = new HashMap<>();
+			for (Object o : results) {
+				idsToText.put(getObjectId(o), o.toString());
+			}
+			model.addAttribute(tableName+"Map", idsToText);
+		}
+        
+        return "";
+}
+
+
+
+
+    private String getObjectId(Object o) {
+		try {
+			Field f = o.getClass().getDeclaredField("id");
+			f.setAccessible(true);
+			return ""+f.get(o);
+		} catch (Exception e) {
+			log.warn("Error retrieving id of class " + o.getClass().getSimpleName(), e);
+			return null;
+		}
+	}
+
     /*
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
     public String submit(@ModelAttribute("Book") Book b, Model model) {
@@ -178,36 +245,20 @@ public class RootController {
     }
     
 */
-@Transactional
-@RequestMapping(value="/addBook", method = RequestMethod.POST)
-public String crearBook(
-        @RequestParam("autor") String autor,
-        @RequestParam("descripcion") String descripcion,
-        @RequestParam("fecha") String fecha,
-        @RequestParam("generos") String generos,
-        @RequestParam("ISBN") String ISBN,
-        @RequestParam("imag") String imag,
-        @RequestParam("saga") String saga,
-        @RequestParam("titulo") String titulo,
-        @RequestParam("volumen") String volumen,
-        HttpRequest request, HttpServletBean response,
-        Model model, 
-        HttpSession session){
 
-            Book b = new Book();
-            b.setAutor(autor);
-            b.setDescripcion(descripcion);
-            b.setFecha(fecha);
-            b.setGeneros(generos);
-            b.setISBN(ISBN);
-            b.setImag(imag);
-            b.setNumpaginas(500);
-            b.setPuntuación(5);
-            b.setSaga(saga);
-            b.setTitulo(titulo);
-            b.setVolumen(volumen);
-            return "redirect:/user-restaurant";
+
+/*
+@PostMapping
+public R<Book> addBook(@RequestBody Book books) {
+    try {
+        booksRepository.save(books);
+    } catch (Exception e) {
+        log.error("Creates a new books fails:" + e.getMessage());
+    }
+
+    return new R<Book>().success();
 }
+*/
 }
 
 /*
