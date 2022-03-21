@@ -15,19 +15,19 @@ VALUES (4, TRUE, 'USER', 'd',
 --insert books
 
 INSERT INTO Book (id, autor, descripcion, fecha, generos, imag, isbn, numpaginas, puntuación, saga, titulo, volumen)
-VALUES(1111, 'J. K. Rowling', 'Harry Potter se ha quedado huérfano y vive en casa de sus abominables tíos..', '2001', '["Juvenile Fiction"]', 
+VALUES(1111, 'J. K. Rowling', 'Harry Potter se ha quedado huérfano y vive en casa de sus abominables tíos..', '2001', 'Juvenile Fiction', 
 'http://books.google.com/books/content?id=p3QQjwEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api', '8498382661', 254, 5, 'Harry Potter', 'Harry Potter y la piedra filosofal', '1');
 
 INSERT INTO Book (id, autor, descripcion, fecha, generos, imag, isbn, numpaginas, puntuación, saga, titulo, volumen)
-VALUES(2111, 'J. K. Rowling', 'Tras derrotar una vez más a lord Voldemort, su siniestro enemigo en Harry Potter..', '1999', '["Juvenile Fiction"]',
+VALUES(2111, 'J. K. Rowling', 'Tras derrotar una vez más a lord Voldemort, su siniestro enemigo en Harry Potter..', '1999', 'Juvenile Fiction',
 'http://books.google.com/books/content?id=_-hnPrimlnYC&printsec=frontcover&img=1&zoom=5&source=gbs_api', '8478884955', 286, 4, 'Harry Potter', 'Harry Potter y la cámara secreta', '2');
 
 INSERT INTO Book (id, autor, descripcion, fecha, generos, imag, isbn, numpaginas, puntuación, saga, titulo, volumen)
-VALUES(31111, 'Sally Rooney', 'Después de Conversaciones entre amigos..', '2019-10-03', '["Fiction"]', 
+VALUES(31111, 'Sally Rooney', 'Después de Conversaciones entre amigos..', '2019-10-03', 'Fiction', 
 'http://books.google.com/books/content?id=QcWrDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', '8439736452', 256, 4, 'none', 'Gente normal', '1');
 
 INSERT INTO Book (id, autor, descripcion, fecha, generos, imag, isbn, numpaginas, puntuación, saga, titulo, volumen)
-VALUES(4111, 'Brandon Sanderson', 'La aclamada continuación de El camino de los reyes es, como el primer volumen..', '2015-08-27', '["Fiction"]', 
+VALUES(4111, 'Brandon Sanderson', 'La aclamada continuación de El camino de los reyes es, como el primer volumen..', '2015-08-27', 'Fiction,Juvenile Fiction', 
 'http://books.google.com/books/content?id=8w-YCgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', '0439064864', 1248, 4, 'El Archivo de las Tormentas', 'Palabras radiantes (El Archivo de las Tormentas 2)', '2');
 
 
@@ -47,16 +47,16 @@ VALUES (15, CURRENT_DATE, 'hola como estasw', 'saludos', 2);
 --insert physicalbooks
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(1, 1, 1, 2, '2022-03-01', null);
+VALUES(1, 1111, 1, 2, '2022-03-01', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(2, 3, 1, 2, '2022-03-02', null);
+VALUES(2, 31111, 1, 2, '2022-03-02', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(3, 4, 2, null, '2022-03-05', null);
+VALUES(3, 4111, 2, null, '2022-03-05', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(4, 4, 2, null, '2022-03-05', null);
+VALUES(4, 4111, 2, null, '2022-03-05', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(5, 2, 1, null, '2022-03-05', null);
+VALUES(5, 2111, 1, null, '2022-03-05', null);

@@ -1,5 +1,7 @@
 package es.ucm.fdi.iw.controller;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -106,8 +108,16 @@ public class RootController {
     // User u = entityManager.createNamedQuery("User.byUsername", User.class)
 
     @ModelAttribute("generos")
-    public List<String> getGenerosList() {
-        return entityManager.createQuery("SELECT DISTINCT b.generos FROM Book b", String.class).getResultList();
+    public HashSet<String> getGenerosList() {
+        
+        HashSet<String> listaGeneros = new HashSet<String>(); 
+        List<String> generos = entityManager.createQuery("SELECT DISTINCT b.generos FROM Book b", String.class).getResultList();
+        for (String g : generos){
+            String[] gen = g.split(",");
+            listaGeneros.addAll(Arrays.asList(gen));
+        }
+
+        return listaGeneros;
     }
 
     @ModelAttribute("posts")
