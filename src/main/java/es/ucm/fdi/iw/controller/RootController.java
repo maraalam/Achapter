@@ -136,8 +136,7 @@ public String crearBook(
         Model model){
             log.info("En funcion");
             Book b = new Book();
-            b.setId(10);
-
+            
             b.setAutor("Stephanie Meyer");
            
             b.setISBN("12345610");
@@ -146,12 +145,16 @@ public String crearBook(
             b.setPuntuación(5);
    
             b.setTitulo("Crepusculo");
-           
+            model.addAttribute("Book", b);
+            
            //Do Something
             
            //model.addAttribute(b);
+          // entityManager.getTransaction().begin();
            entityManager.persist(b);
+          // entityManager.getTransaction().commit();
 
+           /*
            for (String tableName : "Book".split(" ")) {
 			// queries all objects
 			List<?> results = entityManager.createQuery(
@@ -171,7 +174,8 @@ public String crearBook(
 				idsToText.put(getObjectId(o), o.toString());
 			}
 			model.addAttribute(tableName+"Map", idsToText);
-		}
+		    }
+            */
         
         return "";
 }

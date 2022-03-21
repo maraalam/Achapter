@@ -22,7 +22,7 @@ import java.util.List;
 })
 public class Book implements Transferable<Book.Transfer> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id; // primary key of the dataset
     private String ISBN;
     private String titulo;
