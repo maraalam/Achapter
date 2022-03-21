@@ -91,11 +91,13 @@ function go(url, method, data = {}, headers = false) {
         params.headers["X-CSRF-TOKEN"] = config.csrf.value;
     }
 
-    console.log(params)
+    for (var pair of params.body.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
     return fetch(url, params)
         .then(response => {
             const r = response;
-            
+            console.log(r.text);
             if (r.ok) {
                 return r.json().then(json => Promise.resolve(json));
             } else {

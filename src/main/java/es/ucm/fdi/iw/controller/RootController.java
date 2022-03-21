@@ -132,19 +132,19 @@ public class RootController {
  @PostMapping("/addBook")
  @ResponseBody
  @Transactional
-public String crearBook(
+public String crearBook(@RequestParam(required=false) String autor, @RequestParam(required=false) String titulo, @RequestParam(required=false) String isbn,
         Model model){
             log.info("En funcion");
             Book b = new Book();
             
-            b.setAutor("Stephanie Meyer");
+            b.setAutor(autor);
            
-            b.setISBN("12345610");
+            b.setISBN(isbn);
          
             b.setNumpaginas(500);
             b.setPuntuación(5);
    
-            b.setTitulo("Crepusculo");
+            b.setTitulo(titulo);
             model.addAttribute("Book", b);
             
            //Do Something
@@ -154,30 +154,10 @@ public String crearBook(
            entityManager.persist(b);
           // entityManager.getTransaction().commit();
 
-           /*
-           for (String tableName : "Book".split(" ")) {
-			// queries all objects
-			List<?> results = entityManager.createQuery(
-					"select x from " + tableName + " x").getResultList();
-			
-			// dumps them via log
-			log.info("Dumping table {}", tableName);
-			for (Object o : results) {
-				log.info("\t{}", o);
-			}
-			
-			// adds them to model
-			model.addAttribute(tableName, results);
-			// adds id-to-text map to model, too
-			Map<String, String> idsToText = new HashMap<>();
-			for (Object o : results) {
-				idsToText.put(getObjectId(o), o.toString());
-			}
-			model.addAttribute(tableName+"Map", idsToText);
-		    }
-            */
+   
+            entityManager.flush();  
         
-        return "";
+        return "{\"titulo\": " + titulo + "}";
 }
 
 
