@@ -48,7 +48,7 @@
          <!-- LIBROS MAS POPULARES -->
 
          
-	<form id = "bookForm" action="addBook" method="post">
+	<form id = "bookForm" th:action="addBook" method="post">
 	<table>
 		<tr>
 		<td><input id="autor" name="autor" placeholder="autor">
@@ -57,7 +57,7 @@
 		<td><button id="postBook" type="submit">Send</button>                               
 		</tr>
 	</table>
-	</form>
+    <button type="submit">enviar</button>	</form>
 
 
         <div class="products-box">
@@ -195,7 +195,7 @@
 
         console.log(url)
          //fd.append(url, autor, titulo, isbn);
-            go(url, 'POST', fd)
+            go(url, 'POST', fd, {})
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
             // hace falta recargar la pagina para q se vea
