@@ -128,12 +128,15 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
             Book b = new Book();
 
             b.setAutor(data.get("autor").asText());
-            b.setGeneros("Fiction");
+            b.setGeneros(data.get("categories").asText().trim());
             b.setISBN(data.get("isbn").asText());
          
             b.setImag(data.get("img").asText());
-            b.setNumpaginas(500);
-            b.setPuntuación(5);
+            log.info(data.get("pagecount").asInt());
+           
+            b.setNumpaginas(data.get("pagecount").asInt());
+            log.info(b.getNumpaginas());
+            b.setPuntuación(0);
    
             b.setTitulo(data.get("titulo").asText());
             model.addAttribute("Book", b);
@@ -148,6 +151,7 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
     @Transactional
     public String addToLibrary(@PathVariable long id, Model model, HttpSession session) {
 
+        log.info("En funcion GUARDAR EN LIBRERIA");
         User u = entityManager.find(
                 User.class, ((User)session.getAttribute("u")).getId());
         Book b = entityManager.find(Book.class, id);

@@ -51,26 +51,26 @@ $(document).ready(function() {
      */
      function displayResults(response) {
       outputList.innerHTML = '<div class="row special-list">';
-        for (var i = 0; i < 2/*response.items.length*/; i+=2) {
+        for (var i = 0; i < 1/*response.items.length*/; i+=1) {
           item = response.items[i];
           title1 = item.volumeInfo.title;
           author1 = item.volumeInfo.authors;
           publisher1 = item.volumeInfo.publisher;
           bookLink1 = item.volumeInfo.previewLink;
-          bookIsbn = item.volumeInfo.industryIdentifiers[1].identifier
+          bookIsbn = item.volumeInfo.industryIdentifiers[0].identifier
           bookImg1 = (item.volumeInfo.imageLinks) ? item.volumeInfo.imageLinks.thumbnail : placeHldr ;
-
-          item2 = response.items[i+1];
-          title2 = item2.volumeInfo.title;
-          author2 = item2.volumeInfo.authors;
-          publisher2 = item2.volumeInfo.publisher;
-          bookLink2 = item2.volumeInfo.previewLink;
-          bookIsbn2 = item2.volumeInfo.industryIdentifiers[1].identifier
-          bookImg2 = (item2.volumeInfo.imageLinks) ? item2.volumeInfo.imageLinks.thumbnail : placeHldr ;
-  
+          bookPageCount = item.volumeInfo.pageCount;
+          bookCategories="";
+          for(var j=0; j<item.volumeInfo.categories.length; j+=1 ){
+            bookCategories += item.volumeInfo.categories[j].trim();
+            if(j != item.volumeInfo.categories.length -1)
+              bookCategories+=";";
+          }
+          console.log(bookCategories);
+ 
           // in production code, item.text should have the HTML entities escaped.
           outputList.innerHTML += '<div class="row mt-4">' +
-                                  formatOutput(bookImg1, title1, author1, publisher1, bookLink1, bookIsbn) + '<br> <br> <br>  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> '+
+                                  formatOutput(bookImg1, title1, author1, publisher1, bookLink1, bookIsbn,bookPageCount, bookCategories) + '<br> <br> <br>  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> '+
                                 //  formatOutput(bookImg2, title2, author2, publisher2, bookLink2, bookIsbn2) +
                                   '</div>';
   
@@ -83,7 +83,7 @@ $(document).ready(function() {
      * @param bookImg title author publisher bookLink
      * @return htmlCard
      */
-     function formatOutput(bookImg, title, author, publisher, bookLink, bookIsbn) {
+     function formatOutput(bookImg, title, author, publisher, bookLink, bookIsbn ,bookPageCount, bookCategories) {
        // console.log(title + ""+ author +" "+ publisher +" "+ bookLink+" "+ bookImg)
        
 
@@ -103,6 +103,8 @@ $(document).ready(function() {
                       <h6 id ="publisher"> ${publisher}</h6>
                       <h6 hidden id ="isbn"> ${bookIsbn}</h6>
                       <img  id ="img" src="${bookImg}" class="card-img" alt="..." hidden>
+                      <h6 hidden id ="pagecount"> ${bookPageCount}</h6>
+                      <h6 hidden id ="categories"> ${bookCategories}</h6>
                       <button id="sendBook" type="submit" name="submit" onclick="return submitBook();">GuardarLista</button>
                       <br>
                       <br>

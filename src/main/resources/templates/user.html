@@ -54,7 +54,7 @@
                     <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Posts</a>
                 </li>
                 <li class="nav-item h6">
-                    <a id="biblioteca" class="nav-link" id="library-tab" data-toggle="tab" href="#library" role="tab" aria-controls="library" aria-selected="false">Biblioteca</a>
+                    <a  class="nav-link" id="library-tab" data-toggle="tab" href="#library" role="tab" aria-controls="library" aria-selected="false">Biblioteca</a>
                 </li>
                 <li class="nav-item h6">
                     <a class="nav-link" id="lends-tab" data-toggle="tab" href="#lends" role="tab" aria-controls="lends" aria-selected="false">Préstamos</a>
@@ -93,6 +93,7 @@
 
                 <!--libros-->
                 <div class="tab-pane fade" id="library" role="tabpanel" aria-labelledby="library-tab">
+                    <p>Biblioteca</p>
                     <div th:if="${user.library} != null">
                         <div class="row">
                             <div class="col-lg-3 col-md-6 special-grid" th:each="key: ${user.library.books.keySet()}">
