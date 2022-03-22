@@ -122,36 +122,29 @@ public class RootController {
     }
 
  @PostMapping("/addBook")
- @ResponseBody
  @Transactional
 public String crearBook(@RequestBody  JsonNode data, Model model){
             log.info("En funcion");
             Book b = new Book();
-            
+
             b.setAutor(data.get("autor").asText());
             b.setGeneros("Fiction");
             b.setISBN(data.get("isbn").asText());
          
+            b.setImag(data.get("img").asText());
             b.setNumpaginas(500);
             b.setPuntuación(5);
    
             b.setTitulo(data.get("titulo").asText());
             model.addAttribute("Book", b);
             
-           //Do Something
-            
-           //model.addAttribute(b);
-          // entityManager.getTransaction().begin();
+           
            entityManager.persist(b);
-          // entityManager.getTransaction().commit();
-
-
         
-        return "{\"titulo\": " + data.get("titulo").asText() + "}";
+        return "index";
     }
 
     @PostMapping("save/{id}")
-    @ResponseBody
     @Transactional
     public String addToLibrary(@PathVariable long id, Model model, HttpSession session) {
 
@@ -174,139 +167,40 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
         entityManager.persist(u);
 
         log.info("Book with id {} added to user {}'s library", id, u.getId());
-        return "{\"result\": \"ok.\"}";
-    }
-
-    private String getObjectId(Object o) {
-		try {
-			Field f = o.getClass().getDeclaredField("id");
-			f.setAccessible(true);
-			return ""+f.get(o);
-		} catch (Exception e) {
-			log.warn("Error retrieving id of class " + o.getClass().getSimpleName(), e);
-			return null;
-		}
-	}
-
-    /*
-    @RequestMapping(value = "/addBook", method = RequestMethod.POST)
-    public String submit(@ModelAttribute("Book") Book b, Model model) {
-       
-        if (result.hasErrors()) {
-            return "error";
-        }
-        
-        entityManager.createNamedQuery(
-            " insert into Book (id, autor, descripcion, fecha, generos, imag, isbn, numpaginas, puntuación, saga, titulo, volumen) values (8, 'Sally Rooney', 'Después de Conversaciones entre amigos..', '2019-10-03', '[Fiction]', 
-            'http://books.google.com/books/content?id=QcWrDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', '8439736452', 256, 4, 'none', 'Gente normal 2', '1')",  
-            Book.class);
-
         return "index";
     }
-    
-    public Optional<Book> save(Book book) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(book);
-            entityManager.getTransaction().commit();
-            return Optional.of(book);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-    
 
-    @PostMapping("/addBook")
-    public String submit(@ModelAttribute("Book") Book b, Model model) {
-       
-        model.addAttribute("Book", b);
-
-        System.out.println(b.getTitulo().toString());
-        log.info("Guardar libro");
-        entityManager.getTransaction().begin();
-        entityManager.persist(b);
-        entityManager.getTransaction().commit();
-
-        return "addBook";
-    }
-@GetMapping("/addBook")
-    public String submit2( @ModelAttribute("Book") Book b, Model model) {
-       
-        Book b = new Book();
-        b.setAutor("Daniela");
-        b.setTitulo("ksksks");
-        b.setId(1234);
-        model.addAttribute("Book",b );
-
-        return "redirect:/index";
-    }
-    
-*/
-
-
-/*
-@PostMapping
-public R<Book> addBook(@RequestBody Book books) {
-    try {
-        booksRepository.save(books);
-    } catch (Exception e) {
-        log.error("Creates a new books fails:" + e.getMessage());
-    }
-
-    return new R<Book>().success();
 }
-*/
-}
+    /*
+     @PostMapping("/addBook")
+ @ResponseBody
+ @Transactional
+   public String crearBook(@RequestParam(required=false) String autor, @RequestParam(required=false) String titulo, @RequestParam(required=false) String isbn,
+        Model model){
+            log.info("En funcion");
+            Book b = new Book();
+            
+            b.setAutor(autor);
+           
+            b.setISBN(isbn);
+         
+            b.setNumpaginas(500);
+            b.setPuntuación(5);
+   
+            b.setTitulo(titulo);
+            model.addAttribute("Book", b);
+            
+           //Do Something
+            
+           //model.addAttribute(b);
+          // entityManager.getTransaction().begin();
+           entityManager.persist(b);
+          // entityManager.getTransaction().commit();
 
-/*
-@PostMapping("/{id}")
-	
-	public String postUser(
-			HttpServletResponse response,
-			@PathVariable long id, 
-			@ModelAttribute User edited, 
-			@RequestParam(required=false) String pass2,
-			Model model, HttpSession session) throws IOException {
-
-        User requester = (User)session.getAttribute("u");
-        User target = null;
-        if (id == -1 && requester.hasRole(Role.ADMIN)) {
-            // create new user with random password
-            target = new User();
-            target.setPassword(encodePassword(generateRandomBase64Token(12)));
-            target.setEnabled(true);
-            entityManager.persist(target);
-            entityManager.flush(); // forces DB to add user & assign valid id
-            id = target.getId();   // retrieve assigned id from DB
-        }
+   
+            entityManager.flush();  
         
-        // retrieve requested user
-        target = entityManager.find(User.class, id);
-        model.addAttribute("user", target);
-		
-		if (requester.getId() != target.getId() &&
-				! requester.hasRole(Role.ADMIN)) {
-			throw new NoEsTuPerfilException();
-		}
-		
-		if (edited.getPassword() != null) {
-            if ( ! edited.getPassword().equals(pass2)) {
-                // FIXME: complain
-            } else {
-                // save encoded version of password
-                target.setPassword(encodePassword(edited.getPassword()));
-            }
-		}		
-		target.setUsername(edited.getUsername());
-		target.setFirstName(edited.getFirstName());
-		target.setLastName(edited.getLastName());
+        return "{\"titulo\": " + titulo + "}";
+}
 
-		// update user session so that changes are persisted in the session, too
-        if (requester.getId() == target.getId()) {
-            session.setAttribute("u", target);
-        }
-
-		return "user";
-	}	
     */

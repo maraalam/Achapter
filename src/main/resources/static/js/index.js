@@ -101,7 +101,8 @@ $(document).ready(function() {
                       <h5 id ="title" class="booktitle" "> ${title} </h5>
                       <h6 id ="author"> ${author}</h6>
                       <h6 id ="publisher"> ${publisher}</h6>
-                      <h6 id ="isbn"> ${bookIsbn}</h6>
+                      <h6 hidden id ="isbn"> ${bookIsbn}</h6>
+                      <img  id ="img" src="${bookImg}" class="card-img" alt="..." hidden>
                       <button id="sendBook" type="submit" name="submit" onclick="return submitBook();">GuardarLista</button>
                       <br>
                       <br>
@@ -123,25 +124,7 @@ $(document).ready(function() {
      }
 
  
-      document.querySelector("#sendBook").onclick = e => {
-       e.preventDefault();
-       let autor = document.querySelector("#autor");
-        let titulo = document.querySelector("#titulo");
-        let isbn = document.querySelector("#ISBN");
-        let url = document.querySelector("#autor").parentNode.action;
- 
-        console.log(url, autor, titulo, isbn);
-        postBook(titulo, url, "titulo").then(() =>{
-        document.getElementById("list-output").appendChild = '<h3>'+ titulo + '</h3>';
-    });
-   }
-  
-   function postBook(state, endpoint, name) {
-    console.log(name, endpoint, state);
-    let fd = new FormData();
-    fd.append(name, state);
-    return go(endpoint, "POST", fd, {})
-  }
+     
   });
 
   
