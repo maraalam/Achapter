@@ -166,7 +166,7 @@ form.search-form {
     padding: 5px 10px;
     display: block;
 }
-.mask-icon a.cart{
+.mask-icon .cart{  /* .mask-icon a.cart */
     background: #53ca6f;
     position: absolute;
     bottom: 0;
@@ -175,7 +175,7 @@ form.search-form {
     font-weight: 700;
     color: #ffffff;
 }
-.mask-icon a.cart:hover{
+.mask-icon .cart:hover{
     background: #010101;
     color: #ffffff;
 }

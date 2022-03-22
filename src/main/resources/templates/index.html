@@ -20,9 +20,6 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                     -->
                 </form>
-                
-              
-
             </div>
         </div>
         
@@ -40,25 +37,23 @@
                 <!-- card  -->
     
               </div>
-    
             </div>
-          </div>
         </div>
 
-         <!-- LIBROS MAS POPULARES -->
 
-         
 	<form id = "bookForm" th:action="addBook" method="post">
 	<table>
 		<tr>
 		<td><input id="autor" name="autor" placeholder="autor">
 		<td><input id="isbn" name="isbn" placeholder="isbn">
         <td><input id="titulo" name="titulo" placeholder="titulo">
-		<td><button id="postBook" type="submit">Send</button>                               
+		<td><button id="postBook" type="submit">Send</button>
 		</tr>
 	</table>
     <button type="submit">enviar</button>	</form>
 
+
+        <!-- LIBROS MAS POPULARES -->
 
         <div class="products-box">
             <div class="container">
@@ -69,8 +64,6 @@
                         </div>
                     </div>
                 </div>
-                
-                
 
                 <div class="row special-list">              
                     <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
@@ -78,15 +71,15 @@
                             <div class="box-img-hover">
                                 <div id="imgPortada" class="" ></div>
                                 <img th:src="${book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
-                                <div class="mask-icon">
-                                    <a class="cart" href="#">Agregar a mi biblioteca</a>
-                                </div>
+                                <form class="mask-icon" th:action="@{/save/__${book.id}__}" method="POST">
+                                    <button id="addToLib" class="cart" type="submit">Agregar a mi biblioteca</button>
+                                </form>
                             </div>
-                            <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
+                            <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
                                 <div class="why-text">
                                     
-                                    <h3  th:text="${book.titulo}" >Nombre del libro</h3>
-                                    <h5  th:text="${book.autor}"  > Por Autor</h5>
+                                    <h3 th:text="${book.titulo}" >Nombre del libro</h3>
+                                    <h5 th:text="${book.autor}" > Por Autor</h5>
                                     <div class="product-rating mb-2">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>

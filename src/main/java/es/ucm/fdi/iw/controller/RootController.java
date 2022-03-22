@@ -1,42 +1,22 @@
 package es.ucm.fdi.iw.controller;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
-import java.lang.reflect.Field;
-import es.ucm.fdi.iw.model.Post;
-import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.HttpServletBean;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
-//import es.ucm.fdi.iw.Repositories.BookRepository;
-import es.ucm.fdi.iw.model.Book;
-import es.ucm.fdi.iw.model.Library;
 
 /**
  *  Non-authenticated requests only.
@@ -107,7 +87,6 @@ public class RootController {
         return entityManager.createQuery("select b from Book b", Book.class).getResultList();
     }
 
-
     // User u = entityManager.createNamedQuery("User.byUsername", User.class)
 
     @ModelAttribute("generos")
@@ -166,13 +145,37 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
            entityManager.persist(b);
           // entityManager.getTransaction().commit();
 
-   
+
         
         return "{\"titulo\": " + data.get("titulo").asText() + "}";
-}
+    }
 
+    @PostMapping("save/{id}")
+    @ResponseBody
+    @Transactional
+    public String addToLibrary(@PathVariable long id, Model model, HttpSession session) {
 
+        User u = entityManager.find(
+                User.class, ((User)session.getAttribute("u")).getId());
+        Book b = entityManager.find(Book.class, id);
 
+        if (u.getLibrary() == null) {
+            Library lib = new Library(u);
+//            lib.setOwner(u);
+            u.setLibrary(lib);
+            entityManager.persist(lib);
+        }
+        Progreso pro = new Progreso();
+        pro.setBook(b);
+        pro.setUser(u);
+        entityManager.persist(pro);
+        entityManager.flush();
+        u.addToLibrary(b, pro);
+        entityManager.persist(u);
+
+        log.info("Book with id {} added to user {}'s library", id, u.getId());
+        return "{\"result\": \"ok.\"}";
+    }
 
     private String getObjectId(Object o) {
 		try {

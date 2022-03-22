@@ -55,7 +55,7 @@ public class User implements Transferable<User.Transfer> {
 
     //Libros en progreso
     @OneToOne
-    private Library library;
+    private Library library = new Library(this);
 
 	@OneToMany
 	@JoinColumn(name = "sender_id")
@@ -90,6 +90,10 @@ public class User implements Transferable<User.Transfer> {
     public boolean hasRole(Role role) {
         String roleName = role.name();
         return Arrays.asList(roles.split(",")).contains(roleName);
+    }
+
+    public void addToLibrary(Book b, Progreso p) {
+        library.put(b, p);
     }
 
     @Getter
