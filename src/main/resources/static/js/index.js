@@ -41,6 +41,9 @@ $(document).ready(function() {
         $("#search-box").val(""); //limpieza del search box
      });
 
+     
+   
+
 
      /*
      * function to display result in index.html
@@ -48,7 +51,7 @@ $(document).ready(function() {
      */
      function displayResults(response) {
       outputList.innerHTML = '<div class="row special-list">';
-        for (var i = 0; i < response.items.length; i+=2) {
+        for (var i = 0; i < 2/*response.items.length*/; i+=2) {
           item = response.items[i];
           title1 = item.volumeInfo.title;
           author1 = item.volumeInfo.authors;
@@ -67,8 +70,8 @@ $(document).ready(function() {
   
           // in production code, item.text should have the HTML entities escaped.
           outputList.innerHTML += '<div class="row mt-4">' +
-                                  formatOutput(bookImg1, title1, author1, publisher1, bookLink1, bookIsbn) +
-                                  formatOutput(bookImg2, title2, author2, publisher2, bookLink2, bookIsbn2) +
+                                  formatOutput(bookImg1, title1, author1, publisher1, bookLink1, bookIsbn) + '<br> <br> <br>  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> '+
+                                //  formatOutput(bookImg2, title2, author2, publisher2, bookLink2, bookIsbn2) +
                                   '</div>';
   
           console.log(outputList);
@@ -82,6 +85,8 @@ $(document).ready(function() {
      */
      function formatOutput(bookImg, title, author, publisher, bookLink, bookIsbn) {
        // console.log(title + ""+ author +" "+ publisher +" "+ bookLink+" "+ bookImg)
+       
+
        var viewUrl = 'book.html?isbn='+bookIsbn; //constructing link for bookviewer
        var htmlCard = `<div class="col-lg-6">
          <div class="card" style="">
@@ -93,35 +98,22 @@ $(document).ready(function() {
                <div class="card-body">
 
                  <div class="why-text">
-                                            <h5 class="booktitle" "> ${title} </h5>
-                                            <h6 > ${author}</h6>
-                                            <h6> ${publisher}</h6>
-                                        </div>
-                
-                                  <form action="addBook" method="post" >
-                  
-                                        <input type="text" id="autor" name="autor" placeholder="autor"  required>
-                                            <input type="text" id="descripcion" name="descripcion" placeholder="Descripcion"  required>
-                                            <input type="text" id="fecha" name="fecha" placeholder="fecha"  required>
-                                            <input type="text" id="generos" name="generos" placeholder="Generos"  required>
-                                            <input type="text" id="ISBN" name="ISBN" placeholder="ISBN"  required>
-                                            <input type="text" id="imag" name="imag" placeholder="imag"  required>
-                                            <input type="text" id="saga" name="saga" placeholder="saga"  required>
-                                            <input type="text" id="titulo" name="titulo" placeholder="titulo"  required>
-                                            <input type="text" id="volumen" name="volumen" placeholder="volumen"  required>
-                                     
-                                          
-                                  
-                                      <button id="sendBook" type="submit" name="submit">Crear</button>
-                                    
-            
-                                  </form>
+                      <h5 id ="title" class="booktitle" "> ${title} </h5>
+                      <h6 id ="author"> ${author}</h6>
+                      <h6 id ="publisher"> ${publisher}</h6>
+                      <h6 id ="isbn"> ${bookIsbn}</h6>
+                      <button id="sendBook" type="submit" name="submit" onclick="return submitBook();">GuardarLista</button>
+                      <br>
+                      <br>
+                  </div>
 
                </div>
              </div>
            </div>
          </div>
        </div> <br>`
+
+      
        return htmlCard;
      }
   

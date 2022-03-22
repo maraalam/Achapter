@@ -9,6 +9,8 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.lang.reflect.Field;
 import es.ucm.fdi.iw.model.Post;
 import es.ucm.fdi.iw.model.User;
@@ -143,19 +145,18 @@ public class RootController {
  @PostMapping("/addBook")
  @ResponseBody
  @Transactional
-public String crearBook(@RequestParam(required=false) String autor, @RequestParam(required=false) String titulo, @RequestParam(required=false) String isbn,
-        Model model){
+public String crearBook(@RequestBody  JsonNode data, Model model){
             log.info("En funcion");
             Book b = new Book();
             
-            b.setAutor(autor);
-           
-            b.setISBN(isbn);
+            b.setAutor(data.get("autor").asText());
+            b.setGeneros("Fiction");
+            b.setISBN(data.get("isbn").asText());
          
             b.setNumpaginas(500);
             b.setPuntuación(5);
    
-            b.setTitulo(titulo);
+            b.setTitulo(data.get("titulo").asText());
             model.addAttribute("Book", b);
             
            //Do Something
@@ -166,9 +167,8 @@ public String crearBook(@RequestParam(required=false) String autor, @RequestPara
           // entityManager.getTransaction().commit();
 
    
-            entityManager.flush();  
         
-        return "{\"titulo\": " + titulo + "}";
+        return "{\"titulo\": " + data.get("titulo").asText() + "}";
 }
 
 

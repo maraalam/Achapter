@@ -91,13 +91,11 @@ function go(url, method, data = {}, headers = false) {
         params.headers["X-CSRF-TOKEN"] = config.csrf.value;
     }
 
-    for (var pair of params.body.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
+    
     return fetch(url, params)
         .then(response => {
             const r = response;
-            console.log(r.text);
+            
             if (r.ok) {
                 return r.json().then(json => Promise.resolve(json));
             } else {
@@ -221,3 +219,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // 	 document.addEventListener("DOMContentLoaded", () => { /* your-code-here */ });
     //   (assuming you do not care about order-of-execution, all such handlers will be called correctly)
 });
+
+function submitBook() {
+   let b = document.getElementById("sendBook");
+
+    const parent  = b.parentElement;
+    let request = {titulo: "", autor: "", isbn: ""};
+    for (var i = 0; i < parent.childNodes.length; i++) {
+        var inner = parent.childNodes[i];
+        console.log(inner, request);
+        if (inner.id === 'title') {
+            request.titulo = inner.innerText;
+        }
+        else if(inner.id === 'author') {
+            request.autor = inner.innerText;
+        }
+        else if(inner.id === 'isbn') {
+            request.isbn = inner.innerText;
+        }
+        console.log(inner, request);
+    }
+
+        go('addBook', 'POST', request )
+            .then(d => console.log("happy", d))
+            .catch(e => console.log("sad", e))
+    
+
+   return true;
+}
+
