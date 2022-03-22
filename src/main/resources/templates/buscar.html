@@ -28,9 +28,9 @@
                     <div class="d-flex flex-row">        
                         <div class="ml-auto mr-lg-4">
                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
-                                    <option value="libro"><b>Titulo</b></option>
-                                    <option value="libro"><b>ISBN</b></option>
-                                    <option value="libro"><b>Autor</b></option>
+                                    <option value="titulo"><b>Titulo</b></option>
+                                    <option value="isbn"><b>ISBN</b></option>
+                                    <option value="autor"><b>Autor</b></option>
                                     <option value="usuario"><b>Usuarios</b></option>
                                 </select> </div>
                         </div>
@@ -113,7 +113,7 @@
             <div class="col-md-9">
                 <section>
                     <div class="input-group mb-n2 border rounded-pill">
-                        <input id="search-text" onkeyup="buscarLibro()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
+                        <input id="search-text" onkeyup="buscar()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
                         <div class="input-group-append border-0">
                         <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                         </div>
@@ -146,7 +146,8 @@
                                         <div class="why-text">
                                             
                                             <h5 class="booktitle" th:text="${book.titulo}" >Nombre del libro</h5>
-                                            <h6 th:text="${book.autor}"  > Por Autor</h6>
+                                            <h5 class="bookisbn" th:text="${book.ISBN}" hidden>isbn</h5>
+                                            <h6 th:text="${book.autor}"> Por Autor</h6>
                                             <div class="product-rating mb-2">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
@@ -170,19 +171,44 @@
     
     <script th:inline="javascript">
         function changeSearch() {
-            var result = null, tmp = [];
+            //https://stackoverflow.com/questions/4842590/how-to-run-a-function-when-the-page-is-loaded
+            var result_query = null, result_type, tmp = [];
             location.search
                 .substr(1)
                 .split("&")
                 .forEach(function (item) {
                 tmp = item.split("=");
-                if (tmp[0] === "query") result = decodeURIComponent(tmp[1]);
+                if (tmp[0] === "query") result_query = decodeURIComponent(tmp[1]);
                 });
-                document.getElementById("search-text").value = result;
-                buscarLibro();
+                document.getElementById("search-text").value = result_query;
+
+                location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === "type") result_type = decodeURIComponent(tmp[1]);
+                });
+                
+                var types = document.querySelector('#sorting option[value='+result_type+']');
+                types.selected = "selected";
+            buscar();
         }
         window.onload = changeSearch;
         
+
+        function buscar(){
+            var e = document.getElementById("sort");
+            
+            var result_type = e[e.selectedIndex].value;
+            if(result_type.localeCompare("titulo")==0){
+                buscarLibro();
+            }
+            else if(result_type.localeCompare("isbn")==0){
+                buscarISBN();
+            }
+        }
+
         function buscarLibro() {
             console.log("getting books...");
             var search = document.getElementById("search-text").value;
@@ -190,11 +216,31 @@
 
             for(let r of rows){
                 let titulo = r.getElementsByClassName("booktitle")[0].innerHTML;
-                console.log(titulo)
+                console.log(titulo);
                 if (search === ""){
                     r.style.display = "block";
                 }
                 else if (titulo.toLowerCase().search(search.toLowerCase())==-1){
+                    r.style.display = "none";
+                }
+                else{
+                    r.style.display = "block";
+                }
+            }
+        }
+
+        function buscarISBN(){
+            console.log("getting ISBN...");
+            var search = document.getElementById("search-text").value;
+            var rows = document.getElementsByClassName("best-seller");
+
+            for(let r of rows){
+                let isbn = r.getElementsByClassName("bookisbn")[0].innerHTML;
+                console.log(isbn);
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if (isbn.toLowerCase().search(search.toLowerCase())!=0){
                     r.style.display = "none";
                 }
                 else{

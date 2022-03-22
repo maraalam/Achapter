@@ -105,6 +105,7 @@ public class RootController {
         return entityManager.createQuery("select b from Book b", Book.class).getResultList();
     }
 
+
     // User u = entityManager.createNamedQuery("User.byUsername", User.class)
 
     @ModelAttribute("generos")

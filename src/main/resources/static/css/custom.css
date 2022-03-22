@@ -422,11 +422,19 @@ nav {
 .fa-user-o,
 .fa-shopping-cart {
     font-size: 20px;
-    padding: 4px
+    padding: 4px;
 }
 
 .form-group {
     margin-bottom: 5px
+}
+
+.type_search{
+    color: #6c757d;
+    opacity: 1;
+    background-color: #ffffff;
+    border-color: #bcc9d4;
+
 }
 
 label {

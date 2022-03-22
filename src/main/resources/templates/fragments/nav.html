@@ -39,8 +39,15 @@
                     </li>
 
                     <form class="nav-item form-inline search-form align-self-left mx-2" th:action="@{/buscar}" action="/buscar" method:"get">
+                    
+
+                        <select id="type_search" class="type_search" name="type">
+                            <option class="dropdown-item" active value="titulo">Titulo</option>
+                            <option class="dropdown-item" value="isbn">IBSN</option>
+                        </select>
+                        
                         <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
-                        <button class="btn btn-outline-success" type="submit"  >Search</button>
+                        <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                         
                     <th:block th:if="${session.u}">
