@@ -169,6 +169,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     
     <script th:inline="javascript">
+        function changeSearch() {
+            var result = null, tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === "query") result = decodeURIComponent(tmp[1]);
+                });
+                document.getElementById("search-text").value = result;
+                buscarLibro();
+        }
+        window.onload = changeSearch;
+        
         function buscarLibro() {
             console.log("getting books...");
             var search = document.getElementById("search-text").value;
