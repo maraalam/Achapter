@@ -20,8 +20,7 @@
                             <section id="leftMessages">
                                 <ul class="list-table" >
                                     <div class="box-img-hover" style="float:left">
-                                        <img src="https://i.pinimg.com/564x/1e/60/15/1e60154f5b08660131e3268873d7927c.jpg" width="250" height="400" >
-                                        
+                                        <img th:src="${searchBookById.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" width="250" height="400"/>
                                     </div>
                                    
             
@@ -41,34 +40,22 @@
                             </a>
                             </section>
                             <section id="rightMessages" >
-                                <h2> Libro</h2>
-                                <h4> Autor del libro</h4>
-                                <h5> Fecha de publicación</h5>
-                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                <h2 th:text="${searchBookById.titulo}" >Nombre del libro</h2>
+                                <h4 th:text="${searchBookById.autor}" > Por Autor</h4>
+                                <h5 th:text="${searchBookById.fecha}" > Fecha publicación</h5>
+                                
+                                <p th:text="${searchBookById.descripcion}" class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
                             
                                                             <!-- Géneros más buscados  -->
                                     <div class="products-box">
                                         <div class="container">
-
+                                            
                                             <div class="row special-list">
-                                                <div class="col-lg-4 col-md-6 ">
+                                                <div th:each="genero,count : ${#strings.arraySplit(searchBookById.generos, ',')}" class="col-lg-4 col-md-6 ">
                                                     <div class="products-single fix">
-                                                        <button type="button" class="btn btn-genre"> Género 1</button>
+                                                        <button type="button" th:text="${#strings.arraySplit(genero,',')[0]}"class="btn btn-genre"> Género 1</button>
                                                     </div>
-                                                </div>
-                                
-                                                <div class="col-lg-4 col-md-6 ">
-                                                    <div class="products-single fix">
-                                                        <button type="button" class="btn btn-genre"> Género 2</button>
-                                                    </div>
-                                                </div>
-                                
-                                                <div class="col-lg-4 col-md-6 ">
-                                                    <div class="products-single fix">
-                                                        <button type="button" class="btn btn-genre"> Género 3</button>
-                                                    </div>
-                                                </div>
-                                                
+                                                </div>          
                                             </div>
                                         </div>
                                     </div>

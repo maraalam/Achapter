@@ -63,7 +63,7 @@
                                     <button id="addToLib" class="cart" type="submit">Agregar a mi biblioteca</button>
                                 </form>
                             </div>
-                            <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
+                            <a th:href="@{/libro/__${book.id}__}" href="/libro" class="text-decoration-none link-dark">
                                 <div class="why-text">
                                     
                                     <h3 th:text="${book.titulo}" >Nombre del libro</h3>
@@ -97,7 +97,7 @@
                 
     
                 <div class="row special-list">
-                    <div  th:each="genero: ${generos}" class="col-lg-4 col-md-6 ">
+                    <div th:each="genero: ${generos}" class="col-lg-4 col-md-6 ">
                         <div class="products-single fix">
                             <button th:text="${genero}"  type="button" class="btn btn-genre"> Género 1</button>
                         </div>

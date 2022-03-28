@@ -70,8 +70,10 @@ public class RootController {
         return "mensajeria";
     }
 
-    @GetMapping("/libro")
-    public String libro(Model model) {
+    @GetMapping("/libro/{id}")
+    public String libro(Model model, @PathVariable long id) {
+        log.info("buscando libro " + id);
+        model.addAttribute("searchBookById", entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult());
         return "libro";
     }
 
