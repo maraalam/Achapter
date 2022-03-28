@@ -41,18 +41,6 @@
         </div>
 
 
-	<form id = "bookForm" th:action="addBook" method="post">
-	<table>
-		<tr>
-		<td><input id="autor" name="autor" placeholder="autor">
-		<td><input id="isbn" name="isbn" placeholder="isbn">
-        <td><input id="titulo" name="titulo" placeholder="titulo">
-		<td><button id="postBook" type="submit">Send</button>
-		</tr>
-	</table>
-    <button type="submit">enviar</button>	</form>
-
-
         <!-- LIBROS MAS POPULARES -->
 
         <div class="products-box">
@@ -154,3 +142,17 @@
 </body>
 
 </html>
+
+<!-- EJEMPLO DE FORMULARIO - EN ROOT CONTROLLERS SE RECOGE CON REQUEST PARAM
+	<form id = "bookForm" th:action="addBook" method="post">
+	<table>
+		<tr>
+		<td><input id="autor" name="autor" placeholder="autor">
+		<td><input id="isbn" name="isbn" placeholder="isbn">
+        <td><input id="titulo" name="titulo" placeholder="titulo">
+		<td><button id="postBook" type="submit">Send</button>
+		</tr>
+	</table>
+    <button type="submit">enviar</button>	</form>
+
+-->

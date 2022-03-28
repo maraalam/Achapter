@@ -17,5 +17,10 @@ class ExternalRunner {
     @Karate.Test
     Karate testSearch() {
         return Karate.run("search").relativeTo(getClass());
+    }
+    
+    @Karate.Test
+    Karate testBook() {
+        return Karate.run("book").relativeTo(getClass());
     } 
 }

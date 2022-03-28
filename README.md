@@ -2,8 +2,13 @@
 
 Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuadas, limitadas en funcionamiento y complicadas de utilizar. ¿Quieres encontrar tu próxima lectura, o tal vez compartir con tus amigos el progreso de tu actual lectura? ¿Tienes una lista de libros pendientes de la que siempre te olvidas? Proponemos una nueva aplicación amigable y divertida en la que encontrar tus libros favoritos y expresarte en una comunidad con tus mismos intereses.
 
+## Flujo Principal y adicionales
+- Guardar un libro en la biblioteca de un usuario
+- Buscar libros con el buscador dentro de la propia BD (Search en el Nav Bar)
+
+
 ## USO DE AJAX
-1. Se usa para acceder a la API de Google. La barra de búsqueda en la página  principal de la web busca libros en base a la data que introduzcas haciendo solicitudes a la api de Google (index.js): 
+1. Se usa para acceder a la API de Google. La barra de búsqueda en la página  principal de la web busca libros en base a la data que introduzcas haciendo solicitudes a la api de Google. El libro luego se puede guardar en la BD (index.js): 
 
 Índice [Achapter: índice](http://localhost:8080/)
 

@@ -348,6 +348,8 @@ public class UserController {
 		return "{\"result\": \"state updated.\"}";
 	}	
 
+	
+
 	/*@PostMapping("/{id}/photo")
     @ResponseBody
     public String postPhoto(@RequestParam("photo") MultipartFile photo,@PathVariable("id") String id){

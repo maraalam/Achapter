@@ -224,7 +224,7 @@ function submitBook() {
    let b = document.getElementById("sendBook");
 
     const parent  = b.parentElement;
-    let request = {titulo: "", autor: "", isbn: ""};
+    let request = {titulo: "", autor: "", isbn: "", img: "", pagecount: "", categories: ""};
     for (var i = 0; i < parent.childNodes.length; i++) {
         var inner = parent.childNodes[i];
         console.log(inner, request);
@@ -237,7 +237,17 @@ function submitBook() {
         else if(inner.id === 'isbn') {
             request.isbn = inner.innerText;
         }
-        console.log(inner, request);
+        else if(inner.id === 'img') {
+            request.img = inner.currentSrc;
+        }
+        else if(inner.id === 'pagecount') {
+            request.pagecount = inner.innerText;
+            request.pagecount =  request.pagecount.replace(" ","");
+        }
+        else if(inner.id === 'categories') {
+            request.categories = inner.innerText;
+        }
+       
     }
 
         go('addBook', 'POST', request )
