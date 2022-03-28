@@ -150,10 +150,10 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
         return "{\"titulo\": " + data.get("titulo").asText() + "}";
     }
 
-    @PostMapping("save/{id}")
+    @PostMapping("save/{tipoLibreria}/{id}")
     @ResponseBody
     @Transactional
-    public String addToLibrary(@PathVariable long id, Model model, HttpSession session) {
+    public String addToLibrary(@PathVariable long id, @PathVariable String tipoLibreria, Model model, HttpSession session, String libreria) {
 
         User u = entityManager.find(
                 User.class, ((User)session.getAttribute("u")).getId());
@@ -170,7 +170,7 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
         pro.setUser(u);
         entityManager.persist(pro);
         entityManager.flush();
-        u.addToLibrary(b, pro);
+        u.addToLibrary(b, pro, tipoLibreria);
         entityManager.persist(u);
 
         log.info("Book with id {} added to user {}'s library", id, u.getId());

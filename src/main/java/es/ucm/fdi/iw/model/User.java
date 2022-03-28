@@ -92,8 +92,8 @@ public class User implements Transferable<User.Transfer> {
         return Arrays.asList(roles.split(",")).contains(roleName);
     }
 
-    public void addToLibrary(Book b, Progreso p) {
-        library.put(b, p);
+    public void addToLibrary(Book b, Progreso p, String libreria) {
+        library.put(b, p,libreria);
     }
 
     @Getter
