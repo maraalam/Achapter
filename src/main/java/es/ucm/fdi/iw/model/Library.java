@@ -11,7 +11,7 @@ import java.util.Map;
 public class Library {
 
     public static final String terminado = "terminado";
-    public static final String quieroLeer = "quiero_leer";
+    public static final String quieroLeer = "quieroLeer";
     public static final String leyendo = "leyendo";
     public static final String abandonados = "abandonados";
     public static final String pausados = "pausados";

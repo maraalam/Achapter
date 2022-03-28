@@ -147,13 +147,14 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
         return "index";
     }
 
-    
+
     @PostMapping("save/{tipoLibreria}/{id}")
     @ResponseBody
     @Transactional
-    public String addToLibrary(@PathVariable long id, @PathVariable String tipoLibreria, Model model, HttpSession session, String libreria) {
+    public String addToLibrary(@PathVariable String tipoLibreria, @PathVariable long id, Model model, HttpSession session, String libreria) {
 
         log.info("En funcion GUARDAR EN LIBRERIA");
+        log.info("Libreria:" + tipoLibreria);
         User u = entityManager.find(
                 User.class, ((User)session.getAttribute("u")).getId());
         Book b = entityManager.find(Book.class, id);

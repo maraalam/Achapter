@@ -93,20 +93,20 @@
 
                 <!--libros-->
                 <div class="tab-pane fade" id="library" role="tabpanel" aria-labelledby="library-tab">
-                    <p>Biblioteca</p>
+                    <p>Quiero leer</p>
                     <div th:if="${user.library} != null">
                         <div class="row">
-                            <div class="col-lg-3 col-md-6 special-grid" th:each="key: ${user.library.books.keySet()}">
+                            <div class="col-lg-3 col-md-6 special-grid" th:each="key: ${user.library.books_quiero_leer.keySet()}">
                                 <div class="products-single fix">
                                     <div class="box-img-hover">
                                         <div id="imgPortada" class="" ></div>
-                                        <img th:src="${user.library.books.get(key).book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
+                                        <img th:src="${user.library.books_quiero_leer.get(key).book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
                                     </div>
                                     <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
                                         <div class="why-text">
 
-                                            <h3 th:text="${user.library.books.get(key).book.titulo}" >Nombre del libro</h3>
-                                            <h5 th:text="${user.library.books.get(key).book.autor}" > Por Autor</h5>
+                                            <h3 th:text="${user.library.books_quiero_leer.get(key).book.titulo}">Nombre del libro</h3>
+                                            <h5 th:text="${user.library.books_quiero_leer.get(key).book.autor}">Por Autor</h5>
                                             <div class="product-rating mb-2">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
