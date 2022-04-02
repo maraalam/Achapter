@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.User.Role;
 
 /**
  *  Non-authenticated requests only.
@@ -59,6 +61,11 @@ public class RootController {
         return "posts";
     }
 
+    @GetMapping("/usuarios")
+    public String usuarios(Model model) {
+        return "usuarios";
+    }
+
     @GetMapping("/mensajeria")
     public String mensajeria(Model model, HttpSession session) {
         model.addAttribute("friends",
@@ -77,16 +84,43 @@ public class RootController {
     }
 
     @GetMapping("/buscar")
-    public String buscar(Model model, @RequestParam("query")String consulta) {
-        log.info("buscando" + consulta);
-        model.addAttribute("searchBook", entityManager.createNamedQuery("Book.byTitulo", Book.class).setParameter("titulo", consulta).getResultList());
+    public String buscar(Model model, @RequestParam("query")String consulta, @RequestParam("type")String tipo) {
+        log.info("buscando " + consulta + " " + tipo);
+        if(consulta.equals("titulo"))
+            model.addAttribute("searchBook", entityManager.createNamedQuery("Book.byTitulo", Book.class).setParameter("titulo", consulta).getResultList());
+        else if(consulta.equals("usuarios")){
+
+        User u = entityManager.createNamedQuery("User.byUsername", User.class)
+                    .setParameter("username", consulta)
+                    .getSingleResult();
+            
+            model.addAttribute("searchUser", u);
+        }
+        
+        //else if(consulta.equals("isbn"))
+         //   model.addAttribute("searchBook", entityManager.createNamedQuery("Book.byISBN", Book.class).setParameter("ISBN", consulta).getResultList());
         return "buscar";
     }
+/*
+    @GetMapping("/buscar_usuarios")
+    public String buscarUsuarios(Model model, @RequestParam("query")String consulta, @RequestParam("type")String tipo) {
+        log.info("buscando " + consulta + " " + tipo);
+      
+        
+        User u = entityManager.createNamedQuery("User.byUsername", User.class)
+                    .setParameter("username", consulta)
+                    .getSingleResult();
+            
+            model.addAttribute("usuarios", u);
 
+        return "usuarios";
+    }
+*/
     @ModelAttribute("books")
     public List<Book> getBooksList() {
         return entityManager.createQuery("select b from Book b", Book.class).getResultList();
     }
+
 
     // User u = entityManager.createNamedQuery("User.byUsername", User.class)
 
@@ -125,7 +159,7 @@ public class RootController {
  @PostMapping("/addBook")
  @Transactional
 public String crearBook(@RequestBody  JsonNode data, Model model){
-            log.info("En funcion");
+            log.info("En funcion crearBook");
             Book b = new Book();
 
             b.setAutor(data.get("autor").asText());
@@ -178,7 +212,45 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
         return "index";
     }
 
+    
+    @ModelAttribute("usuarios")
+    public List<User> getUsuariosList() {
+        log.info("Obteniendo usuarios");
+        return entityManager.createQuery("select u FROM User u", User.class).getResultList();
+    }
+    
+    @PostMapping("/addFollow")
+    @Transactional
+    public String addFollow(@RequestBody  JsonNode data, Model model){
+                log.info("En funcion addFollow: " + data.get("usernameFollowed").asText() + " quiere seguir a " + data.get("usernameFollowing").asText());
+                User usernameFollowed = entityManager.createNamedQuery("User.byUsername", User.class)
+                .setParameter("username", data.get("usernameFollowed").asText())
+                .getSingleResult();
+                User usernameFollowing = entityManager.createNamedQuery("User.byUsername", User.class)
+                .setParameter("username", data.get("usernameFollowing").asText())
+                .getSingleResult();
+                
+
+                usernameFollowed.getFollowers().add(usernameFollowing);
+                usernameFollowing.getFollowed().add(usernameFollowed);
+               // model.addAttribute("Book", b);
+                
+            
+            entityManager.persist(usernameFollowed);
+            entityManager.persist(usernameFollowing);
+            return "index";
+        }
+
 }
+
+/*
+        List<Usuario> l = new ArrayList<Usuario>();
+        for(User u : entityManager.createQuery("select u FROM User u", User.class).getResultList()){
+            log.info(new Usuario(u.getUsername(), u.getFirstName() + " " + u.getLastName(), u.getAbout()));
+            l.add(new Usuario(u.getUsername(), u.getFirstName() + " " + u.getLastName(), u.getAbout()));
+        }
+        */
+
     /*
      @PostMapping("/addBook")
  @ResponseBody

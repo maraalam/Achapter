@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-// return entityManager.createQuery("select b from Book b", Book.class).getResultList(); 
 
 @Entity
 @Data

@@ -348,7 +348,9 @@ public class UserController {
 		return "{\"result\": \"state updated.\"}";
 	}	
 
-	
+
+
+
 
 	/*@PostMapping("/{id}/photo")
     @ResponseBody

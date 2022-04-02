@@ -44,6 +44,7 @@
                         <select id="type_search" class="type_search" name="type">
                             <option class="dropdown-item" active value="titulo">Titulo</option>
                             <option class="dropdown-item" value="isbn">IBSN</option>
+                            
                         </select>
                         
                         <input id=busquedaNav class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
@@ -65,10 +66,16 @@
                             </button>
                         </li>
 
+                        
+                            <a class="nav-item align-self-left me-4" th:href="@{/usuarios}" href="/"> 
+                                <img th:src="@{/img/read.png}" src="/img/read.png" alt="logo users" width="45" height="45" class="d-inline-block align-text-top">
+                            </a>
+                        
+
                         <li class="nav-item dropdown align-self-left">
                             <a class="nav-link dropdown-toggle pfp" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="iwthumb rounded-2" th:src="@{/user/{id}/pic(id=${session.u.id})}">
-                                <span th:text="${session.u.username}">Pepe</span>
+                                <span id="idUsuario" th:text="${session.u.username}">Pepe</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" th:href="@{/user/{id}#posts(id=${session.u.id})}">Mis Posts</a></li>

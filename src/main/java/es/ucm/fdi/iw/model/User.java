@@ -103,6 +103,11 @@ public class User implements Transferable<User.Transfer> {
         private String username;
 		private int totalReceived;
 		private int totalSent;
+        public Transfer(User u) {
+            this.id = u.getId();
+            this.username=u.getUsername();
+            
+        }
     }
 
 	@Override

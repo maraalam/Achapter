@@ -1,15 +1,15 @@
 -- insert admin (username a, password aa)
-INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (1, TRUE, 'ADMIN,USER', 'a',
+INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
+VALUES (1, 'Le gusta fantasia', TRUE, 'Ana', 'Perez', 'ADMIN,USER', 'a',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
-INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (2, TRUE, 'USER', 'b',
+INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
+VALUES (2, 'Le gusta romance',TRUE, 'Barbara', 'Perez', 'USER', 'b',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
-INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (3, TRUE, 'USER', 'c',
+INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
+VALUES (3, 'Le gusta terror',TRUE, 'Clara', 'Perez', 'USER', 'c',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
-INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (4, TRUE, 'USER', 'd',
+INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
+VALUES (4, 'Le gusta No ficcion',TRUE, 'Daniela', 'Perez', 'USER', 'd',
         '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 
 --insert books
