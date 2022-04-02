@@ -26,16 +26,31 @@
             
                                 </ul>
                                 <ul>
-                                    <div class="d-flex flex-row" style="float:left" >
-        
+                                    <h5> Añadir a una lista de lectura </h5>
+                                    <div class="d-flex flex-row" style="float:right" >
                                         <div class="ml-auto mr-lg-4">
-                                            <div id="sorting" class="border rounded p-1 m-1">  <select name="sort" id="sort">
-                                                    <option value="popularity"><b>Terminado</b></option>
-                                                    <option value="prcie"><b>Leer</b></option>
-                                                    <option value="rating"><b>Quiero leer</b></option>
-                                                </select> </div>
+                                            <div id="selectorLista" class="border rounded p-1 m-1">  
+                                            
+                                                <select name="sort" id="selectorListaLectura">
+                                                    <option value="leyendo"><b>Leyendo</b></option>
+                                                    <option value="pausados"><b>Pausados</b></option>
+                                                    <option value="abandonados"><b>Abandonados</b></option>
+                                                    <option value="terminados"><b>Terminados</b></option>
+                                                    <option value="quieroLeer"><b>Quiero leer</b></option>
+                                                </select> 
+
+                                                <!-- el action cambia dinamicamente utilizando una función definida abajo en js-->
+                                                <form id = "listaLecturaForm" th:action="leyendo" method="POST">
+                                                    <button id="addToLib" class="btn btn-primary", onclick="changeList()">Agregar a la lista de lectura</button>
+                                                    <button id="addToLibSubmit" hidden type="submit"></button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
+                        
+                                    <!--
+                                    -->
+                                    <!--</form>-->
                                 </ul>
                             </a>
                             </section>
@@ -70,18 +85,6 @@
             </div>
         </div>
 
-        <section>
-            <div class="d-flex flex-row" style="float:right" >
-        
-                <div class="ml-auto mr-lg-4">
-                    <div id="sorting" class="border rounded p-1 m-1">  <select name="sort" id="sort">
-                            <option value="popularity"><b>Agregar a Lista Lectura</b></option>
-                            <option value="prcie"><b>Leer</b></option>
-                            <option value="rating"><b>Quiero leer</b></option>
-                        </select> </div>
-                </div>
-            </div>
-        </section>
          <!-- Saga -->
 
         <div class="products-box">
@@ -282,6 +285,24 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
-</body>
 
+    <script>
+        // Procesamiento de la selección de lista de lectura
+        function changeList(){
+            let url = window.location.href
+            let action_base = "/save/"
+            let action_idLibro = url.substring(url.lastIndexOf("/"), url.length)
+
+            //Lista de lectura
+            let selector = document.getElementById("selectorListaLectura")
+            let lista = selector.options[selector.selectedIndex].value
+
+            console.log(action_base + lista + action_idLibro)
+            document.getElementById("listaLecturaForm").action = action_base + lista + action_idLibro;
+            document.getElementById("listaLecturaForm").submit();
+        }
+
+    </script>
+
+</body>
 </html>
