@@ -15,7 +15,7 @@
             <!-- Información básica del usuario -->
             <div class="d-flex align-items-center">
                 <div class="img-wrapper">
-                    <img class="iwprof rounded-circle m-3" th:src="@{/user/{id}/pic(id=${session.u.id})}">
+                    <img class="iwprof rounded-circle m-3" th:src="@{/user/{id}/pic(id=${user.id})}">
                 </div>
                 <div class="mx-3 w-100">
                     <div class="mx-4">
