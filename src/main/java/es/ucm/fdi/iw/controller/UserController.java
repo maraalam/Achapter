@@ -111,6 +111,7 @@ public class UserController {
     public String index(@PathVariable long id, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
         model.addAttribute("user", target);
+		
         return "user";
     }
 
@@ -163,7 +164,7 @@ public class UserController {
         if (requester.getId() == target.getId()) {
             session.setAttribute("u", target);
         }
-
+		
 		return "user";
 	}	
 

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -184,7 +186,6 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
 
 
     @PostMapping("save/{tipoLibreria}/{id}")
-    @ResponseBody
     @Transactional
     public String addToLibrary(@PathVariable String tipoLibreria, @PathVariable long id, Model model, HttpSession session, String libreria) {
 
@@ -214,10 +215,29 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
 
     
     @ModelAttribute("usuarios")
-    public List<User> getUsuariosList() {
+    public List<User> getUsuariosList( Model model) {
         log.info("Obteniendo usuarios");
+  
         return entityManager.createQuery("select u FROM User u", User.class).getResultList();
     }
+
+    @ModelAttribute("following")
+    public List<User> getUsuariosfollowingList( Model model, HttpSession session) {
+        log.info("Obteniendo following");
+        
+        User requester = (User)session.getAttribute("u");
+        if(requester!=null){
+        log.info(requester.getId());
+        User u = entityManager.createNamedQuery("User.byId", User.class)
+                    .setParameter("id", requester.getId())
+                    .getSingleResult();
+
+        return u.getFollowed();
+        }
+        return new ArrayList<User>();
+    }
+
+  
     
     @PostMapping("/addFollow")
     @Transactional
@@ -230,14 +250,17 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
                 .setParameter("username", data.get("usernameFollowing").asText())
                 .getSingleResult();
                 
-
-                usernameFollowed.getFollowers().add(usernameFollowing);
-                usernameFollowing.getFollowed().add(usernameFollowed);
-               // model.addAttribute("Book", b);
-                
             
-            entityManager.persist(usernameFollowed);
-            entityManager.persist(usernameFollowing);
+                usernameFollowed.getFollowers().add(usernameFollowing); //es que es seguido
+                usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
+                
+                entityManager.persist(usernameFollowed);
+                entityManager.persist(usernameFollowing);
+
+                
+              // model.addAttribute("following",  list);
+                
+
             return "index";
         }
 

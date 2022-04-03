@@ -20,6 +20,9 @@ import java.util.List;
         @NamedQuery(name="User.byUsername",
                 query="SELECT u FROM User u "
                         + "WHERE u.username = :username AND u.enabled = TRUE"),
+        @NamedQuery(name="User.byId",
+                        query="SELECT u FROM User u "
+                                + "WHERE u.id = :id AND u.enabled = TRUE"),
         @NamedQuery(name="User.hasUsername",
                 query="SELECT COUNT(u) "
                         + "FROM User u "
