@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import es.ucm.fdi.iw.model.*;
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
@@ -263,6 +265,34 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
 
             return "index";
         }
+
+
+        @PostMapping("{tipo}/usuariosfriends")
+        @Transactional
+        public String followers(@PathVariable long tipo, Model model, HttpSession session) {
+            log.info("En funcion followers: ");
+            
+            User self = entityManager.find(
+                    User.class, ((User)session.getAttribute("u")).getId());
+    //		
+            
+            if(tipo==1){
+                model.addAttribute("usuariosf", self.getFollowed());
+            }
+            else
+                model.addAttribute("usuariosf",self.getFollowers());
+           
+            return "usuariosfriends";
+        }
+    
+        @PostMapping("{id}/state")
+        @ResponseBody
+        public String postState(@RequestParam("state") Model state, @PathVariable long id, 
+        HttpServletResponse response, HttpSession session, Model model){
+            System.out.println("[Test] - Se ejecuta");
+            return "{\"result\": \"state updated.\"}";
+        }	
+    
 
 }
 
