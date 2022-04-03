@@ -1,6 +1,9 @@
 package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.Book;
+import es.ucm.fdi.iw.model.Library;
+import es.ucm.fdi.iw.model.Progreso;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -42,7 +46,9 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 /**
@@ -106,10 +112,64 @@ public class UserController {
 
     /**
      * Landing page for a user profile
+	 * 
+	 * Carga Valores necesarios que queremos ver en la pagina principal: ahora -> libros quiero leer
      */
 	@GetMapping("{id}")
+	@Transactional
     public String index(@PathVariable long id, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
+
+		log.info("USER:" + id);
+		Library libreria = entityManager
+		.createQuery("SELECT l FROM Library l " + "WHERE l.owner.id   <> :owner  ", Library.class)
+		.setParameter("owner", id).getResultList()
+		.stream().findFirst().orElse(null);
+
+		if(libreria!=null){
+			
+			if (target.getLibrary() == null) {
+				//Library lib = new Library(target);
+	            libreria.setOwner(target);
+				target.setLibrary(libreria);
+				//entityManager.persist(lib);
+			}
+			//Book books_quiero_leer = entityManager.createQuery(" SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id   ", Book.class).getSingleResult(); //SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id 
+			
+			Progreso progreso = entityManager
+			.createQuery("SELECT p FROM Progreso p " + "WHERE p.user.id   <> :user  ", Progreso.class)
+			.setParameter("user", id).getResultList()
+			.stream().findFirst().orElse(null);
+
+			log.info("Progreso: "+ progreso.getId());
+			log.info("Book: "+ progreso.getBook().getTitulo());
+			
+			Library l = target.getLibrary();
+			l.put(progreso.getBook(), progreso, "quieroLeer");
+
+			log.info("paso");
+		}else
+		log.info("Libreria: vacio");
+		/*
+		if(libreria!=null){
+		Map<Integer, Integer> books_quiero_leer  = entityManager
+		//.createQuery(" SELECT l FROM Library l INNER JOIN  LIBRARY_BOOKS_QUIERO_LEER  nl " + "ON nl.LIBRARY_ID.id   <> :LIBRARY_ID   ", Tuple.class)
+		.createQuery(" SELECT l FROM Library l JOIN u.books_quiero_leer r  WHERE r.get(key)   ", Tuple.class)
+		.setParameter("LIBRARY_ID ", libreria.getId())
+		.getResultList()
+		.stream()
+		.collect(
+			Collectors.toMap(
+				tuple -> ((Number) tuple.get("BOOKS_QUIERO_LEER_KEY")).intValue(),
+				tuple -> ((Number) tuple.get("BOOKS_QUIERO_LEER_ID ")).intValue()
+			)
+		);
+
+		
+		//target.addToLibrary(), p, libreria);
+		log.info("Mapa: " + books_quiero_leer.entrySet().toString());
+		}
+*/
         model.addAttribute("user", target);
 		
         return "user";

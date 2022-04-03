@@ -60,3 +60,14 @@ VALUES(4, 4111, 2, null, '2022-03-05', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
 VALUES(5, 2111, 1, null, '2022-03-05', null);
+
+-- insert library
+INSERT INTO PROGRESO (ID, NUM_PAGINAS, PORCENTAJE, BOOK_ID, USER_ID)
+VALUES(2111, null, null, 1111, 2);
+
+INSERT INTO LIBRARY (id, USER_ID)
+VALUES(1, 2);
+
+
+INSERT INTO LIBRARY_BOOKS_QUIERO_LEER (ID, PROGRESO_ID, BOOKS_QUIERO_LEER_KEY )
+VALUES(1, 2111, 1111);

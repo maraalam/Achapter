@@ -25,12 +25,17 @@ public class Library {
     private User owner;
 
     @ManyToMany(targetEntity = Progreso.class)
+    @JoinTable(
+        name = "LIBRARY_BOOKS_QUIERO_LEER", 
+        joinColumns = @JoinColumn(name = "id"), 
+        inverseJoinColumns = @JoinColumn(name = "progreso_id"))
     private Map<Long, Progreso> books_quiero_leer;
     
     @ManyToMany(targetEntity = Progreso.class)
     private Map<Long, Progreso> books_terminados;
 
     @ManyToMany(targetEntity = Progreso.class)
+
     private Map<Long, Progreso> books_leyendo;
 
     @ManyToMany(targetEntity = Progreso.class)
@@ -41,6 +46,7 @@ public class Library {
 
     public Library() {
         //¿?
+        
     }
 
     public Library(User u) {

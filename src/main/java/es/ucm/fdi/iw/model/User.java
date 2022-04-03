@@ -58,7 +58,7 @@ public class User implements Transferable<User.Transfer> {
 
     //Libros en progreso
     @OneToOne
-    private Library library = new Library(this);
+    private Library library;
 
 	@OneToMany
 	@JoinColumn(name = "sender_id")
@@ -96,6 +96,8 @@ public class User implements Transferable<User.Transfer> {
     }
 
     public void addToLibrary(Book b, Progreso p, String libreria) {
+        //if(library==null)
+        //    library = new Library(this);
         library.put(b, p,libreria);
     }
 
