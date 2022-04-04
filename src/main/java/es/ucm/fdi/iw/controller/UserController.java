@@ -141,12 +141,13 @@ public class UserController {
 			.setParameter("user", id).getResultList()
 			.stream().findFirst().orElse(null);
 
-			log.info("Progreso: "+ progreso.getId());
-			log.info("Book: "+ progreso.getBook().getTitulo());
-			
-			Library l = target.getLibrary();
-			l.put(progreso.getBook(), progreso, "quieroLeer");
-
+			if(progreso!=null){
+				log.info("Progreso: "+ progreso.getId());
+				log.info("Book: "+ progreso.getBook().getTitulo());
+				
+				Library l = target.getLibrary();
+				l.put(progreso.getBook(), progreso, "quieroLeer");
+			}
 			log.info("paso");
 		}else
 		log.info("Libreria: vacio");
