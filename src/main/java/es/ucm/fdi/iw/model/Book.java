@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.model;
 
+import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -13,6 +14,8 @@ import java.util.List;
 @Entity
 @Data
 @NamedQueries({
+        @NamedQuery(name="Book.all",
+                query="SELECT b FROM Book b"),
         @NamedQuery(name="Book.byTitulo",
                 query="SELECT DISTINCT b FROM Book b "
                 + "WHERE b.titulo LIKE CONCAT('%', :titulo, '%')"),

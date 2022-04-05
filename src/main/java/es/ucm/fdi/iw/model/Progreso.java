@@ -9,6 +9,10 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@NamedQueries(
+        @NamedQuery(name="Progreso.byUser",
+                query = "SELECT p FROM Progreso p " + "WHERE p.user.id <> :user")
+)
 public class Progreso implements Transferable<Progreso.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

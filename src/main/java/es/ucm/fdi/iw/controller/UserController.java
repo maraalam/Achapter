@@ -122,7 +122,7 @@ public class UserController {
 
 		log.info("USER:" + id);
 		Library libreria = entityManager
-		.createQuery("SELECT l FROM Library l " + "WHERE l.owner.id   <> :owner  ", Library.class)
+		.createNamedQuery("Library.byOwner", Library.class)
 		.setParameter("owner", id).getResultList()
 		.stream().findFirst().orElse(null);
 
@@ -137,7 +137,7 @@ public class UserController {
 			//Book books_quiero_leer = entityManager.createQuery(" SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id   ", Book.class).getSingleResult(); //SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id 
 			
 			Progreso progreso = entityManager
-			.createQuery("SELECT p FROM Progreso p " + "WHERE p.user.id   <> :user  ", Progreso.class)
+			.createNamedQuery("Progreso.byUser", Progreso.class)
 			.setParameter("user", id).getResultList()
 			.stream().findFirst().orElse(null);
 

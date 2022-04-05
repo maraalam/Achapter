@@ -8,6 +8,10 @@ import java.util.Map;
 
 @Data
 @Entity
+@NamedQueries(
+        @NamedQuery(name = "Library.byOwner",
+                query = "SELECT l FROM Library l WHERE l.owner.id = :owner")
+)
 public class Library {
 
     public static final String terminado = "terminado";
@@ -26,11 +30,11 @@ public class Library {
 
     @ManyToMany(targetEntity = Progreso.class)
     @JoinTable(
-        name = "LIBRARY_BOOKS_QUIERO_LEER", 
-        joinColumns = @JoinColumn(name = "id"), 
-        inverseJoinColumns = @JoinColumn(name = "progreso_id"))
+            name = "LIBRARY_BOOKS_QUIERO_LEER",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "progreso_id"))
     private Map<Long, Progreso> books_quiero_leer;
-    
+
     @ManyToMany(targetEntity = Progreso.class)
     private Map<Long, Progreso> books_terminados;
 
@@ -46,7 +50,7 @@ public class Library {
 
     public Library() {
         //¿?
-        
+
     }
 
     public Library(User u) {
@@ -59,22 +63,22 @@ public class Library {
     }
 
     public void put(Book b, Progreso p, String libreria) {
-        switch (libreria){
+        switch (libreria) {
             case terminado:
                 this.books_terminados.put(b.getId(), p);
-            break;
+                break;
             case abandonados:
                 this.books_abandonados.put(b.getId(), p);
-            break;
+                break;
             case pausados:
                 this.books_pausados.put(b.getId(), p);
-            break;
+                break;
             case leyendo:
                 this.books_leyendo.put(b.getId(), p);
-            break;
+                break;
             case quieroLeer:
                 this.books_quiero_leer.put(b.getId(), p);
-            break;
+                break;
         }
     }
 }

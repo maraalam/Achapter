@@ -122,7 +122,7 @@ public class RootController {
 */
     @ModelAttribute("books")
     public List<Book> getBooksList() {
-        return entityManager.createQuery("select b from Book b", Book.class).getResultList();
+        return entityManager.createNamedQuery("Book.all", Book.class).getResultList();
     }
 
 
@@ -132,7 +132,7 @@ public class RootController {
     public HashSet<String> getGenerosList() {
         
         HashSet<String> listaGeneros = new HashSet<String>(); 
-        List<String> generos = entityManager.createQuery("SELECT DISTINCT b.generos FROM Book b", String.class).getResultList();
+        List<String> generos = entityManager.createNamedQuery("Book.allGenre", String.class).getResultList();
         for (String g : generos){
             String[] gen = g.split(",");
             listaGeneros.addAll(Arrays.asList(gen));
@@ -220,7 +220,7 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
     public List<User> getUsuariosList( Model model) {
         log.info("Obteniendo usuarios");
   
-        return entityManager.createQuery("select u FROM User u", User.class).getResultList();
+        return entityManager.createNamedQuery("User.all", User.class).getResultList();
     }
 
     @ModelAttribute("following")
