@@ -252,8 +252,14 @@ function submitBook() {
 
         go('addBook', 'POST', request )
             .then(d => console.log("happy", d))
-            .catch(e => console.log("sad", e))
+            .catch(e => console.log("sad", e));
     
+            const para = document.createElement("p");
+            para.innerText = "Guardado";
+            para.style="margin-left:100px; color: #5cca60; ";
+            para.class= "btn btn-light btn-sm bg-white has-icon btn-block";
+            b.parentNode.appendChild(para);
+            b.parentNode.removeChild(b);
 
    return true;
 }

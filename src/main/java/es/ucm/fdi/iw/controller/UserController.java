@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -229,6 +230,9 @@ public class UserController {
 		return "user";
 	}	
 
+
+
+
     /**
      * Returns the default profile pic
      * 
@@ -412,6 +416,45 @@ public class UserController {
 
 
 
+	@PostMapping("/register")
+	@Transactional
+	public String registerUser(
+			HttpServletResponse response, 
+			@ModelAttribute User user,
+			Model model) throws IOException {
+
+			
+				
+				log.info("registrando usuario:  " + user.getUsername());
+		
+			User target = null;
+			
+            target = new User();
+			target.setUsername(user.getUsername());
+            target.setPassword(encodePassword(user.getPassword()));
+			target.setFirstName(user.getFirstName());
+			target.setLastName(user.getLastName());
+			target.setRoles("USER");
+            target.setEnabled(true);
+            entityManager.persist(target);
+            entityManager.flush(); // forces DB to add user & assign valid id
+            long id = target.getId();   // retrieve assigned id from DB
+
+			target = entityManager.find(User.class, id);
+        	model.addAttribute("user", target);
+        /*
+        	User u = entityManager.createNamedQuery("User.byUsername", User.class)
+			.setParameter("username", user.getUsername())
+			.getSingleResult();			*/
+			//User requester = (User)session.getAttribute("u");
+
+			log.info("Registrado usuario:  " + target.getUsername());
+
+        model.addAttribute("user", target);
+		
+		
+		return "login";
+	}	
 
 
 	/*@PostMapping("/{id}/photo")

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <link rel="stylesheet" th:href="@{/css/register.css}" href="css/profiles.css" type="text/css" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Usuarios</title>
+</head>
+
+<body class="d-flex flex-column h-100 ">
+    <header th:replace="fragments/nav.html :: nav"></header>
+    <main class="flex-shrink-0 register">
+
+<div class="container ">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img th:src="@{/img/libro.png}" src="/img/libro.png" alt="libro"/>
+                        <h3>Bienvenido a Achapter</h3>
+                        <p> Esta es una aplicación que te permitirá mantener un control de los libros que te has leído, 
+                            quieres leer y los que estás leyendo actualmente
+                            . Además, ¡podrás conectarte con una 
+                            una comunidad que tiene tus mismos intereses obteniendo ideas para tus próximas lecturas!  </p>
+                        <input type="submit" name="" value="Login"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                
+                                <div class="row register-form">
+                                    
+                                    <div class="col-md-6">
+                                        <h3 class="register-heading">Regístrate</h3>
+                                        <form class="form-group" method="POST" th:object="${user}" th:action="@{/user/register}" >
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="username" th:field="*{username}" placeholder="Username *" value="" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="firstName" th:field="*{firstName}" placeholder="First Name *" value="" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="lastName" th:field="*{lastName}" placeholder="Last Name *" value="" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" name="password" th:field="*{password}" placeholder="Password *" value="" />
+                                            </div>
+                                           
+                                            <input  type="submit" id="registerB" class="btnRegister" value="Register"/>
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--
+            <script>
+                // envio de mensajes con AJAX
+                let b = document.getElementById("registerB");
+                b.onclick = (e) => {
+                    e.preventDefault();
+                    go(b.parentNode.action, 'POST', {
+                        message: document.getElementById("message").value
+                    })
+                        .then(d => console.log("happy", d))
+                        .catch(e => console.log("sad", e))
+                }
+        
+            </script>
+                -->
+    </main>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>

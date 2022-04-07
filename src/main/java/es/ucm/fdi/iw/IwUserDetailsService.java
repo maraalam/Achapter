@@ -30,9 +30,11 @@ public class IwUserDetailsService implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String username){
     	try {
+			log.info("cargando usuario: " + username);
 	        User u = entityManager.createNamedQuery("User.byUsername", User.class)
                     .setParameter("username", username)
                     .getSingleResult();
+			
 	        // build UserDetails object
 	        ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
 	        for (String r : u.getRoles().split("[,]")) {

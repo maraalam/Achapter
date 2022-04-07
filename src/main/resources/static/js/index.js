@@ -21,9 +21,9 @@ $(document).ready(function() {
             url: bookUrl + searchData,
             dataType: "json",
             success: function(response) {
-              console.log(response)
+              console.log(response);
               if (response.totalItems === 0) {
-                alert("no hay respuesta, vuelve a intentarlo")
+                console.log("no hay respuesta, vuelve a intentarlo");
               }
               else {
                 $("#title").animate({'margin-top': '5px'}, 1000);
@@ -32,7 +32,7 @@ $(document).ready(function() {
               }
             },
             error: function () {
-              alert("Hubo un error.. <br>"+"Vuelve a intentarlo");
+              console.log("Hubo un error.. <br>"+"Vuelve a intentarlo");
             }
           });
 
@@ -50,8 +50,11 @@ $(document).ready(function() {
      * @param response
      */
      function displayResults(response) {
-      outputList.innerHTML = '<div class="row special-list">';
-        for (var i = 0; i < 1/*response.items.length*/; i+=1) {
+      outputList.innerHTML = '<div class="products-box"> <div class="container"> <div class="row"> <div class="col-lg-12"> <div class="title-all ">' +
+                            '<h1>Resultados de la Busqueda</h1>  </div>  </div>  </div> <div class="row special-list"> <div class="col-lg-3 col-md-6 special-grid best-seller" >';
+          
+          console.log("Respuesta: " + response.items.length);
+        for (var i = 0; i < response.items.length ; i+=1) {
           item = response.items[i];
           title1 = item.volumeInfo.title;
           author1 = item.volumeInfo.authors;
@@ -61,21 +64,23 @@ $(document).ready(function() {
           bookImg1 = (item.volumeInfo.imageLinks) ? item.volumeInfo.imageLinks.thumbnail : placeHldr ;
           bookPageCount = item.volumeInfo.pageCount;
           bookCategories="";
+          if(item.volumeInfo.categories!=null){
           for(var j=0; j<item.volumeInfo.categories.length; j+=1 ){
             bookCategories += item.volumeInfo.categories[j].trim();
             if(j != item.volumeInfo.categories.length -1)
               bookCategories+=";";
           }
+        }
           console.log(bookCategories);
  
           // in production code, item.text should have the HTML entities escaped.
-          outputList.innerHTML += '<div class="row mt-4">' +
-                                  formatOutput(bookImg1, title1, author1, publisher1, bookLink1, bookIsbn,bookPageCount, bookCategories) + '<br> <br> <br>  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> '+
+          outputList.innerHTML +=  formatOutput(bookImg1, title1, author1, publisher1, bookLink1, bookIsbn,bookPageCount, bookCategories) ;
                                 //  formatOutput(bookImg2, title2, author2, publisher2, bookLink2, bookIsbn2) +
-                                  '</div>';
+                                 
   
-          console.log(outputList);
+          console.log("Libros google: " + outputList);
         }
+        outputList.innerHTML +='</div> </div>  </div> </div>';
      }
   
      /*
@@ -88,7 +93,51 @@ $(document).ready(function() {
        
 
        var viewUrl = 'book.html?isbn='+bookIsbn; //constructing link for bookviewer
-       var htmlCard = `<div class="col-lg-6">
+       var htmlCard = ` 
+       
+       <div class="products-single fix">
+          <div class="box-img-hover">
+              <div id="imgPortada" class="" ></div>
+              <div class="col-md-7">
+              <img src="${bookImg}"  alt="img" width="100px" height="200px" />
+              </div>
+          </div>
+          <a  class="text-decoration-none link-dark">
+              <div class="why-text">
+                  
+                  <h3 th:text="${title}" >${title}</h3>
+                  <h5 th:text="${author}" > ${author}</h5>
+                  <div class="product-rating mb-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star mr-0"></i>
+                  </div>
+                  <button id="sendBook" type="submit" name="submit" onclick="return submitBook();">Guardar En BD</button>
+              </div>
+          </a>
+    </div>
+       
+  `
+
+      
+       return htmlCard;
+     }
+  
+     //handling error for empty search box
+     function displayError() {
+      Console.log("search term can not be empty!")
+     }
+
+ 
+     
+  });
+
+  
+  /*
+
+  <div class="col-lg-6">
          <div class="card" style="">
            <div class="row no-gutters">
              <div class="col-md-7">
@@ -114,20 +163,5 @@ $(document).ready(function() {
              </div>
            </div>
          </div>
-       </div> <br>`
-
-      
-       return htmlCard;
-     }
-  
-     //handling error for empty search box
-     function displayError() {
-       alert("search term can not be empty!")
-     }
-
- 
-     
-  });
-
-  
-  
+       </div> <br>
+  */

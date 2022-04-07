@@ -1,15 +1,15 @@
 -- insert admin (username a, password aa)
 INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
-VALUES (1, 'Le gusta fantasia', TRUE, 'Ana', 'Perez', 'ADMIN,USER', 'a',
+VALUES (11111, 'Le gusta fantasia', TRUE, 'Ana', 'Perez', 'ADMIN,USER', 'a',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
-VALUES (2, 'Le gusta romance',TRUE, 'Barbara', 'Benitez', 'USER', 'b',
+VALUES (21111, 'Le gusta romance',TRUE, 'Barbara', 'Benitez', 'USER', 'b',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
-VALUES (3, 'Le gusta terror',TRUE, 'Clara', 'Porta', 'USER', 'c',
+VALUES (31111, 'Le gusta terror',TRUE, 'Clara', 'Porta', 'USER', 'c',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 INSERT INTO IWUser (id, about, enabled, first_name, last_name, roles, username, password)
-VALUES (4, 'Le gusta No ficcion',TRUE, 'Daniela', 'Cordova', 'USER', 'd',
+VALUES (41111, 'Le gusta No ficcion',TRUE, 'Daniela', 'Cordova', 'USER', 'd',
         '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 
 --insert books
@@ -34,39 +34,39 @@ VALUES(4111, 'Brandon Sanderson', 'La aclamada continuación de El camino de los
 --insert post
 
 INSERT INTO POST (id, date_sent, text, title, author_id)
-VALUES (3, CURRENT_DATE, 'oh no, se han caído otro árbol, pero...', '1213', 2);
+VALUES (3, CURRENT_DATE, 'oh no, se han caído otro árbol, pero...', '1213', 21111);
 
 INSERT INTO POST (id, DATE_SENT, TEXT, TITLE, AUTHOR_ID)
-VALUES (1, CURRENT_DATE, 'hola como estas', 'saludos', 2);
+VALUES (1, CURRENT_DATE, 'hola como estas', 'saludos', 21111);
 
 INSERT INTO POST (id, DATE_SENT, TEXT, TITLE, AUTHOR_ID)
-VALUES (15, CURRENT_DATE, 'hola como estasw', 'saludos', 2);
+VALUES (15, CURRENT_DATE, 'hola como estasw', 'saludos', 21111);
 
 
 
 --insert physicalbooks
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(1, 1111, 1, 2, '2022-03-01', null);
+VALUES(1, 1111, 11111,21111, '2022-03-01', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(2, 31111, 1, 2, '2022-03-02', null);
+VALUES(2, 31111, 11111, 21111, '2022-03-02', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(3, 4111, 2, null, '2022-03-05', null);
+VALUES(3, 4111, 21111, null, '2022-03-05', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(4, 4111, 2, null, '2022-03-05', null);
+VALUES(4, 4111,21111, null, '2022-03-05', null);
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(5, 2111, 1, null, '2022-03-05', null);
+VALUES(5, 2111, 11111, null, '2022-03-05', null);
 
 -- insert library
 INSERT INTO PROGRESO (ID, NUM_PAGINAS, PORCENTAJE, BOOK_ID, USER_ID)
-VALUES(2111, null, null, 1111, 2);
+VALUES(2111, null, null, 1111, 21111);
 
 INSERT INTO LIBRARY (id, USER_ID)
-VALUES(1, 2);
+VALUES(1, 21111);
 
 
 INSERT INTO LIBRARY_BOOKS_QUIERO_LEER (ID, PROGRESO_ID, BOOKS_QUIERO_LEER_KEY )

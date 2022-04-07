@@ -6,15 +6,18 @@ import es.ucm.fdi.iw.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -51,6 +54,7 @@ public class RootController {
 
 	@GetMapping("/")
     public String index(Model model) {
+        //model.addAttribute("user", new User());
         //model.addAttribute("libros", bookservice.mockBooks());
         return "index";
     }
@@ -69,6 +73,7 @@ public class RootController {
     public String usuarios(Model model) {
         return "usuarios";
     }
+
 
     @GetMapping("/mensajeria")
     public String mensajeria(Model model, HttpSession session) {
@@ -293,6 +298,25 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
             return "{\"result\": \"state updated.\"}";
         }	
     
+
+        
+	@ResponseStatus(
+		value=HttpStatus.FORBIDDEN, 
+		reason="Username ya existe en el sistema, usa otro")  // 403
+	public static class UsernameNoPermitidoException extends RuntimeException {}
+	
+
+
+	@GetMapping("/register")
+	@Transactional
+	public String registerRUser(Model model) throws IOException {
+		log.info("createUser");	 
+
+        model.addAttribute("user", new User());
+		
+		return "register";
+	}	
+
 
 }
 
