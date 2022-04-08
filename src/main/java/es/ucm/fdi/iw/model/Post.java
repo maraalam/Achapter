@@ -10,6 +10,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A post a user can publish on their profile.
+ */
 @Entity
 @Data
 @NamedQueries({

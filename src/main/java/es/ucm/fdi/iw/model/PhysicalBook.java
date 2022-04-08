@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A physical copy of a book a user has.
+ */
 @Entity
 @Data
 @NamedQueries({

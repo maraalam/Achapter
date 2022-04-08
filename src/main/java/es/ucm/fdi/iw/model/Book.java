@@ -1,16 +1,15 @@
 package es.ucm.fdi.iw.model;
 
-import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
+/**
+ * A book on the system.
+ */
 @Entity
 @Data
 @NamedQueries({

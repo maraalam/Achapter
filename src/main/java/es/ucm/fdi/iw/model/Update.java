@@ -10,6 +10,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * An update a user makes on their progress with a book (i.e. 30 more pages read).
+ */
 @Entity
 @Data
 public class Update implements Transferable<Update.Transfer> {

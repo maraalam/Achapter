@@ -10,6 +10,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A review a user can publish about a book.
+ */
 @Entity
 @Data
 public class Review implements Transferable<Review.Transfer>{
