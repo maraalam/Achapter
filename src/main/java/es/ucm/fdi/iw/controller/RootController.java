@@ -208,7 +208,7 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
             u.setLibrary(lib);
             entityManager.persist(lib);
         }
-        Progreso pro = new Progreso();
+        Progress pro = new Progress();
         pro.setBook(b);
         pro.setUser(u);
         entityManager.persist(pro);
@@ -299,23 +299,23 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
         }	
     
 
-        
+
 	@ResponseStatus(
-		value=HttpStatus.FORBIDDEN, 
+		value=HttpStatus.FORBIDDEN,
 		reason="Username ya existe en el sistema, usa otro")  // 403
 	public static class UsernameNoPermitidoException extends RuntimeException {}
-	
+
 
 
 	@GetMapping("/register")
 	@Transactional
 	public String registerRUser(Model model) throws IOException {
-		log.info("createUser");	 
+		log.info("createUser");
 
         model.addAttribute("user", new User());
-		
+
 		return "register";
-	}	
+	}
 
 
 }

@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A user's personal library.
+ */
 @Data
 @Entity
 @NamedQueries(
@@ -28,25 +31,25 @@ public class Library {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    @ManyToMany(targetEntity = Progreso.class)
+    @ManyToMany(targetEntity = Progress.class)
     @JoinTable(
             name = "LIBRARY_BOOKS_QUIERO_LEER",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "progreso_id"))
-    private Map<Long, Progreso> books_quiero_leer;
+    private Map<Long, Progress> books_quiero_leer;
 
-    @ManyToMany(targetEntity = Progreso.class)
-    private Map<Long, Progreso> books_terminados;
+    @ManyToMany(targetEntity = Progress.class)
+    private Map<Long, Progress> books_terminados;
 
-    @ManyToMany(targetEntity = Progreso.class)
+    @ManyToMany(targetEntity = Progress.class)
 
-    private Map<Long, Progreso> books_leyendo;
+    private Map<Long, Progress> books_leyendo;
 
-    @ManyToMany(targetEntity = Progreso.class)
-    private Map<Long, Progreso> books_abandonados; //dropeados
+    @ManyToMany(targetEntity = Progress.class)
+    private Map<Long, Progress> books_abandonados; //dropeados
 
-    @ManyToMany(targetEntity = Progreso.class)
-    private Map<Long, Progreso> books_pausados;
+    @ManyToMany(targetEntity = Progress.class)
+    private Map<Long, Progress> books_pausados;
 
     public Library() {
         //¿?
@@ -62,7 +65,7 @@ public class Library {
         this.books_pausados = new HashMap<>();
     }
 
-    public void put(Book b, Progreso p, String libreria) {
+    public void put(Book b, Progress p, String libreria) {
         switch (libreria) {
             case terminado:
                 this.books_terminados.put(b.getId(), p);

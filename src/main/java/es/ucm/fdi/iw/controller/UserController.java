@@ -1,12 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
-import es.ucm.fdi.iw.model.Book;
-import es.ucm.fdi.iw.model.Library;
-import es.ucm.fdi.iw.model.Progreso;
-import es.ucm.fdi.iw.model.Message;
-import es.ucm.fdi.iw.model.Transferable;
-import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.*;
 import es.ucm.fdi.iw.model.User.Role;
 
 import org.apache.logging.log4j.LogManager;
@@ -47,7 +42,6 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -137,17 +131,17 @@ public class UserController {
 			}
 			//Book books_quiero_leer = entityManager.createQuery(" SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id   ", Book.class).getSingleResult(); //SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id 
 			
-			Progreso progreso = entityManager
-			.createNamedQuery("Progreso.byUser", Progreso.class)
+			Progress progress = entityManager
+			.createNamedQuery("Progreso.byUser", Progress.class)
 			.setParameter("user", id).getResultList()
 			.stream().findFirst().orElse(null);
 
-			if(progreso!=null){
-				log.info("Progreso: "+ progreso.getId());
-				log.info("Book: "+ progreso.getBook().getTitulo());
+			if(progress !=null){
+				log.info("Progreso: "+ progress.getId());
+				log.info("Book: "+ progress.getBook().getTitulo());
 				
 				Library l = target.getLibrary();
-				l.put(progreso.getBook(), progreso, "quieroLeer");
+				l.put(progress.getBook(), progress, "quieroLeer");
 			}
 			log.info("paso");
 		}else

@@ -6,14 +6,16 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
-
+/**
+ * Progress a user has made with a book.
+ */
 @Entity
 @Data
 @NamedQueries(
         @NamedQuery(name="Progreso.byUser",
-                query = "SELECT p FROM Progreso p " + "WHERE p.user.id <> :user")
+                query = "SELECT p FROM Progress p " + "WHERE p.user.id <> :user")
 )
-public class Progreso implements Transferable<Progreso.Transfer> {
+public class Progress implements Transferable<Progress.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id; //primary key of the dataset
@@ -34,7 +36,7 @@ public class Progreso implements Transferable<Progreso.Transfer> {
         private Long porcentaje;
         private Long numPaginas;
         long id;
-        public Transfer(Progreso p) {
+        public Transfer(Progress p) {
            
             this.porcentaje = p.getPorcentaje();
             this.numPaginas= p.getNumPaginas();
