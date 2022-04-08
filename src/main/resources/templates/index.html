@@ -118,7 +118,7 @@
     <th:block th:replace="fragments/footer.html :: footer" />
     <script>
         let b = document.getElementById("postBook");
-        b.onclick = (e) => {
+        b.addEventListener('click', (e) => {
             e.preventDefault();
            
  
@@ -139,7 +139,7 @@
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
             // hace falta recargar la pagina para q se vea
-        }
+        })
     </script>
 </body>
 

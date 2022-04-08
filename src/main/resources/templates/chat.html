@@ -34,14 +34,14 @@
     <script>
         // envio de mensajes con AJAX
         let b = document.getElementById("sendmsg");
-        b.onclick = (e) => {
+        b.addEventListener('click', (e) => {
             e.preventDefault();
             go(b.parentNode.action, 'POST', {
                 message: document.getElementById("message").value
             })
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
-        }
+        })
 
     </script>
 

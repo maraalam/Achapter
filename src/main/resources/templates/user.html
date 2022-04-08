@@ -180,23 +180,23 @@
     <script>
 
         let b = document.getElementById("follow");
-        b.onclick = (e) => {
+        b.addEventListener('click', (e) => {
             e.preventDefault();
             go(b.parentNode.action, 'POST')
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
             // hace falta recargar la pagina para q se vea
-        }
+        })
 
-        document.querySelector("#f_avatar").onchange = e => {
+        document.querySelector("#f_avatar").addEventListener('change', (e)=> {
             let img = document.querySelector("#avatar");
             let fileInput = document.querySelector("#f_avatar");
             console.log(img, fileInput);
             readImageFileData(fileInput.files[0], img);
-        };
+        });
 
         // click en boton de enviar avatar
-        document.querySelector("#postAvatar").onclick = e => {
+        document.querySelector("#postAvatar").addEventListener('click', (e) => {
             e.preventDefault();
             let url = document.querySelector("#postAvatar").parentNode.action;
             let img = document.querySelector("#avatar");
@@ -207,10 +207,10 @@
                 document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
                 document.querySelector("div.img-wrapper>img.iwprof").src = url + cacheBuster;
             });
-        };
+        });
 
         // click en boton de enviar estado
-        document.querySelector("#postEstado").onclick = e => {
+        document.querySelector("#postEstado").addEventListener('click', (e) => {
             e.preventDefault();
             let url = document.querySelector("#postEstado").parentNode.action;
             let state = document.querySelector("#estado").value;
@@ -218,7 +218,7 @@
             postState(state, url, "state").then(() =>{
                 document.getElementById("userState").innerText = state;
             });
-        };
+        });
     </script>
 
     <!-- JavaScript, for the tabs-->

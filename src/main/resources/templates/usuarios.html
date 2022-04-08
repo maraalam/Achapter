@@ -121,8 +121,8 @@
         }
 
         let b = document.getElementById("addF");
-        b.onclick = (e) => {
-            if(b.innerHTML=="Follow"){
+        b.addEventListener('click', (e) => {
+            if(b.innerHTML==="Follow"){
             e.preventDefault();
             let request = {usernameFollowed: "", usernameFollowing: ""};
             var card = b.parentNode.parentNode.parentNode;
@@ -140,7 +140,7 @@
             b.parentNode.parentNode.appendChild(para);
             b.parentNode.removeChild(b);
             }
-        }
+        })
         /*
         function addFollow() {
             let card = this.
