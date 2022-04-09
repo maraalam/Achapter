@@ -62,7 +62,7 @@ INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_presta
 VALUES(5, 2111, 11111, null, '2022-03-05', null);
 
 -- insert library
-INSERT INTO PROGRESO (ID, NUM_PAGINAS, PORCENTAJE, BOOK_ID, USER_ID)
+INSERT INTO PROGRESS (ID, NUM_PAGINAS, PORCENTAJE, BOOK_ID, USER_ID)
 VALUES(2111, null, null, 1111, 21111);
 
 INSERT INTO LIBRARY (id, USER_ID)
