@@ -24,25 +24,25 @@
                     </div>
                     <div class="d-flex ">
                         <form  th:action="@{/2/usuariosfriends}" method="POST">
-                             <button   class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF" href="#" 
+                             <button   class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF" href="#"
                              th:text="${user.followers.size() + ' seguidores'}" type="submit" > 0 seguidores</button>
-                
+
                         </form>
                         <form  th:action="@{/1/usuariosfriends}" method="POST">
-                            <button class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF" 
+                            <button class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF"
                              href="#" th:text="${user.followed.size() + ' seguidos'}">0 seguidos</button>
-                      
-                       </form> 
+
+                       </form>
                         <!--
                         <div class="flex-column btn btn-light mx-2 rounded-3">
                             <a class="nav-link" href="#" th:text="${user.followers.size() + ' seguidores'}">0 seguidores</a>
                         </div>
-                        
+
                         <div class="flex-column btn btn-light mx-2 rounded-3">
                             <a class="nav-link" href="#" th:text="${user.followed.size() + ' seguidos'}">0 seguidos</a>
                         </div>
                     -->
-                        
+
                     </div>
                 </div>
                 <div th:if="${session.u.id != user.id}">
@@ -92,7 +92,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys" th:if="${session.u.id == user.id}">
                             <div class="widget panel" style="width:700px;">
-                                <form>
+                                <form th:action="@{/user/post}" method="POST">
                                     <label for="new-post" class="semibold nm" ><h5>What is on your mind</h5></label>
                                     <textarea id="new-post" placeholder="Write something here"></textarea>
                                     <button id="publish-post" class="btn btn-outline-success" type="submit">Publicar</button>
@@ -157,7 +157,7 @@
                 <!--perfil-->
                 <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                     <h2>Actualizar foto de perfil</h2>
-                    
+
                     <input type="file" id="f_avatar" accept="image/jpeg,image/png">
                     <img id="avatar" alt="foto de perfil" hidden/>
                     <form th:action="@{/user/__${user.id}__/pic}">
@@ -186,7 +186,18 @@
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
             // hace falta recargar la pagina para q se vea
-        })
+        });
+
+        let c = document.getElementById("publish-post")
+        c.addEventListener('click', (e) => {
+            e.preventDefault();
+            go(c.parentNode.action, 'POST', {
+                text: document.getElementById("new-post").value
+            })
+                .then(d => console.log("happy", d))
+                .catch(e => console.log("sad", e))
+            // hace falta recargar la pagina para q se vea
+        });
 
         document.querySelector("#f_avatar").addEventListener('change', (e)=> {
             let img = document.querySelector("#avatar");

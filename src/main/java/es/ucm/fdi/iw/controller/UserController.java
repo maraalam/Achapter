@@ -1,9 +1,12 @@
 package es.ucm.fdi.iw.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.*;
 import es.ucm.fdi.iw.model.User.Role;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,88 +16,48 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 /**
- *  User management.
- *
- *  Access to this end-point is authenticated.
+ * User management.
+ * <p>
+ * Access to this end-point is authenticated.
  */
 @Controller()
 @RequestMapping("user")
 public class UserController {
 
-	private static final Logger log = LogManager.getLogger(UserController.class);
+    private static final Logger log = LogManager.getLogger(UserController.class);
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	@Autowired
+    @Autowired
     private LocalData localData;
 
-	@Autowired
-	private SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-    /**
-     * Exception to use when denying access to unauthorized users.
-     * 
-     * In general, admins are always authorized, but users cannot modify
-     * each other's profiles.
-     */
-	@ResponseStatus(
-		value=HttpStatus.FORBIDDEN, 
-		reason="No eres administrador, y éste no es tu perfil")  // 403
-	public static class NoEsTuPerfilException extends RuntimeException {}
-
-	/**
-	 * Encodes a password, so that it can be saved for future checking. Notice
-	 * that encoding the same password multiple times will yield different
-	 * encodings, since encodings contain a randomly-generated salt.
-	 * @param rawPassword to encode
-	 * @return the encoded password (typically a 60-character string)
-	 * for example, a possible encoding of "test" is 
-	 * {bcrypt}$2y$12$XCKz0zjXAP6hsFyVc8MucOzx6ER6IsC1qo5zQbclxhddR1t6SfrHm
-	 */
-	public String encodePassword(String rawPassword) {
-		return passwordEncoder.encode(rawPassword);
-	}
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Generates random tokens. From https://stackoverflow.com/a/44227131/15472
+     *
      * @param byteLength
      * @return
      */
@@ -106,46 +69,71 @@ public class UserController {
     }
 
     /**
-     * Landing page for a user profile
-	 * 
-	 * Carga Valores necesarios que queremos ver en la pagina principal: ahora -> libros quiero leer
+     * Returns the default profile pic
+     *
+     * @return
      */
-	@GetMapping("{id}")
-	@Transactional
+    private static InputStream defaultPic() {
+        return new BufferedInputStream(Objects.requireNonNull(
+                UserController.class.getClassLoader().getResourceAsStream(
+                        "static/img/default-pic.jpg")));
+    }
+
+    /**
+     * Encodes a password, so that it can be saved for future checking. Notice
+     * that encoding the same password multiple times will yield different
+     * encodings, since encodings contain a randomly-generated salt.
+     *
+     * @param rawPassword to encode
+     * @return the encoded password (typically a 60-character string)
+     * for example, a possible encoding of "test" is
+     * {bcrypt}$2y$12$XCKz0zjXAP6hsFyVc8MucOzx6ER6IsC1qo5zQbclxhddR1t6SfrHm
+     */
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
+    /**
+     * Landing page for a user profile
+     * <p>
+     * Carga Valores necesarios que queremos ver en la pagina principal: ahora -> libros quiero leer
+     */
+    @GetMapping("{id}")
+    @Transactional
     public String index(@PathVariable long id, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
 
-		log.info("USER:" + id);
-		Library libreria = entityManager
-		.createNamedQuery("Library.byOwner", Library.class)
-		.setParameter("owner", id).getResultList()
-		.stream().findFirst().orElse(null);
+        log.info("USER:" + id);
+        Library libreria = entityManager
+                .createNamedQuery("Library.byOwner", Library.class)
+                .setParameter("owner", id).getResultList()
+                .stream().findFirst().orElse(null);
 
-		if(libreria!=null){
-			
-			if (target.getLibrary() == null) {
-				//Library lib = new Library(target);
-	            libreria.setOwner(target);
-				target.setLibrary(libreria);
-				//entityManager.persist(lib);
-			}
-			//Book books_quiero_leer = entityManager.createQuery(" SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id   ", Book.class).getSingleResult(); //SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id 
-			
-			Progress progress = entityManager
-			.createNamedQuery("Progreso.byUser", Progress.class)
-			.setParameter("user", id).getResultList()
-			.stream().findFirst().orElse(null);
+        if (libreria != null) {
 
-			if(progress !=null){
-				log.info("Progreso: "+ progress.getId());
-				log.info("Book: "+ progress.getBook().getTitulo());
-				
-				Library l = target.getLibrary();
-				l.put(progress.getBook(), progress, "quieroLeer");
-			}
-			log.info("paso");
-		}else
-		log.info("Libreria: vacio");
+            if (target.getLibrary() == null) {
+                //Library lib = new Library(target);
+                libreria.setOwner(target);
+                target.setLibrary(libreria);
+                //entityManager.persist(lib);
+            }
+            //Book books_quiero_leer = entityManager.createQuery(" SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id   ", Book.class).getSingleResult(); //SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id
+
+            Progress progress = entityManager
+                    .createNamedQuery("Progreso.byUser", Progress.class)
+                    .setParameter("user", id).getResultList()
+                    .stream().findFirst().orElse(null);
+
+            if (progress != null) {
+                log.info("Progreso: " + progress.getId());
+                log.info("Book: " + progress.getBook().getTitulo());
+
+                Library l = target.getLibrary();
+                l.put(progress.getBook(), progress, "quieroLeer");
+            }
+            log.info("paso");
+        } else
+            log.info("Libreria: vacio");
 		/*
 		if(libreria!=null){
 		Map<Integer, Integer> books_quiero_leer  = entityManager
@@ -167,23 +155,23 @@ public class UserController {
 		}
 */
         model.addAttribute("user", target);
-		
+
         return "user";
     }
 
     /**
      * Alter or create a user
      */
-	@PostMapping("/{id}")
-	@Transactional
-	public String postUser(
-			HttpServletResponse response,
-			@PathVariable long id, 
-			@ModelAttribute User edited, 
-			@RequestParam(required=false) String pass2,
-			Model model, HttpSession session) throws IOException {
+    @PostMapping("/{id}")
+    @Transactional
+    public String postUser(
+            HttpServletResponse response,
+            @PathVariable long id,
+            @ModelAttribute User edited,
+            @RequestParam(required = false) String pass2,
+            Model model, HttpSession session) throws IOException {
 
-        User requester = (User)session.getAttribute("u");
+        User requester = (User) session.getAttribute("u");
         User target = null;
         if (id == -1 && requester.hasRole(Role.ADMIN)) {
             // create new user with random password
@@ -194,261 +182,276 @@ public class UserController {
             entityManager.flush(); // forces DB to add user & assign valid id
             id = target.getId();   // retrieve assigned id from DB
         }
-        
+
         // retrieve requested user
         target = entityManager.find(User.class, id);
         model.addAttribute("user", target);
-		
-		if (requester.getId() != target.getId() &&
-				! requester.hasRole(Role.ADMIN)) {
-			throw new NoEsTuPerfilException();
-		}
-		
-		if (edited.getPassword() != null) {
-            if ( ! edited.getPassword().equals(pass2)) {
+
+        if (requester.getId() != target.getId() &&
+                !requester.hasRole(Role.ADMIN)) {
+            throw new NoEsTuPerfilException();
+        }
+
+        if (edited.getPassword() != null) {
+            if (!edited.getPassword().equals(pass2)) {
                 // FIXME: complain
             } else {
                 // save encoded version of password
                 target.setPassword(encodePassword(edited.getPassword()));
             }
-		}		
-		target.setUsername(edited.getUsername());
-		target.setFirstName(edited.getFirstName());
-		target.setLastName(edited.getLastName());
+        }
+        target.setUsername(edited.getUsername());
+        target.setFirstName(edited.getFirstName());
+        target.setLastName(edited.getLastName());
 
-		// update user session so that changes are persisted in the session, too
+        // update user session so that changes are persisted in the session, too
         if (requester.getId() == target.getId()) {
             session.setAttribute("u", target);
         }
-		
-		return "user";
-	}	
 
-
-
-
-    /**
-     * Returns the default profile pic
-     * 
-     * @return
-     */
-    private static InputStream defaultPic() {
-	    return new BufferedInputStream(Objects.requireNonNull(
-            UserController.class.getClassLoader().getResourceAsStream(
-                "static/img/default-pic.jpg")));
+        return "user";
     }
 
     /**
      * Downloads a profile pic for a user id
-     * 
-     * @param id
-     * @return
-     * @throws IOException
+     *
+     * @param id of user
+     * @return image
+     * @throws IOException if file is not found
      */
     @GetMapping("{id}/pic")
     public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
-        File f = localData.getFile("user/", ""+id+".jpg");
+        File f = localData.getFile("user/", "" + id + ".jpg");
         InputStream in = new BufferedInputStream(f.exists() ?
-            new FileInputStream(f) : UserController.defaultPic());
+                new FileInputStream(f) : UserController.defaultPic());
         return os -> FileCopyUtils.copy(in, os);
     }
 
     /**
      * Uploads a profile pic for a user id
-     * 
-     * @param id
-     * @return
-     * @throws IOException
+     *
+     * @param id of user
+     * @return picture updated
+     * @throws IOException if file is not found
      */
     @PostMapping("{id}/pic")
     @ResponseBody
-    public String setPic(@RequestParam("photo") MultipartFile photo, @PathVariable long id, 
-        HttpServletResponse response, HttpSession session, Model model) throws IOException {
+    public String setPic(@RequestParam("photo") MultipartFile photo, @PathVariable long id,
+                         HttpServletResponse response, HttpSession session, Model model) throws IOException {
 
         User target = entityManager.find(User.class, id);
         model.addAttribute("user", target);
-		
-		// check permissions
-		User requester = (User)session.getAttribute("u");
-		if (requester.getId() != target.getId() &&
-				! requester.hasRole(Role.ADMIN)) {
+
+        // check permissions
+        User requester = (User) session.getAttribute("u");
+        if (requester.getId() != target.getId() &&
+                !requester.hasRole(Role.ADMIN)) {
             throw new NoEsTuPerfilException();
-		}
-		
-		log.info("Updating photo for user {}", id);
-		File f = localData.getFile("user/", ""+id +".jpg");
-		if (photo.isEmpty()) {
-			log.info("failed to upload photo: empty file?");
-		} else {
-			try (BufferedOutputStream stream =
-					new BufferedOutputStream(new FileOutputStream(f))) {
-				byte[] bytes = photo.getBytes();
-				stream.write(bytes);
+        }
+
+        log.info("Updating photo for user {}", id);
+        File f = localData.getFile("user/", "" + id + ".jpg");
+        if (photo.isEmpty()) {
+            log.info("failed to upload photo: empty file?");
+        } else {
+            try (BufferedOutputStream stream =
+                         new BufferedOutputStream(new FileOutputStream(f))) {
+                byte[] bytes = photo.getBytes();
+                stream.write(bytes);
                 log.info("Uploaded photo for {} into {}!", id, f.getAbsolutePath());
-			} catch (Exception e) {
+            } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				log.warn("Error uploading " + id + " ", e);
-			}
-		}
-		return "{\"status\":\"photo uploaded correctly\"}";
+                log.warn("Error uploading " + id + " ", e);
+            }
+        }
+        return "{\"status\":\"photo uploaded correctly\"}";
     }
-    
-    
+
     /**
      * Returns JSON with all received messages
      */
     @GetMapping(path = "received", produces = "application/json")
-	@Transactional // para no recibir resultados inconsistentes
-	@ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
-	public List<Message.Transfer> retrieveMessages(HttpSession session) {
-		long userId = ((User)session.getAttribute("u")).getId();		
-		User u = entityManager.find(User.class, userId);
-		log.info("Generating message list for user {} ({} messages)", 
-				u.getUsername(), u.getReceived().size());
-		return  u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
-	}	
-    
-    /**
-     * Returns JSON with count of unread messages 
-     */
-	@GetMapping(path = "unread", produces = "application/json")
-	@ResponseBody
-	public String checkUnread(HttpSession session) {
-		long userId = ((User)session.getAttribute("u")).getId();		
-		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
-			.setParameter("userId", userId)
-			.getSingleResult();
-		session.setAttribute("unread", unread);
-		return "{\"unread\": " + unread + "}";
+    @Transactional // para no recibir resultados inconsistentes
+    @ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
+    public List<Message.Transfer> retrieveMessages(HttpSession session) {
+        long userId = ((User) session.getAttribute("u")).getId();
+        User u = entityManager.find(User.class, userId);
+        log.info("Generating message list for user {} ({} messages)",
+                u.getUsername(), u.getReceived().size());
+        return u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
     }
-    
+
+    /**
+     * Returns JSON with count of unread messages
+     */
+    @GetMapping(path = "unread", produces = "application/json")
+    @ResponseBody
+    public String checkUnread(HttpSession session) {
+        long userId = ((User) session.getAttribute("u")).getId();
+        long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+        session.setAttribute("unread", unread);
+        return "{\"unread\": " + unread + "}";
+    }
+
     /**
      * Posts a message to a user.
+     *
      * @param id of target user (source user is from ID)
-     * @param o JSON-ized message, similar to {"message": "text goes here"}
-     * @throws JsonProcessingException
+     * @param o  JSON-ized message, similar to {"message": "text goes here"}
+     * @throws JsonProcessingException if unable to build Json object
      */
     @PostMapping("/{id}/msg")
-	@ResponseBody
-	@Transactional
-	public String postMsg(@PathVariable long id, 
-			@RequestBody JsonNode o, Model model, HttpSession session) 
-		throws JsonProcessingException {
-		
-		String text = o.get("message").asText();
-		User u = entityManager.find(User.class, id);
-		User sender = entityManager.find(
-				User.class, ((User)session.getAttribute("u")).getId());
-		model.addAttribute("user", u);
-		
-		// construye mensaje, lo guarda en BD
-		Message m = new Message();
-		m.setRecipient(u);
-		m.setSender(sender);
-		m.setDateSent(LocalDateTime.now());
-		m.setText(text);
-		entityManager.persist(m);
-		entityManager.flush(); // to get Id before commit
-		
-		// construye json
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode rootNode = mapper.createObjectNode();
-		rootNode.put("from", sender.getUsername());
-		rootNode.put("to", u.getUsername());
-		rootNode.put("text", text);
-		rootNode.put("id", m.getId());
-		String json = mapper.writeValueAsString(rootNode);
-		
-		log.info("Sending a message to {} with contents '{}'", id, json);
+    @ResponseBody
+    @Transactional
+    public String postMsg(@PathVariable long id,
+                          @RequestBody JsonNode o, Model model, HttpSession session)
+            throws JsonProcessingException {
 
-		messagingTemplate.convertAndSend("/user/"+u.getUsername()+"/queue/updates", json);
-		return "{\"result\": \"message sent.\"}";
-	}
+        String text = o.get("message").asText();
+        User u = entityManager.find(User.class, id);
+        User sender = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
+        model.addAttribute("user", u);
 
-	@GetMapping("/{id}/chat")
-	public String getChat(@PathVariable long id, Model model, HttpSession session) {
-		User u = entityManager.find(User.class, id);
-		model.addAttribute("user", u);
-		return "chat";
-	}
+        // construye mensaje, lo guarda en BD
+        Message m = new Message();
+        m.setRecipient(u);
+        m.setSender(sender);
+        m.setDateSent(LocalDateTime.now());
+        m.setText(text);
+        entityManager.persist(m);
+        entityManager.flush(); // to get Id before commit
 
-	@PostMapping("{id}/follow")
-	@ResponseBody
-	@Transactional
-	public String follow(@PathVariable long id, Model model, HttpSession session) {
+        // construye json
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
+        rootNode.put("from", sender.getUsername());
+        rootNode.put("to", u.getUsername());
+        rootNode.put("text", text);
+        rootNode.put("id", m.getId());
+        String json = mapper.writeValueAsString(rootNode);
 
-		User user = entityManager.find(User.class, id);
-		User self = entityManager.find(
-				User.class, ((User)session.getAttribute("u")).getId());
+        log.info("Sending a message to {} with contents '{}'", id, json);
+
+        messagingTemplate.convertAndSend("/user/" + u.getUsername() + "/queue/updates", json);
+        return "{\"result\": \"message sent.\"}";
+    }
+
+    @GetMapping("/{id}/chat")
+    public String getChat(@PathVariable long id, Model model) {
+        User u = entityManager.find(User.class, id);
+        model.addAttribute("user", u);
+        return "chat";
+    }
+
+    @PostMapping("{id}/follow")
+    @ResponseBody
+    @Transactional
+    public String follow(@PathVariable long id, Model model, HttpSession session) {
+
+        User user = entityManager.find(User.class, id);
+        User self = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
 //		model.addAttribute("user", user); // ???
 
-		List<User> selfFollowed = self.getFollowed();
-		if(!selfFollowed.contains(user)) {
-			selfFollowed.add(user);
-			List<User> userFollowers = user.getFollowers();
-			userFollowers.add(self);
-		} else {
-			selfFollowed.remove(user);
-			List<User> userFollowers = user.getFollowers();
-			userFollowers.remove(self);
-		}
+        List<User> selfFollowed = self.getFollowed();
+        if (!selfFollowed.contains(user)) {
+            selfFollowed.add(user);
+            List<User> userFollowers = user.getFollowers();
+            userFollowers.add(self);
+        } else {
+            selfFollowed.remove(user);
+            List<User> userFollowers = user.getFollowers();
+            userFollowers.remove(self);
+        }
 
-		entityManager.persist(user);
-		entityManager.persist(self);
+        entityManager.persist(user);
+        entityManager.persist(self);
 
-		log.info("User {} now follows user {}", self.getUsername(), user.getUsername());
-		return "{\"result\": \"ok.\"}";
-	}
+        log.info("User {} now follows user {}", self.getUsername(), user.getUsername());
+        return "{\"result\": \"ok.\"}";
+    }
 
     @PostMapping("{id}/state")
     @ResponseBody
-	public String postState(@RequestParam("state") Model state, @PathVariable long id, 
-    HttpServletResponse response, HttpSession session, Model model){
+    public String postState(@RequestParam("state") Model state, @PathVariable long id,
+                            HttpServletResponse response, HttpSession session, Model model) {
         System.out.println("[Test] - Se ejecuta");
-		return "{\"result\": \"state updated.\"}";
-	}	
+        return "{\"result\": \"state updated.\"}";
+    }
+
+    @PostMapping("post")
+    @Transactional
+    public String publishPost(Model model, HttpSession session) {
+        User u = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
+        model.addAttribute("user", u);
+
+        Post post = new Post();
+        post.setAuthor(u);
+        post.setTitle("this is a post and you couldn't edit the title");
+        post.setText("? pero yo no escribí esto");
+        post.setDateSent(LocalDateTime.now());
+        entityManager.persist(post);
+        entityManager.flush();
+
+        log.info("published post with id {} by user with id {}", post.getId(), u.getId());
+
+        return "user";
+    }
+
+    @PostMapping("/register")
+    @Transactional
+    public String registerUser(
+            HttpServletResponse response,
+            @ModelAttribute User user,
+            Model model) throws IOException {
 
 
+        log.info("registrando usuario:  " + user.getUsername());
 
-	@PostMapping("/register")
-	@Transactional
-	public String registerUser(
-			HttpServletResponse response, 
-			@ModelAttribute User user,
-			Model model) throws IOException {
+        User target = null;
 
-			
-				
-				log.info("registrando usuario:  " + user.getUsername());
-		
-			User target = null;
-			
-            target = new User();
-			target.setUsername(user.getUsername());
-            target.setPassword(encodePassword(user.getPassword()));
-			target.setFirstName(user.getFirstName());
-			target.setLastName(user.getLastName());
-			target.setRoles("USER");
-            target.setEnabled(true);
-            entityManager.persist(target);
-            entityManager.flush(); // forces DB to add user & assign valid id
-            long id = target.getId();   // retrieve assigned id from DB
+        target = new User();
+        target.setUsername(user.getUsername());
+        target.setPassword(encodePassword(user.getPassword()));
+        target.setFirstName(user.getFirstName());
+        target.setLastName(user.getLastName());
+        target.setRoles("USER");
+        target.setEnabled(true);
+        entityManager.persist(target);
+        entityManager.flush(); // forces DB to add user & assign valid id
+        long id = target.getId();   // retrieve assigned id from DB
 
-			target = entityManager.find(User.class, id);
-        	model.addAttribute("user", target);
+        target = entityManager.find(User.class, id);
+        model.addAttribute("user", target);
         /*
         	User u = entityManager.createNamedQuery("User.byUsername", User.class)
 			.setParameter("username", user.getUsername())
 			.getSingleResult();			*/
-			//User requester = (User)session.getAttribute("u");
+        //User requester = (User)session.getAttribute("u");
 
-			log.info("Registrado usuario:  " + target.getUsername());
+        log.info("Registrado usuario:  " + target.getUsername());
 
         model.addAttribute("user", target);
-		
-		
-		return "login";
-	}	
+
+
+        return "login";
+    }
+
+    /**
+     * Exception to use when denying access to unauthorized users.
+     * <p>
+     * In general, admins are always authorized, but users cannot modify
+     * each other's profiles.
+     */
+    @ResponseStatus(
+            value = HttpStatus.FORBIDDEN,
+            reason = "No eres administrador, y éste no es tu perfil")  // 403
+    public static class NoEsTuPerfilException extends RuntimeException {
+    }
 
 
 	/*@PostMapping("/{id}/photo")
