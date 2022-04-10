@@ -2,240 +2,239 @@
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:replace="fragments/head :: header" />
+    <th:block th:replace="fragments/head :: header"/>
     <title>IW: Perfil</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header th:replace="fragments/nav.html :: nav"></header>
+<header th:replace="fragments/nav.html :: nav"></header>
 
-    <main class="flex-shrink-0">
-        <div class="container p-2">
+<main class="flex-shrink-0">
+    <div class="container p-2">
 
-            <!-- Información básica del usuario -->
-            <div class="d-flex align-items-center">
-                <div class="img-wrapper">
-                    <img class="iwprof rounded-circle m-3" th:src="@{/user/{id}/pic(id=${user.id})}">
+        <!-- Información básica del usuario -->
+        <div class="d-flex align-items-center">
+            <div class="img-wrapper">
+                <img class="iwprof rounded-circle m-3" th:src="@{/user/{id}/pic(id=${user.id})}">
+            </div>
+
+            <div class="mx-3 w-100">
+                <div class="mx-4">
+                    <h1 class="mt-5">@ <span th:text="${user.username}">Paco</span></h1>
+                    <p id="userState" th:text="${user.about}">About me...</p>
                 </div>
-                <div class="mx-3 w-100">
-                    <div class="mx-4">
-                        <h1 class="mt-5">@ <span th:text="${user.username}">Paco</span></h1>
-                        <p id="userState" th:text="${user.about}" >About me...</p>
-                    </div>
-                    <div class="d-flex ">
-                        <form  th:action="@{/2/usuariosfriends}" method="POST">
-                             <button   class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF" href="#"
-                             th:text="${user.followers.size() + ' seguidores'}" type="submit" > 0 seguidores</button>
 
-                        </form>
-                        <form  th:action="@{/1/usuariosfriends}" method="POST">
-                            <button class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF"
-                             href="#" th:text="${user.followed.size() + ' seguidos'}">0 seguidos</button>
-
-                       </form>
-                        <!--
-                        <div class="flex-column btn btn-light mx-2 rounded-3">
-                            <a class="nav-link" href="#" th:text="${user.followers.size() + ' seguidores'}">0 seguidores</a>
-                        </div>
-
-                        <div class="flex-column btn btn-light mx-2 rounded-3">
-                            <a class="nav-link" href="#" th:text="${user.followed.size() + ' seguidos'}">0 seguidos</a>
-                        </div>
-                    -->
-
-                    </div>
-                </div>
-                <div th:if="${session.u.id != user.id}">
-                    <div class="button flex-row">
-                        <form th:action="@{/user/__${user.id}__/follow}" method="POST">
-                            <button id="follow" class="btn btn-outline-success" type="submit"
-                                    th:text="${session.u.followed.contains(user)} ? 'Siguiendo' : 'Seguir'">Seguir</button>
-                            <!-- session.u.followed.contains(user) no funciona -->
-                        </form>
-                    </div>
-                    <div class="button flex-row">
-                        <form th:action="@{/user/__${user.id}__/chat}" method="GET">
-                            <button id="sendmsg" class="btn btn-outline-success" type="submit">Enviar un mensaje</button>
-                        </form>
-                    </div>
+                <div class="d-flex ">
+                    <form th:action="@{/2/usuariosfriends}" method="POST">
+                        <button class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF" href="#"
+                                th:text="${user.followers.size() + ' seguidores'}" type="submit"> 0 seguidores
+                        </button>
+                    </form>
+                    <form th:action="@{/1/usuariosfriends}" method="POST">
+                        <button class="flex-column btn btn-light mx-2 rounded-3 nav-link buttonF" href="#"
+                                th:text="${user.followed.size() + ' seguidos'}"> 0 seguidos
+                        </button>
+                    </form>
                 </div>
             </div>
 
-
-            <!-- Pestañas del perfil -->
-            <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-                <li class="nav-item h6">
-                    <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Posts</a>
-                </li>
-                <li class="nav-item h6">
-                    <a  class="nav-link" id="biblioteca" data-toggle="tab" href="#library" role="tab" aria-controls="library" aria-selected="false">Biblioteca</a>
-                </li>
-                <li class="nav-item h6">
-                    <a class="nav-link" id="lends-tab" data-toggle="tab" href="#lends" role="tab" aria-controls="lends" aria-selected="false">Préstamos</a>
-                </li>
-                <li class="nav-item h6">
-                    <a class="nav-link" id="lists-tab" data-toggle="tab" href="#lists" role="tab" aria-controls="lists" aria-selected="false">Listas de lectura</a>
-                </li>
-                <li class="nav-item h6">
-                    <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="false">Objetivos y estadísticas</a>
-                </li>
-                <li class="nav-item h6" th:if="${session.u.id == user.id}">
-                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Ajustes de perfil</a>
-                </li>
-            </ul>
-
-
-            <div class="tab-content" id="myTabContent">
-
-                <!--posts-->
-                <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys" th:if="${session.u.id == user.id}">
-                            <div class="widget panel" style="width:700px;">
-                                <form th:action="@{/user/post}" method="POST">
-                                    <label for="new-post" class="semibold nm" ><h5>What is on your mind</h5></label>
-                                    <textarea id="new-post" placeholder="Write something here"></textarea>
-                                    <button id="publish-post" class="btn btn-outline-success" type="submit">Publicar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" th:each="post : ${user.posts}">
-                        <div th:replace="fragments/post.html :: post(${post})"></div>
-                    </div>
-                </div>
-
-                <!--libros-->
-                <div class="tab-pane fade" id="library" role="tabpanel" aria-labelledby="library-tab">
-                    <p>Quiero leer</p>
-                    <div th:if="${user.library} != null">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6 special-grid" th:each="key: ${user.library.books_quiero_leer.keySet()}">
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
-                                        <div id="imgPortada" class="" ></div>
-                                        <img th:src="${user.library.books_quiero_leer.get(key).book.imag}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
-                                    </div>
-                                    <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
-                                        <div class="why-text">
-
-                                            <h3 th:text="${user.library.books_quiero_leer.get(key).book.titulo}">Nombre del libro</h3>
-                                            <h5 th:text="${user.library.books_quiero_leer.get(key).book.autor}">Por Autor</h5>
-                                            <div class="product-rating mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star mr-0"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div th:unless="${user.library} != null">
-                        <p>No books</p>
-                    </div>
-                </div>
-
-                <!--prestamos-->
-                <div class="tab-pane fade" id="lends" role="tabpanel" aria-labelledby="lends-tab">
-                    <p>Prestamos</p>
-                </div>
-
-                <!--listas-->
-                <div class="tab-pane fade" id="lists" role="tabpanel" aria-labelledby="lists-tab">
-                    <p>Listas de lectura</p>
-                </div>
-
-                <!--stats-->
-                <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-                    <p>Estadísticas</p>
-                </div>
-
-                <!--perfil-->
-                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    <h2>Actualizar foto de perfil</h2>
-
-                    <input type="file" id="f_avatar" accept="image/jpeg,image/png">
-                    <img id="avatar" alt="foto de perfil" hidden/>
-                    <form th:action="@{/user/__${user.id}__/pic}">
-                        <button id="postAvatar">Subir foto</button>
-                    </form>
-                    <br>
-
-                    <h2>Actualizar estado </h2>
-                    <input id="estado" type="text"  placeholder="Estado anterior" size="60" maxlength="144"/>
-                    <form th:action="@{/user/__${user.id}__/state}">
-                        <button id="postEstado">Actualizar estado</button>
+            <div th:if="${session.u.id != user.id}">
+                <div class="button flex-row">
+                    <form th:action="@{/user/__${user.id}__/follow}" method="POST">
+                        <button id="follow" class="btn btn-outline-success" type="submit"
+                                th:text="${session.u.followed.contains(user)} ? 'Siguiendo' : 'Seguir'">Seguir
+                        </button>
+                        <!-- session.u.followed.contains(user) no funciona -->
                     </form>
                 </div>
-
+                <div class="button flex-row">
+                    <form th:action="@{/user/__${user.id}__/chat}" method="GET">
+                        <button id="sendmsg" class="btn btn-outline-success" type="submit">Enviar un mensaje</button>
+                    </form>
+                </div>
             </div>
+
         </div>
-    </main>
 
-    <th:block th:replace="fragments/footer.html :: footer" />
-    <script>
+        <!-- Pestañas del perfil -->
+        <ul class="nav nav-tabs mt-4" id="myTab">
+            <li class="nav-item h6">
+                <a class="nav-link" id="posts-tab" th:href="@{/user/__${user.id}__(tab = 'posts')}">Posts</a>
+            </li>
+            <li class="nav-item h6">
+                <a class="nav-link" id="biblioteca" th:href="@{/user/__${user.id}__(tab = 'library')}">Biblioteca</a>
+            </li>
+            <li class="nav-item h6">
+                <a class="nav-link" id="lends-tab" th:href="@{/user/__${user.id}__(tab = 'lends')}">Préstamos</a>
+            </li>
+            <li class="nav-item h6">
+                <a class="nav-link" id="lists-tab" th:href="@{/user/__${user.id}__(tab = 'lists')}">Listas de lectura</a>
+            </li>
+            <li class="nav-item h6">
+                <a class="nav-link" id="stats-tab" th:href="@{/user/__${user.id}__(tab = 'stats')}">Objetivos y estadísticas</a>
+            </li>
+            <li class="nav-item h6" th:if="${session.u.id == user.id}">
+                <a class="nav-link" id="settings-tab" th:href="@{/user/__${user.id}__(tab = 'settings')}">Ajustes de perfil</a>
+            </li>
+        </ul>
 
-        let b = document.getElementById("follow");
-        b.addEventListener('click', (e) => {
-            e.preventDefault();
-            go(b.parentNode.action, 'POST')
-                .then(d => console.log("happy", d))
-                .catch(e => console.log("sad", e))
-            // hace falta recargar la pagina para q se vea
+        <!-- Contenido del perfil (pestaña activa) -->
+        <th:block th:switch="${tab}" class="tab-content">
+
+            <div th:case="LIBRARY" class="tab-pane fade show active" id="library">
+                <p>Quiero leer</p>
+                <div th:if="${user.library} != null">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 special-grid"
+                             th:each="key: ${user.library.books_quiero_leer.keySet()}">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <div id="imgPortada" class=""></div>
+                                    <img th:src="${user.library.books_quiero_leer.get(key).book.imag}"
+                                         src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
+                                </div>
+                                <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
+                                    <div class="why-text">
+                                        <h3 th:text="${user.library.books_quiero_leer.get(key).book.titulo}">Nombre del libro</h3>
+                                        <h5 th:text="${user.library.books_quiero_leer.get(key).book.autor}">Por Autor</h5>
+                                        <div class="product-rating mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star mr-0"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:unless="${user.library} != null">
+                    <p>No books</p>
+                </div>
+            </div>
+
+            <div th:case="LENDS" class="tab-pane fade show active" id="lends">
+                <p>Prestamos</p>
+            </div>
+
+            <div th:case="LISTS" class="tab-pane fade show active" id="lists">
+                <p>Listas de lectura</p>
+            </div>
+
+            <div th:case="STATS" class="tab-pane fade show active" id="stats">
+                <p>Estadísticas</p>
+            </div>
+
+            <div th:case="SETTINGS" class="tab-pane fade show active" id="settings">
+                <h2>Actualizar foto de perfil</h2>
+
+                <input type="file" id="f_avatar" accept="image/jpeg,image/png">
+                <img id="avatar" alt="foto de perfil" hidden/>
+                <form th:action="@{/user/__${user.id}__/pic}">
+                    <button id="postAvatar">Subir foto</button>
+                </form>
+                <br>
+
+                <h2>Actualizar estado </h2>
+                <input id="estado" type="text" placeholder="Estado anterior" size="60" maxlength="144"/>
+                <form th:action="@{/user/__${user.id}__/state}">
+                    <button id="postEstado">Actualizar estado</button>
+                </form>
+            </div>
+
+            <!-- POSTS -->
+            <div th:case="*" class="tab-pane fade show active show active" id="posts">
+                <div class="row">
+                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys"
+                         th:if="${session.u.id == user.id}">
+                        <div class="widget panel" style="width:700px;">
+                            <form th:action="@{/user/post}" method="POST">
+                                <label for="new-post" class="semibold nm"><h5>What is on your mind</h5></label>
+                                <textarea id="new-post" placeholder="Write something here"></textarea>
+                                <button id="publish-post" class="btn btn-outline-success" type="submit">Publicar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" th:each="post : ${user.posts}">
+                    <div th:replace="fragments/post.html :: post(${post})"></div>
+                </div>
+            </div>
+
+        </th:block>
+
+    </div>
+</main>
+
+<th:block th:replace="fragments/footer.html :: footer"/>
+<script>
+
+    let b = document.getElementById("follow");
+    b.addEventListener('click', (e) => {
+        e.preventDefault();
+        go(b.parentNode.action, 'POST')
+            .then(d => console.log("happy", d))
+            .catch(e => console.log("sad", e))
+        // hace falta recargar la pagina para q se vea
+    });
+
+    let c = document.getElementById("publish-post")
+    c.addEventListener('click', (e) => {
+        e.preventDefault();
+        go(c.parentNode.action, 'POST', {
+            text: document.getElementById("new-post").value
+        })
+            .then(d => console.log("happy", d))
+            .catch(e => console.log("sad", e))
+        // hace falta recargar la pagina para q se vea
+    });
+
+    document.querySelector("#f_avatar").addEventListener('change', (e) => {
+        let img = document.querySelector("#avatar");
+        let fileInput = document.querySelector("#f_avatar");
+        console.log(img, fileInput);
+        readImageFileData(fileInput.files[0], img);
+    });
+
+    // click en boton de enviar avatar
+    document.querySelector("#postAvatar").addEventListener('click', (e) => {
+        e.preventDefault();
+        let url = document.querySelector("#postAvatar").parentNode.action;
+        let img = document.querySelector("#avatar");
+        let file = document.querySelector("#f_avatar");
+        console.log(url, img, file);
+        postImage(img, url, "photo").then(() => {
+            let cacheBuster = "?" + new Date().getTime();
+            document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
+            document.querySelector("div.img-wrapper>img.iwprof").src = url + cacheBuster;
         });
+    });
 
-        let c = document.getElementById("publish-post")
-        c.addEventListener('click', (e) => {
-            e.preventDefault();
-            go(c.parentNode.action, 'POST', {
-                text: document.getElementById("new-post").value
-            })
-                .then(d => console.log("happy", d))
-                .catch(e => console.log("sad", e))
-            // hace falta recargar la pagina para q se vea
+    // click en boton de enviar estado
+    document.querySelector("#postEstado").addEventListener('click', (e) => {
+        e.preventDefault();
+        let url = document.querySelector("#postEstado").parentNode.action;
+        let state = document.querySelector("#estado").value;
+        console.log(url, state);
+        postState(state, url, "state").then(() => {
+            document.getElementById("userState").innerText = state;
         });
+    });
+</script>
 
-        document.querySelector("#f_avatar").addEventListener('change', (e)=> {
-            let img = document.querySelector("#avatar");
-            let fileInput = document.querySelector("#f_avatar");
-            console.log(img, fileInput);
-            readImageFileData(fileInput.files[0], img);
-        });
-
-        // click en boton de enviar avatar
-        document.querySelector("#postAvatar").addEventListener('click', (e) => {
-            e.preventDefault();
-            let url = document.querySelector("#postAvatar").parentNode.action;
-            let img = document.querySelector("#avatar");
-            let file = document.querySelector("#f_avatar");
-            console.log(url, img, file);
-            postImage(img, url, "photo").then(() => {
-                let cacheBuster = "?" + new Date().getTime();
-                document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
-                document.querySelector("div.img-wrapper>img.iwprof").src = url + cacheBuster;
-            });
-        });
-
-        // click en boton de enviar estado
-        document.querySelector("#postEstado").addEventListener('click', (e) => {
-            e.preventDefault();
-            let url = document.querySelector("#postEstado").parentNode.action;
-            let state = document.querySelector("#estado").value;
-            console.log(url, state);
-            postState(state, url, "state").then(() =>{
-                document.getElementById("userState").innerText = state;
-            });
-        });
-    </script>
-
-    <!-- JavaScript, for the tabs-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- JavaScript, for the tabs-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 </body>
 

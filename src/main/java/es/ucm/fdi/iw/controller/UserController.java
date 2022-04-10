@@ -29,6 +29,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -100,8 +101,10 @@ public class UserController {
      */
     @GetMapping("{id}")
     @Transactional
-    public String index(@PathVariable long id, Model model, HttpSession session) {
+    public String index(@PathVariable long id, @RequestParam(defaultValue = "posts") String tab, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
+
+        model.addAttribute("tab", tab); // tab.toUpperCase());
 
         log.info("USER:" + id);
         Library libreria = entityManager
@@ -148,7 +151,6 @@ public class UserController {
 				tuple -> ((Number) tuple.get("BOOKS_QUIERO_LEER_ID ")).intValue()
 			)
 		);
-
 		
 		//target.addToLibrary(), p, libreria);
 		log.info("Mapa: " + books_quiero_leer.entrySet().toString());

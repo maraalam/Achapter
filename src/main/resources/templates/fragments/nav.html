@@ -11,7 +11,7 @@
     <header th:fragment="nav">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-            <!-- nombre del sitio; es un enlace que lleva a la página ppal -->        
+            <!-- nombre del sitio; es un enlace que lleva a la página ppal -->
             <a class="navbar-brand" th:href="@{/}" href="/"> <!-- Logo -->
                 <img th:src="@{/img/achapterLogo.png}" src="/img/achapterLogo.png" alt="logo AChapter" width="150" height="50" class="d-inline-block align-text-top">
             </a>
@@ -38,19 +38,16 @@
                         <a class="nav-link" th:href="@{/prestamos}" href="/prestamos">Préstamos</a>
                     </li>
 
-                    <form class="nav-item form-inline search-form align-self-left mx-2" th:action="@{/buscar}" action="/buscar" method:"get">
-                    
-
+                    <form class="nav-item form-inline search-form align-self-left mx-2" th:action="@{/buscar}" action="/buscar" method="GET">
                         <select id="type_search" class="type_search" name="type">
                             <option class="dropdown-item" active value="titulo">Titulo</option>
                             <option class="dropdown-item" value="isbn">IBSN</option>
-                            
                         </select>
-                        
+
                         <input id=busquedaNav class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
                         <button id=submitNav class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                        
+
                     <th:block th:if="${session.u}">
                         <li class="nav-item align-self-left" th:if="${session.u.hasRole('ADMIN')}">
                             <a class="nav-link" th:href="@{/admin/}">Administrar</a>
@@ -66,11 +63,10 @@
                             </button>
                         </li>
 
-                        
-                            <a class="nav-item align-self-left me-4" th:href="@{/usuarios}" href="/"> 
-                                <img th:src="@{/img/read.png}" src="/img/read.png" alt="logo users" width="45" height="45" class="d-inline-block align-text-top">
-                            </a>
-                        
+                        <a class="nav-item align-self-left me-4" th:href="@{/usuarios}" href="/">
+                            <img th:src="@{/img/read.png}" src="/img/read.png" alt="logo users" width="45" height="45" class="d-inline-block align-text-top">
+                        </a>
+
 
                         <li class="nav-item dropdown align-self-left">
                             <a class="nav-link dropdown-toggle pfp" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,14 +74,16 @@
                                 <span id="idUsuario" th:text="${session.u.username}">Pepe</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" th:href="@{/user/{id}#posts(id=${session.u.id})}">Mis Posts</a></li>
-                                <li><a class="dropdown-item" th:href="@{/user/{id}#library(id=${session.u.id})}">Biblioteca</a></li>
-                                <li><a class="dropdown-item" th:href="@{/user/{id}#lends(id=${session.u.id})}">Préstamos</a></li>
-                                <li><a class="dropdown-item" th:href="@{/user/{id}#lists(id=${session.u.id})}">Listas de lectura</a></li>
-                                <li><a class="dropdown-item" th:href="@{/user/{id}#stats(id=${session.u.id})}">Objetivos y estadísticas</a></li>
+                                <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id}, tab='posts')}">Mis Posts</a></li>
+                                <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id}, tab='library')}">Biblioteca</a></li>
+                                <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id}, tab='lends')}">Préstamos</a></li>
+                                <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id}, tab='lists')}">Listas de lectura</a></li>
+                                <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id}, tab='stats')}">Objetivos y estadísticas</a></li>
 
                                 <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" th:href="@{/user/{id}(id=${session.u.id}, tab='settings')}">Ajustes del perfil</a></li>
 
+                                <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form th:action="@{/logout}" method="post">
                                         <button type="submit" class="dropdown-item">Cerrar sesión</button>
@@ -93,6 +91,7 @@
                                 </li>
                             </ul>
                         </li>
+
                     </th:block>
 
                     <th:block th:unless="${session.u}">
