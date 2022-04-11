@@ -2,9 +2,18 @@
 
 Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuadas, limitadas en funcionamiento y complicadas de utilizar. ¿Quieres encontrar tu próxima lectura, o tal vez compartir con tus amigos el progreso de tu actual lectura? ¿Tienes una lista de libros pendientes de la que siempre te olvidas? Proponemos una nueva aplicación amigable y divertida en la que encontrar tus libros favoritos y expresarte en una comunidad con tus mismos intereses.
 
+## En desarrollo
+- Websockets funcionan si accedes a un usuario desde el botón para ver los usuarios de la aplicación (muñeco en el nav), vas al perfil del usuario y presionas "Enviar mensaje" (Ejemplo: http://localhost:8080/user/21111/chat?  -> Usuario que queremos escribir tiene id 21111).
+
+## Usuarios
+- Se puede registrar un usuario en la aplicación. Con estos datos luego se puede hacer login. 
+- Hasta el momento, se puede hacer login rápido usando los botones de "a" y "b"
+
 ## Flujo Principal y adicionales
 - Guardar un libro en la biblioteca de un usuario
 - Buscar libros con el buscador dentro de la propia BD (Search en el Nav Bar)
+- Ver perfiles y libros que estan leyendo otros usuarios (Pruebas por implementar).
+- Registrarse e iniciar sesión (Pruebas por implementar).
 
 
 ## USO DE AJAX
