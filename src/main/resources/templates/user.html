@@ -81,7 +81,7 @@
         <!-- Contenido del perfil (pestaña activa) -->
         <th:block th:switch="${tab}" class="tab-content">
 
-            <div th:case="LIBRARY" class="tab-pane fade show active" id="library">
+            <div th:case="library" class="tab-pane fade show active" id="library">
                 <p>Quiero leer</p>
                 <div th:if="${user.library} != null">
                     <div class="row">
