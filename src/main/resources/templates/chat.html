@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html class="h-100" xmlns:th="http://www.thymeleaf.org">
-
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <th:block th:replace="fragments/head :: header" />
+    <th:block th:replace="fragments/head :: header"/>
     <title>Mensajeria</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+     <link rel="stylesheet" th:href="@{/css/chat.css}" href="css/chat.css" type="text/css" />
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -11,12 +16,60 @@
 
     <main class="flex-shrink-0" >
 
+        
+        <section>
+        <div class="container">
+            <div class="main">
+                <img class="iwthumb rounded-2" th:src="@{/user/{id}/pic(id=${user.id})}">
+                <h1 th:text="${user.username}" class="align-self-left">Chat</h1>
+                <div id="chatbox" >
+                    
+                    
+                        <!--
+                        <p th:text=" ${m.dateSent} "> Usuario: texto</p>
+                        <p th:text=" ${m.text}"> Usuario: texto</p>
+                    -->
+                        
+                        <div id="liChat"> 
+                            <div th:each="m: ${messages}" >
+                                <div th:switch="${m.sender.id}"> 
+                            
+                                    <div th:case="${session.u.id}">
+                                        <div class="message-data">
+                                            <span th:text=" ${m.dateSent}" class="message-data-time float-right">10:12 AM, Today</span>
+                                        </div>
+                                        <div th:text=" ${m.text}"  class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                                    </div> 
+                                    
+                                    <div th:case="*">
+                                        <div class="message-data">
+                                            <span th:text=" ${m.dateSent}" class="message-data-time">10:12 AM, Today</span>
+                                        </div>
+                                        <div th:text=" ${m.text}" class="message my-message">Are we meeting today?</div> 
+                                    </div>   
+                        
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                </div>                
+
+        
+
+            
+            
+            
+            </div>
+        </div>	
+    </section>
+
         <!-- Friends messages -->
         <section id="leftMessages">
 
-            <h4 th:text="${user.username}">Chat</h4>
+           
             <br> <br>
-
+            
             <form th:action="@{/user/__${user.id}__/msg}" method="POST">
                 <input type="text" id="message" placeholder="escribe a este usuario" />
                 <button id="sendmsg" class="btn btn-outline-success" type="submit">Enviar un mensaje</button>
@@ -27,21 +80,71 @@
             </div>
 
         </section>
-
+        
+       
 
     </main>
+    <section> <table hidden class="datatable" id="datatable"></table> </section>
     <th:block th:replace="fragments/footer.html :: footer" />
     <script>
+
+function formatDate(d) {
+		// 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
+		return new Date(d).toLocaleString("es-ES").split(" ").join("@")
+	}
+
+	
+
+	// envío de mensajes vía AJAX, sin recargar la página
+
         // envio de mensajes con AJAX
         let b = document.getElementById("sendmsg");
         b.addEventListener('click', (e) => {
-            e.preventDefault();
-            go(b.parentNode.action, 'POST', {
+            e.preventDefault();                  // <-- evita que se envíe de la forma normal
+            go(b.parentNode.action, 'POST', {  // <-- hace el `fetch`, y recibe resultados
                 message: document.getElementById("message").value
             })
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
-        })
+        });
+
+        // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
+	let dt = new simpleDatatables.DataTable(
+		'#datatable', { 
+		    ajax: {
+		        url: config.rootUrl + "message/received", // empieza siempre por config.rootUrl
+		        load: function(xhr) {
+		        	let data = JSON.parse(xhr.responseText);
+		        	for (let i=0; i<data.length; i++) {
+		        		let row = data[i];
+		        		row.sent = formatDate(row.sent);
+		        		if (row.received) {
+		        			row.received = formatDate(row.received);
+		        		}
+		        	}
+		        	
+		        	return JSON.stringify(data);
+		        }
+		    }
+		}
+	);
+
+    let b2 = document.getElementById("liChat");
+        // sobreescribid esta funcion para especificar qué sucede cuando recibes un mensaje
+	    // aquí estoy metiendo el mensaje al final de la tabla
+	    ws.receive = (m) => {
+		    //dt.rows().add([m.from, m.to, formatDate(new Date().toISOString()), "", m.text, m.id]);		
+            let para = document.createElement("div");
+            para.style = "message-data";
+    
+            const para2 =  document.createElement("div");
+            para2.innerText = m.text;
+            para2.style = "color: #444; padding: 18px 20px; line-height: 26px; font-size: 16px; border-radius: 7px; display: inline-block; position: relative,  background: #efefef";
+            
+            
+            b2.appendChild(para);
+            b2.appendChild(para2);
+	    }
 
     </script>
 

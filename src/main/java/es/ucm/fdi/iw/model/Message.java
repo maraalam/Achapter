@@ -17,10 +17,13 @@ import java.time.format.DateTimeFormatter;
 @NamedQueries({
 	@NamedQuery(name="Message.countUnread",
 	query="SELECT COUNT(m) FROM Message m "
-			+ "WHERE m.recipient.id = :userId AND m.dateRead = null")
+			+ "WHERE m.recipient.id = :userId AND m.dateRead = null"),
+	@NamedQuery(name="Message.byUsers",
+	query="SELECT m FROM Message m "
+			+ "WHERE m.recipient.id = :userId AND m.sender.id = :senderId")
 })
 @Data
-public class Message implements Transferable<Message.Transfer> {
+public class Message implements Transferable<Message.Transfer>, Comparable<Message>{
 	
 	private static Logger log = LogManager.getLogger(Message.class);	
 	
@@ -35,8 +38,14 @@ public class Message implements Transferable<Message.Transfer> {
 	private String text;
 	
 	private LocalDateTime dateSent;
+	
 	private LocalDateTime dateRead;
 	
+	@Override
+  	public int compareTo(Message o) {
+    	return dateSent.compareTo(o.dateSent);
+  	}
+
 	/**
 	 * Objeto para persistir a/de JSON
 	 * @author mfreire

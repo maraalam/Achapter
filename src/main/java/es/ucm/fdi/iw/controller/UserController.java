@@ -28,6 +28,7 @@ import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -342,10 +343,47 @@ public class UserController {
     }
 
     @GetMapping("/{id}/chat")
-    public String getChat(@PathVariable long id, Model model) {
+    @Transactional
+    public String getChat(@PathVariable long id, Model model, HttpSession session) {
         User u = entityManager.find(User.class, id);
         model.addAttribute("user", u);
+
+        long userId = ((User) session.getAttribute("u")).getId();
+        List<Message> l= entityManager.createNamedQuery("Message.byUsers", Message.class)
+        .setParameter("userId", userId).setParameter("senderId", id)
+        .getResultList();
+
+        l.addAll(entityManager.createNamedQuery("Message.byUsers", Message.class)
+        .setParameter("userId", id).setParameter("senderId", userId)
+        .getResultList());
+
+        Collections.sort(l);
+        model.addAttribute("messages", l);
+
         return "chat";
+    }
+
+    @PostMapping("/{id}/chat")
+    @ResponseBody
+    @Transactional
+    public String getChat2(@PathVariable long id, Model model, HttpSession session) {
+        User u = entityManager.find(User.class, id);
+        model.addAttribute("user", u);
+
+        long userId = ((User) session.getAttribute("u")).getId();
+        List<Message> l= entityManager.createNamedQuery("Message.byUsers", Message.class)
+        .setParameter("userId", userId).setParameter("senderId", id)
+        .getResultList();
+
+        l.addAll(entityManager.createNamedQuery("Message.byUsers", Message.class)
+        .setParameter("userId", id).setParameter("senderId", userId)
+        .getResultList());
+
+        Collections.sort(l);
+        model.addAttribute("messages", l);
+        
+
+        return "chat.html";
     }
 
     @PostMapping("{id}/follow")
@@ -456,7 +494,26 @@ public class UserController {
     }
 
 
-	/*@PostMapping("/{id}/photo")
+
+
+	/*
+		@GetMapping("/messagebox")
+    public String messagebox(Model model, HttpSession session) {
+		User requester = (User)session.getAttribute("u");
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode rootNode = mapper.createObjectNode();
+		rootNode.put("text", requester.getUsername()
+		+ " is looking up " + u.getUsername());
+		String json = mapper.writeValueAsString(rootNode);
+		// { "text": "pepito is looking up juanito" }
+		messagingTemplate.convertAndSend("/user/"+u.getUsername() +"/queue/updates", json);
+        return "messagebox";
+    }
+
+
+
+
+	@PostMapping("/{id}/photo")
     @ResponseBody
     public String postPhoto(@RequestParam("photo") MultipartFile photo,@PathVariable("id") String id){
         File f = localData.getFile("user", id +".jpg");

@@ -94,7 +94,54 @@ $(document).ready(function() {
 
        var viewUrl = 'book.html?isbn='+bookIsbn; //constructing link for bookviewer
        var htmlCard = ` 
+       <div class="col-lg-6">
+       <div class="card" style="">
+         <div class="row no-gutters">
+           <div class="col-md-7">
+             <img src="${bookImg}" class="card-img" alt="...">
+           </div> <br>
+           <div class="col-md-10">
+             <div class="card-body">
+
+               <div class="why-text">
+                    <h5 id ="title" class="booktitle" "> ${title} </h5>
+                    <h6 id ="author"> ${author}</h6>
+                    <h6 id ="publisher"> ${publisher}</h6>
+                    <h6 hidden id ="isbn"> ${bookIsbn}</h6>
+                    <img  id ="img" src="${bookImg}" class="card-img" alt="..." hidden>
+                    <h6 hidden id ="pagecount"> ${bookPageCount}</h6>
+                    <h6 hidden id ="categories"> ${bookCategories}</h6>
+                    <button id="sendBook" type="submit" name="submit" onclick="return submitBook();">GuardarLista</button>
+                    <br>
+                    <br>
+                </div>
+
+             </div>
+           </div>
+         </div>
+       </div>
+     </div> <br>
        
+  `
+
+      
+       return htmlCard;
+     }
+  
+     //handling error for empty search box
+     function displayError() {
+      Console.log("search term can not be empty!")
+     }
+
+ 
+     
+  });
+
+
+  
+  /*
+
+
        <div class="products-single fix">
           <div class="box-img-hover">
               <div id="imgPortada" class="" ></div>
@@ -118,24 +165,7 @@ $(document).ready(function() {
               </div>
           </a>
     </div>
-       
-  `
 
-      
-       return htmlCard;
-     }
-  
-     //handling error for empty search box
-     function displayError() {
-      Console.log("search term can not be empty!")
-     }
-
- 
-     
-  });
-
-  
-  /*
 
   <div class="col-lg-6">
          <div class="card" style="">
