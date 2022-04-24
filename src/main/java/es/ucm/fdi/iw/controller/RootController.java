@@ -171,7 +171,7 @@ public class RootController {
 
  @PostMapping("/addBook")
  @Transactional
-public String crearBook(@RequestBody  JsonNode data, Model model){
+public String crearBook(@RequestBody JsonNode data, Model model){
             log.info("En funcion crearBook");
             Book b = new Book();
 
@@ -202,25 +202,28 @@ public String crearBook(@RequestBody  JsonNode data, Model model){
 
         log.info("En funcion GUARDAR EN LIBRERIA");
         log.info("Libreria:" + tipoLibreria);
-        User u = entityManager.find(
+        User user = entityManager.find(
                 User.class, ((User)session.getAttribute("u")).getId());
-        Book b = entityManager.find(Book.class, id);
+        Book book = entityManager.find(Book.class, id);
 
-        if (u.getLibrary() == null) {
-            Library lib = new Library(u);
-//            lib.setOwner(u);
-            u.setLibrary(lib);
+        if (user.getLibrary() == null) {
+            Library lib = new Library(user);
+            user.setLibrary(lib);
             entityManager.persist(lib);
         }
-        Progress pro = new Progress();
-        pro.setBook(b);
-        pro.setUser(u);
-        entityManager.persist(pro);
-        entityManager.flush();
-        u.addToLibrary(b, pro, tipoLibreria);
-        entityManager.persist(u);
 
-        log.info("Book with id {} added to user {}'s library", id, u.getId());
+        Progress progress = new Progress();
+        progress.setBook(book);
+        progress.setUser(user);
+        progress.setEstado(tipoLibreria);
+
+        entityManager.persist(progress);
+        entityManager.flush();
+
+        user.addToLibrary(book, progress);
+        entityManager.persist(user);
+
+        log.info("Book with id {} added to user {}'s library", id, user.getId());
         return "index";
     }
 

@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A user's personal library.
@@ -17,11 +19,14 @@ import java.util.Map;
 )
 public class Library {
 
+    private static final Logger log = LogManager.getLogger(Library.class);
+
     public static final String terminado = "terminado";
     public static final String quieroLeer = "quieroLeer";
     public static final String leyendo = "leyendo";
     public static final String abandonados = "abandonados";
     public static final String pausados = "pausados";
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,57 +36,34 @@ public class Library {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    @ManyToMany(targetEntity = Progress.class)
-    @JoinTable(
-            name = "LIBRARY_BOOKS_QUIERO_LEER",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "progreso_id"))
-    private Map<Long, Progress> books_quiero_leer;
-
-    @ManyToMany(targetEntity = Progress.class)
-    private Map<Long, Progress> books_terminados;
-
-    @ManyToMany(targetEntity = Progress.class)
-
-    private Map<Long, Progress> books_leyendo;
-
-    @ManyToMany(targetEntity = Progress.class)
-    private Map<Long, Progress> books_abandonados; //dropeados
-
-    @ManyToMany(targetEntity = Progress.class)
-    private Map<Long, Progress> books_pausados;
-
-    public Library() {
-        //¿?
+    public Library(){
 
     }
+
+    @ManyToMany(targetEntity = Progress.class)
+    private Map<Long, Progress> books;
 
     public Library(User u) {
         this.owner = u;
-        this.books_quiero_leer = new HashMap<>();
-        this.books_terminados = new HashMap<>();
-        this.books_leyendo = new HashMap<>();
-        this.books_abandonados = new HashMap<>();
-        this.books_pausados = new HashMap<>();
+        this.books = new HashMap<>();
     }
 
-    public void put(Book b, Progress p, String libreria) {
-        switch (libreria) {
-            case terminado:
-                this.books_terminados.put(b.getId(), p);
-                break;
-            case abandonados:
-                this.books_abandonados.put(b.getId(), p);
-                break;
-            case pausados:
-                this.books_pausados.put(b.getId(), p);
-                break;
-            case leyendo:
-                this.books_leyendo.put(b.getId(), p);
-                break;
-            case quieroLeer:
-                this.books_quiero_leer.put(b.getId(), p);
-                break;
-        }
+    public void put(Book b, Progress p) {
+        this.books.put(b.getId(), p);
     }
+
+    /*public HashMap<Long, Progress> getQuieroLeer(){
+        HashMap<Long, Progress> quieroLeer = new HashMap<>();
+        for (Map.Entry<Long, Progress> entry : this.books.entrySet()) {
+            if(entry.getValue().getEstado().equals(Library.quieroLeer)){
+                quieroLeer.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        return quieroLeer;
+    }
+
+    public Map<Long, Progress> test(){
+        return this.books;
+    }*/
 }

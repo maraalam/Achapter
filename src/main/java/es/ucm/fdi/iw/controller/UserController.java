@@ -116,12 +116,9 @@ public class UserController {
         if (libreria != null) {
 
             if (target.getLibrary() == null) {
-                //Library lib = new Library(target);
                 libreria.setOwner(target);
                 target.setLibrary(libreria);
-                //entityManager.persist(lib);
             }
-            //Book books_quiero_leer = entityManager.createQuery(" SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id   ", Book.class).getSingleResult(); //SELECT nl.book FROM Library l INNER JOIN  l.books_quiero_leer nl " + "ON nl.id = l.id
 
             Progress progress = entityManager
                     .createNamedQuery("Progreso.byUser", Progress.class)
@@ -133,7 +130,7 @@ public class UserController {
                 log.info("Book: " + progress.getBook().getTitulo());
 
                 Library l = target.getLibrary();
-                l.put(progress.getBook(), progress, "quieroLeer");
+                l.put(progress.getBook(), progress);
             }
             log.info("paso");
         } else

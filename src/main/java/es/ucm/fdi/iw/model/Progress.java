@@ -16,6 +16,13 @@ import javax.persistence.*;
                 query = "SELECT p FROM Progress p " + "WHERE p.user.id <> :user")
 )
 public class Progress implements Transferable<Progress.Transfer> {
+
+    public static final String terminado = "terminado";
+    public static final String quieroLeer = "quieroLeer";
+    public static final String leyendo = "leyendo";
+    public static final String abandonados = "abandonados";
+    public static final String pausados = "pausados";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id; //primary key of the dataset
@@ -26,6 +33,8 @@ public class Progress implements Transferable<Progress.Transfer> {
     @ManyToOne
     private Book book;
 
+    //estado se usará para determinar si el libro está terminado, leyendose, pausado...
+    private String estado;
     private Long porcentaje;
     private Long numPaginas;
 
@@ -33,17 +42,17 @@ public class Progress implements Transferable<Progress.Transfer> {
     @AllArgsConstructor
     public static class Transfer {
 
+        private String estado;
         private Long porcentaje;
         private Long numPaginas;
         long id;
         public Transfer(Progress p) {
-           
+            this.estado = p.getEstado();
             this.porcentaje = p.getPorcentaje();
             this.numPaginas= p.getNumPaginas();
             this.id = p.getId();
         }
     }
-
 
 	@Override
 	public Transfer toTransfer() {
