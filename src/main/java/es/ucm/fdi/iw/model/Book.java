@@ -41,33 +41,33 @@ public class Book implements Transferable<Book.Transfer> {
    
     private int numpaginas;
 
-   	@OneToMany(targetEntity=Review.class)
+    @OneToMany(targetEntity=Review.class)
     @JoinColumn(name = "book_id")
     private List<Review> reviewsPropias;
 	
     @Getter
     @AllArgsConstructor
     public static class Transfer {
-	private String titulo;
-	private String autor;
-    private String portada;
-    private String saga;
-    private String fecha;
-    private String descripcion;
-    private long puntuación;
-	private int numpaginas;
-        long id;
-        public Transfer(Book b) {
-            this.titulo = b.getTitulo();
-            this.autor = b.getAutor();
-            this.portada = b.getPortada();
-            this.saga = b.getSaga();
-            this.fecha = b.getFecha();//DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
-            this.descripcion = b.getDescripcion();
-            this.puntuación = b.getPuntuación();
-            this.numpaginas = b.getNumpaginas();
-            this.id = b.getId();
-        }
+		private String titulo;
+		private String autor;
+		private String portada;
+		private String saga;
+		private String fecha;
+		private String descripcion;
+		private long puntuación;
+		private int numpaginas;
+		long id;
+		public Transfer(Book b) {
+				this.titulo = b.getTitulo();
+				this.autor = b.getAutor();
+				this.portada = b.getPortada();
+				this.saga = b.getSaga();
+				this.fecha = b.getFecha();//DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
+				this.descripcion = b.getDescripcion();
+				this.puntuación = b.getPuntuación();
+				this.numpaginas = b.getNumpaginas();
+				this.id = b.getId();
+		}
     }
 
 

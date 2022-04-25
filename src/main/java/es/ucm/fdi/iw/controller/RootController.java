@@ -124,7 +124,7 @@ public class RootController {
 
     @GetMapping("/libro/{id}")
     public String libro(Model model, @PathVariable long id) {
-        log.info("buscando libro " + id);
+        log.info("[RootController.Libro] Accediendo al libro" + id);
         model.addAttribute("searchBookById", entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult());
         return "libro";
     }

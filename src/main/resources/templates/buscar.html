@@ -142,7 +142,7 @@
                                             <a class="cart" href="#">Agregar a mi biblioteca</a>
                                         </div>
                                     </div>
-                                    <a th:href=@{/libro} href="/libro" class="text-decoration-none link-dark">
+                                    <a th:href=@{/libro/{id}(id=${book.id})} href="/libro/"{id}(id=${book.id}) class="text-decoration-none link-dark">
                                         <div class="why-text">
                                             
                                             <h5 class="booktitle" th:text="${book.titulo}" >Nombre del libro</h5>

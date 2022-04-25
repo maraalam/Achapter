@@ -3,7 +3,7 @@ $(document).ready(function() {
     var outputList = document.getElementById("list-output");
     var bookUrl = "https://www.googleapis.com/books/v1/volumes?q=";
     var apiKey = "AIzaSyDtXC7kb6a7xKJdm_Le6_BYoY5biz6s8Lw";
-    var placeHldr = '<img src="https://via.placeholder.com/150">';
+    var placeHldr = 'https://via.placeholder.com/150';
     var searchData;
 
     //listener del boton search
@@ -64,6 +64,7 @@ $(document).ready(function() {
           bookImg1 = (item.volumeInfo.imageLinks) ? item.volumeInfo.imageLinks.thumbnail : placeHldr ;
           bookPageCount = item.volumeInfo.pageCount;
           bookCategories="";
+          
           if(item.volumeInfo.categories!=null){
           for(var j=0; j<item.volumeInfo.categories.length; j+=1 ){
             bookCategories += item.volumeInfo.categories[j].trim();
