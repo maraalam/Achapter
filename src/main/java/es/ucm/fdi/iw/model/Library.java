@@ -21,11 +21,11 @@ public class Library {
 
     private static final Logger log = LogManager.getLogger(Library.class);
 
-    public static final String terminado = "terminado";
+    /*public static final String terminado = "terminado";
     public static final String quieroLeer = "quieroLeer";
     public static final String leyendo = "leyendo";
     public static final String abandonados = "abandonados";
-    public static final String pausados = "pausados";
+    public static final String pausados = "pausados";*/
 
     @Id
     @Column(name = "id")

@@ -20,8 +20,8 @@ public class Progress implements Transferable<Progress.Transfer> {
     public static final String terminado = "terminado";
     public static final String quieroLeer = "quieroLeer";
     public static final String leyendo = "leyendo";
-    public static final String abandonados = "abandonados";
-    public static final String pausados = "pausados";
+    public static final String abandonados = "abandonado";
+    public static final String pausados = "pausado";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

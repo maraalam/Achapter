@@ -125,7 +125,7 @@
                                 <div th:each="prestamo: ${prestamosSinDestinatario}" class="col-lg-4 col-md-6 special-grid best-seller">
                                     <div class="products-single fix">
                                         <div class="box-img-hover">
-                                            <img th:src="${prestamo.libro.imag}" class="img-fluid" alt="Image">
+                                            <img th:src="${prestamo.libro.portada}" class="img-fluid" alt="Image">
                                         </div>
                                         <div class="why-text">
                                             <h5 class="booktitle" th:text="${prestamo.libro.titulo}"> Título </h5>

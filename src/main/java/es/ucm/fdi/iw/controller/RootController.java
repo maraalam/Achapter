@@ -212,7 +212,6 @@ public String crearBook(@RequestBody JsonNode data, Model model){
             b.setGeneros(data.get("categories").asText().trim());
             b.setISBN(data.get("isbn").asText());
          
-            b.setImag(data.get("img").asText());
             log.info(data.get("pagecount").asInt());
            
             b.setNumpaginas(data.get("pagecount").asInt());

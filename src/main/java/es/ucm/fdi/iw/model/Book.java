@@ -37,7 +37,6 @@ public class Book implements Transferable<Book.Transfer> {
     private String generos; // split by ','
     private String fecha;
     private String descripcion;
-    private String imag;
     private long puntuación;
    
     private int numpaginas;
@@ -55,7 +54,6 @@ public class Book implements Transferable<Book.Transfer> {
     private String saga;
     private String fecha;
     private String descripcion;
-    private String imag;
     private long puntuación;
 	private int numpaginas;
         long id;
@@ -68,7 +66,6 @@ public class Book implements Transferable<Book.Transfer> {
             this.descripcion = b.getDescripcion();
             this.puntuación = b.getPuntuación();
             this.numpaginas = b.getNumpaginas();
-            this.imag = b.getImag();
             this.id = b.getId();
         }
     }
@@ -77,6 +74,6 @@ public class Book implements Transferable<Book.Transfer> {
 	@Override
 	public Transfer toTransfer() {
 		return new Transfer(titulo, autor, portada, saga,fecha,
-                descripcion, imag, puntuación, numpaginas, id );
+                descripcion, puntuación, numpaginas, id );
     }
 }
