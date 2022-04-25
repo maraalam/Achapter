@@ -25,7 +25,8 @@
                         <div class="d-flex flex-row">
 
                             <div class="ml-auto mr-lg-4">
-                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
+                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> 
+                                    <select name="sort" id="sort">
                                         <option value="popularity"><b>Popularidad</b></option>
                                         <option value="date"><b>Fecha</b></option>
                                         <option value="rating"><b>Rating</b></option>
@@ -165,6 +166,57 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     </main>
     <th:block th:replace="fragments/footer.html :: footer" />
+    <script>
+        function sortBy(containerSel, dataField, asc) {
+            console.log("Sorting", containerSel, "by", dataField);
+            const container = document.querySelector(containerSel);
+            const els = [ ... container.children].map(c => ({
+                k: c.dataset[dataField], v: c }));
+            container.innerHTML = ''; // remove current contents
+            if (asc) { 
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
+            } else {
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? -1 : 1 ); 
+            }
+            els.forEach(o => container.append(o.v));
+            }
 
+            function filterBy(containerSel, condition) {
+            const container = document.querySelector(containerSel);
+                [ ... container.children].forEach(o => {
+                o.style.display = condition(o) ? 'block' : 'none';
+            });
+        }
+
+        function filterCondition(filters) {
+            let fs = [ ... filters].map(f => ({
+            active: f.checked, field: f.field}));
+            fs = fs.filter(f => f.active);
+            if (fs.length === 0) {
+                return () => true; // muestra todos los resultados
+            } else {
+                return (o) => {
+                // true sólo si alguna categoria coincide
+                    const values = o.dataset.category.split(","); 
+                for (let f of fs) {
+                    console.log(values, f.field);
+                    if (values.indexOf(f.field) != -1) return true;
+                }
+                return false;
+                }
+            }
+        }
+
+        // enlazo ordenacion
+        const ord = document.querySelector("#ordenacion");
+        ord.addEventListener("change", () => sortBy(
+            "#datos", ord.value, 
+        ord.options[ord.selectedIndex].dataset.ord === 'asc')
+        )
+        // enlazo filtrado
+        const filters = document.querySelectorAll("#filtros input");
+        [... filters].forEach(f => f.addEventListener("change", () => filterBy(
+            "#datos", filterCondition(filters))));
+    </script>
 </body>
 </html>

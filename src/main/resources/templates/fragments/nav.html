@@ -44,8 +44,8 @@
                             <option class="dropdown-item" value="isbn">IBSN</option>
                         </select>
 
-                        <input id=busquedaNav class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
-                        <button id=submitNav class="btn btn-outline-success" type="submit">Search</button>
+                        <input id=busquedaNav class="form-control" type="search" placeholder="Buscar" aria-label="Search" name="query">
+                        <button id=submitNav class="btn btn-outline-success" type="submit">Buscar</button>
                     </form>
 
                     <th:block th:if="${session.u}">
@@ -53,12 +53,15 @@
                             <a class="nav-link" th:href="@{/admin/}">Administrar</a>
                         </li>
 
+
+                        <!--
                         <li class="nav-item align-self-left">
                             <a class="nav-link" th:href="@{/mensajeria}" href="mensajeria">Mensajeria</a>
                         </li>
+                        -->
 
                         <li class="nav-item align-self-left me-4">
-                            <a type="button" class="btn btn-outline-primary btn-sm position-relative"   th:href="@{/messagebox}" href="/messagebox">
+                            <a type="button" class="btn btn-outline-primary btn-sm position-relative" th:href="@{/mensajeria}" href="mensajeria">
                                 ✉️ <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
                             </a>
                         </li>

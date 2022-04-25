@@ -3,6 +3,8 @@
 
 <head>
     <th:block th:replace="fragments/head :: header" />
+    <link rel="stylesheet" th:href="@{/css/message.css}" href="css/message.css" type="text/css" />
+
     <title>Mensajeria</title>
 </head>
 
@@ -16,12 +18,132 @@
 
             <h4> Mensajes de las personas que sigues y tu sigues</h4>
             <br> <br>
-
+            <section>
             <div class="container" >
                 <div class="row" th:each="user : ${friends}"> <!-- returns not only friends but every user -->
-                    <div th:replace="fragments/chatSnippet.html :: chatSnippet(${user})"></div>
+                    <!--  <div th:replace="fragments/chatSnippet.html :: chatSnippet(${user})"></div>-->
                 </div>
+
+                <div class="row">
+                    <div th:each="mensaje : ${mensajesR}">
+                        <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+                            <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                                <div class="widget panel"  style="width:700px; border:1px solid grey;">
+                                    <a th:href="@{'/user/' + ${mensaje.sender.id} + '/chat'}" class="text-decoration-none link-dark">
+                                        <div class="panel-body" >
+                        
+                                            <ul class="list-table" >
+                                                <li style="width:70px;">
+                                                    <img class="img-circle img-bordered-primary" 
+                                                    th:src="@{/user/{mensaje.sender.id}/pic(id=${mensaje.sender.id})}"
+                                                    src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
+                                                </li>
+                                                <li class="text-left">
+                                                    <h5 class="semibold ellipsis nm" th:text="${mensaje.sender.username}">Usuario 1</h5>
+                                                    <p class="nm" th:text="${mensaje.text}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                                    <small th:text="${mensaje.dateSent}" class="text-muted" >1 day ago</small>
+                                                </li>
+                                                <!--
+                                                <h4> <span class="badge bg-secondary" style = "float: right; margin: 2%">4</span></h4> -->
+                                            </ul>
+                        
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:each="mensaje : ${allMessagesSUser}">
+                        <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+                            <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
+                                <div class="widget panel"  style="width:700px; border:1px solid grey;">
+                                    <a th:href="@{'/user/' + ${mensaje.recipient.id} + '/chat'}" class="text-decoration-none link-dark">
+                                        <div class="panel-body" >
+                        
+                                            <ul class="list-table" >
+                                                <li style="width:70px;">
+                                                    <img class="img-circle img-bordered-primary" 
+                                                    th:src="@{/user/{mensaje.recipient.id}/pic(id=${mensaje.recipient.id})}"
+                                                    src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
+                                                </li>
+                                                <li class="text-left">
+                                                    <h5 class="semibold ellipsis nm" th:text="${mensaje.sender.username}">Usuario 1</h5>
+                                                    <p class="nm" th:text="${mensaje.text}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                                    <small th:text="${mensaje.dateSent}" class="text-muted" >1 day ago</small>
+                                                </li>
+                                                <!--
+                                                <h4> <span class="badge bg-secondary" style = "float: right; margin: 2%">4</span></h4> -->
+                                            </ul>
+                        
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </section>
+                <br> <br>
+            <section>
+                <button class="open-button" onclick="openForm()">Nuevo Mensaje</button>
+
+                <div class="chat-popup" id="myForm">
+                   
+                      <h1>Amigos</h1>
+
+                      <section>
+                        <div class="input-group mb-n2 border rounded-pill">
+                            <input id="search-text" placeholder="Búsqueda avanzada" aria-describedby="button-addon3">
+                            <div class="input-group-append border-0">
+                            <button onclick="buscarUsuario()" id="buttonS" type="button" >Buscar</button>
+                            </div>
+                        </div>
+                    </section>
+                  
+                      <section>
+                        <div class="container ">
+                            <div class="row ">
+                                <div th:each="f : ${friends}" class="col-md-8 list-usuarios">
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-1">
+                                            <a class="pull-left" href="javascript:;">
+                                                <img  th:src="@{/user/{id}/pic(id=${f.id})}" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="media-object img-circle iwthumb rounded-2">
+                                            </a>
+                                           
+                                        </div>
+                                        
+                                        <div class="col-md-1 col-sm-1">
+                                           
+                                            <h5><a th:text="${f.username}" 
+                                                th:href="@{/user/__${f.id}__}"
+                                                href="#" class="profile-link">Ana</a></h5>
+                                        </div>
+                                        
+                                        <div class="col-md-3 col-sm-3">
+                                            
+                                            <form th:action="@{/user/__${f.id}__/chat}" method="GET">
+                                                <button class="btn btn-primary pull-right" type="submit">Enviar mensaje</button>
+                                            </form>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                        
+                      </section>
+                      
+
+                  </div>
+                </div>
+
+            </section>    
+
+                  
             </div>
+
+            
 
         </section>
 
@@ -64,6 +186,39 @@
 
     </main>
     <th:block th:replace="fragments/footer.html :: footer" />
+
+    <script>
+        function openForm() {
+          document.getElementById("myForm").style.display = "block";
+        }
+        
+        function closeForm() {
+          document.getElementById("myForm").style.display = "none";
+        }
+
+        function buscarUsuario() {
+            console.log("getting users...");
+            var search = document.getElementById("search-text").value;
+            var rows = document.getElementsByClassName("list-usuarios");
+
+            for(let r of rows){
+                let username = r.getElementsByClassName("profile-link")[0].innerHTML;
+              
+                console.log(search + username);
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if(username.toLowerCase().search(search.toLowerCase())!=-1)
+                    r.style.display = "block";
+               
+                else{
+                    r.style.display = "none";
+                }
+               
+            }
+        }
+
+    </script>
 
 </body>
 

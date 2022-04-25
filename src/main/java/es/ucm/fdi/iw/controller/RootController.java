@@ -81,6 +81,39 @@ public class RootController {
 
     @GetMapping("/mensajeria")
     public String mensajeria(Model model, HttpSession session) {
+
+
+        long userId = ((User) session.getAttribute("u")).getId();
+        List<Message> f = new ArrayList<Message>();
+        List<Message> f2 = new ArrayList<Message>();
+        List<Long> listId = new ArrayList<Long>();
+
+        List<Message> lr= entityManager.createNamedQuery("Message.allMessagesRUser", Message.class)
+        .setParameter("userId", userId)
+        .getResultList();
+
+        for(Message m : lr){
+            if(!listId.contains(m.getSender().getId())){
+                f.add(m);
+                listId.add(m.getSender().getId());
+            }
+        }
+
+        List<Message> ls = entityManager.createNamedQuery("Message.allMessagesSUser", Message.class)
+        .setParameter("userId", userId)
+        .getResultList();
+
+        for(Message m : ls){
+            if(!listId.contains(m.getRecipient().getId())){
+                f2.add(m);
+                listId.add(m.getRecipient().getId());
+            }
+        }
+ 
+
+        model.addAttribute("mensajesR", f);
+        model.addAttribute("mensajesS", f2);
+      
         model.addAttribute("friends",
                 entityManager.createNamedQuery("User.friends", User.class)
                         .setParameter("username", ((User)session.getAttribute("u")).getUsername())

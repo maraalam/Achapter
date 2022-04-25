@@ -18,6 +18,12 @@ import java.time.format.DateTimeFormatter;
 	@NamedQuery(name="Message.countUnread",
 	query="SELECT COUNT(m) FROM Message m "
 			+ "WHERE m.recipient.id = :userId AND m.dateRead = null"),
+	@NamedQuery(name="Message.allMessagesRUser",
+	query="SELECT m FROM Message m "
+			+ "WHERE m.recipient.id = :userId  " ),
+	@NamedQuery(name="Message.allMessagesSUser",
+	query="SELECT m FROM Message m "
+			+ "WHERE m.sender.id = :userId " ),
 	@NamedQuery(name="Message.byUsers",
 	query="SELECT m FROM Message m "
 			+ "WHERE m.recipient.id = :userId AND m.sender.id = :senderId")

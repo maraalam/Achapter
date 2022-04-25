@@ -36,7 +36,7 @@ public class Progress implements Transferable<Progress.Transfer> {
     //estado se usará para determinar si el libro está terminado, leyendose, pausado...
     private String estado;
     private Long porcentaje;
-    private Long numPaginas;
+    private Long numPaginas; //Es el num paginas leidas
 
     @Getter
     @AllArgsConstructor
