@@ -221,13 +221,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function submitBook() {
-   let b = document.getElementById("sendBook");
-
+    let b = document.getElementById("sendBook");
     const parent  = b.parentElement;
-    let request = {titulo: "", autor: "", isbn: "", img: "", pagecount: "", categories: ""};
+    let request = {titulo: "", autor: "", isbn: "", portada: "", pagecount: "", categories: ""};
+    console.log(parent);
     for (var i = 0; i < parent.childNodes.length; i++) {
         var inner = parent.childNodes[i];
-        console.log(inner, request);
+        
         if (inner.id === 'title') {
             request.titulo = inner.innerText;
         }
@@ -237,8 +237,8 @@ function submitBook() {
         else if(inner.id === 'isbn') {
             request.isbn = inner.innerText;
         }
-        else if(inner.id === 'img') {
-            request.img = inner.currentSrc;
+        else if(inner.id === 'portada') {
+            request.portada = inner.currentSrc;
         }
         else if(inner.id === 'pagecount') {
             request.pagecount = inner.innerText;
@@ -247,19 +247,19 @@ function submitBook() {
         else if(inner.id === 'categories') {
             request.categories = inner.innerText;
         }
-       
+        
     }
-
-        go('addBook', 'POST', request )
-            .then(d => console.log("happy", d))
-            .catch(e => console.log("sad", e));
     
-            const para = document.createElement("p");
-            para.innerText = "Guardado";
-            para.style="margin-left:100px; color: #5cca60; ";
-            para.class= "btn btn-light btn-sm bg-white has-icon btn-block";
-            b.parentNode.appendChild(para);
-            b.parentNode.removeChild(b);
+    go('addBook', 'POST', request )
+        .then(d => console.log("happy", d))
+        .catch(e => console.log("sad", e));
+
+    const para = document.createElement("p");
+    para.innerText = "Guardado";
+    para.style="margin-left:100px; color: #5cca60; ";
+    para.class= "btn btn-light btn-sm bg-white has-icon btn-block";
+    b.parentNode.appendChild(para);
+    b.parentNode.removeChild(b);
 
    return true;
 }

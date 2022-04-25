@@ -108,7 +108,7 @@ $(document).ready(function() {
                     <h6 id ="author"> ${author}</h6>
                     <h6 id ="publisher"> ${publisher}</h6>
                     <h6 hidden id ="isbn"> ${bookIsbn}</h6>
-                    <img  id ="img" src="${bookImg}" class="card-img" alt="..." hidden>
+                    <img id ="portada" src="${bookImg}" class="card-img" alt="..." hidden>
                     <h6 hidden id ="pagecount"> ${bookPageCount}</h6>
                     <h6 hidden id ="categories"> ${bookCategories}</h6>
                     <button id="sendBook" type="submit" name="submit" onclick="return submitBook();">GuardarLista</button>
