@@ -28,8 +28,8 @@
                                 <div id="sort2" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> 
                                     <select  id="sort1" name="sort" >
                                         <option value="popularity"><b>Popularidad</b></option>
-                                        <option value="date"><b>Fecha Ascendente</b></option>
-                                        <option value="date"><b>Fecha Descendente</b></option>
+                                        <option value="Fecha Ascendente"><b>Fecha Ascendente</b></option>
+                                        <option value="Fecha Descendente"><b>Fecha Descendente</b></option>
                                     </select> </div>
                             </div>
                         </div>
@@ -47,9 +47,13 @@
                             <div id="fecha"><span class="fa fa-minus"></span></div>
                             <form>
                                 <div id="filtros">
-                                    <div class="form-group"> <input type="checkbox" id="2022"> <label for="2022">2022</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="2021"> <label for="2021">2021</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="2020"> <label for="2021">2021</label> </div>
+                                    <div  data-field="2022" class="form-group"> <input type="checkbox" id="2022"> <label for="2022">2022</label> </div>
+                                    <div data-field="2021"  class="form-group"> <input type="checkbox" id="2021"> <label for="2021">2021</label> </div>
+                                    <div data-field="2020"  class="form-group"> <input type="checkbox" id="2020"> <label for="2020">2020</label> </div>
+                                    <div data-field="2019"  class="form-group"> <input type="checkbox" id="2019"> <label for="2019">2019</label> </div>
+                                    <div data-field="2018"  class="form-group"> <input type="checkbox" id="2018"> <label for="2018">2018</label> </div>
+                                    <div data-field="2017"  class="form-group"> <input type="checkbox" id="2017"> <label for="2017">2017</label> </div>
+                                    <div data-field="2016"  class="form-group"> <input type="checkbox" id="2016"> <label for="2016">2016</label> </div>
                                 </div>
                             </form>
                         </div>
@@ -88,9 +92,9 @@
         function sortBy(containerSel, dataField, asc) {
             console.log("Sorting", containerSel, "by", dataField);
             const container = document.querySelector(containerSel);
-             if(dataField.includes("Fecha") || dataField.includes("date")){
+             if(dataField.includes("Fecha")){
             const els = [ ... container.children].map(c => ({
-                k:c.querySelector('.fecha'), v: c }));
+                k:c.querySelector('.fecha').innerText, v: c }));
                 container.innerHTML = ''; // remove current contents
             if (asc) { 
                 els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
@@ -100,17 +104,6 @@
             els.forEach(o => container.append(o.v));
             }
 
-            else if(dataField.includes("Fecha") || dataField.includes("date")){
-            const els = [ ... container.children].map(c => ({
-                k:c.querySelector('.fecha'), v: c }));
-            container.innerHTML = ''; // remove current contents
-            if (asc) { 
-                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
-            } else {
-                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? -1 : 1 ); 
-            }
-            els.forEach(o => container.append(o.v));
-            }
         }
 
             function filterBy(containerSel, condition) {
@@ -122,14 +115,14 @@
 
         function filterCondition(filters) {
             let fs = [ ... filters].map(f => ({
-            active: f.checked, field: f.field}));
+            active: f.checked, field: f.id}));
             fs = fs.filter(f => f.active);
             if (fs.length === 0) {
                 return () => true; // muestra todos los resultados
             } else {
                 return (o) => {
                 // true sólo si alguna categoria coincide
-                    const values = o.dataset.category.split(","); 
+                    const values =  o.querySelector('.fecha').innerText; 
                 for (let f of fs) {
                     console.log(values, f.field);
                     if (values.indexOf(f.field) != -1) return true;
@@ -143,7 +136,7 @@
         const ord = document.querySelector("#sort1");
         ord.addEventListener("change", () => sortBy(
             "#posts", ord.value, 
-            ord.value.includes("asc"))
+            ord.value.includes("Asc"))
         )
         // enlazo filtrado
         const filters = document.querySelectorAll("#filtros input");
