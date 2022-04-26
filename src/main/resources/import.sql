@@ -71,16 +71,16 @@ ATRIBUTOS:
    author_id -> id del usuario autor del libro [User]*/
 
 INSERT INTO POST (id, date_sent, text, title, author_id)
-VALUES (10, CURRENT_DATE +1002, 'oh no, se ha caído otro árbol, pero...', '1213', 21111);
+VALUES (10, CURRENT_DATE , 'oh no, se ha caído otro árbol, pero...', '1213', 21111);
 
 INSERT INTO POST (id, DATE_SENT, TEXT, TITLE, AUTHOR_ID)
-VALUES (3, CURRENT_DATE +2020, 'hola como estas', 'saludos', 21111);
+VALUES (3, CURRENT_DATE -1002, 'hola como estas', 'saludos', 21111);
 
 INSERT INTO POST (id, DATE_SENT, TEXT, TITLE, AUTHOR_ID)
-VALUES (15, CURRENT_DATE +2022, 'hola como estasw', 'saludos', 21111);
+VALUES (15, CURRENT_DATE -2022, 'hola como estasw', 'saludos', 21111);
 
 INSERT INTO POST (id, DATE_SENT, TEXT, TITLE, AUTHOR_ID)
-VALUES (6, CURRENT_DATE +4040, 'the queen has fallen. All hail your new ruler.', 'saludos', 11111);
+VALUES (6, CURRENT_DATE -365, 'the queen has fallen. All hail your new ruler.', 'saludos', 11111);
 
 
 
