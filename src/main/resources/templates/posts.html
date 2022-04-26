@@ -24,12 +24,12 @@
                         </div>
                         <div class="d-flex flex-row">
 
-                            <div class="ml-auto mr-lg-4">
-                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> 
-                                    <select name="sort" id="sort">
+                            <div  id="sort3" class="ml-auto mr-lg-4">
+                                <div id="sort2" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> 
+                                    <select  id="sort1" name="sort" >
                                         <option value="popularity"><b>Popularidad</b></option>
-                                        <option value="date"><b>Fecha</b></option>
-                                        <option value="rating"><b>Rating</b></option>
+                                        <option value="date"><b>Fecha Ascendente</b></option>
+                                        <option value="date"><b>Fecha Descendente</b></option>
                                     </select> </div>
                             </div>
                         </div>
@@ -46,9 +46,11 @@
                             <h6 class="font-weight-bold">Fecha de publicación</h6>
                             <div id="fecha"><span class="fa fa-minus"></span></div>
                             <form>
-                                <div class="form-group"> <input type="checkbox" id="tea"> <label for="tea">2022</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="cookies"> <label for="cookies">2021</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="pastries"> <label for="pastries">2020</label> </div>
+                                <div id="filtros">
+                                    <div class="form-group"> <input type="checkbox" id="2022"> <label for="2022">2022</label> </div>
+                                    <div class="form-group"> <input type="checkbox" id="2021"> <label for="2021">2021</label> </div>
+                                    <div class="form-group"> <input type="checkbox" id="2020"> <label for="2021">2021</label> </div>
+                                </div>
                             </form>
                         </div>
 
@@ -65,98 +67,14 @@
                         </div>
                     </section>
 
-                    <div class="container" >
-                        <div class="row" th:each="post : ${posts}">
-                            <div th:replace="fragments/post.html :: post(${post})"></div>
-                            <!--<div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
-                                <div class="widget panel"  style="width:700px;">
-                                    <div class="panel-body" >
-                                    <br>
-                                        <ul class="list-table" >
-                                            <li style="width:70px;">
-                                                <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" width="65px" height="65px">
-                                            </li>
-                                            <li class="text-left">
-                                                <h5 class="semibold ellipsis nm">Usuario 1</h5>
-                                            </li>
-                                            <li class="text-right" style="width:70px;">
-                                                <button type="button" class="btn btn-sm btn-success">Like</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <br>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
-                                            <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
-                                            <small class="text-muted">1 day ago</small>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            -->
+                    
+                        <div class="container" id="posts" >
+                            <div class="row" th:each="post : ${posts}">
+                                <div th:replace="fragments/post.html :: post(${post})"></div>
+                           
                         </div>
 
-                        <!--
-                        <div class="row">
-                            <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
-                                <div class="widget panel"  style="width:700px;">
-                                    <div class="panel-body" >
-                                        <br>
-                                        <ul class="list-table" >
-                                            <li style="width:70px;">
-                                                <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
-                                            </li>
-                                            <li class="text-left">
-                                                <h5 class="semibold ellipsis nm">Usuario 1</h5>
-                                            </li>
-                                            <li class="text-right" style="width:70px;">
-                                                <button type="button" class="btn btn-sm btn-success">Like</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <br>
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
-                                        <small class="text-muted">1 day ago</small>
-                                    </li>
-                                </ul>
-                            </div>
-
-
-                        </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
-                                <div class="widget panel"  style="width:700px;">
-                                    <div class="panel-body" >
-                                        <br>
-                                        <ul class="list-table" >
-                                            <li style="width:70px;">
-                                                <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" width="65px" height="65px">
-                                            </li>
-                                            <li class="text-left">
-                                                <h5 class="semibold ellipsis nm">Usuario 1</h5>
-                                            </li>
-                                            <li class="text-right" style="width:70px;">
-                                                <button type="button" class="btn btn-sm btn-success">Like</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <br>
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
-                                        <small class="text-muted">1 day ago</small>
-                                    </li>
-                                </ul>
-                            </div>
-
-
-                        </div>
-                        </div>
-                        -->
+                       
                     </div>
                 </div>
 
@@ -170,8 +88,21 @@
         function sortBy(containerSel, dataField, asc) {
             console.log("Sorting", containerSel, "by", dataField);
             const container = document.querySelector(containerSel);
+             if(dataField.includes("Fecha") || dataField.includes("date")){
             const els = [ ... container.children].map(c => ({
-                k: c.dataset[dataField], v: c }));
+                k:c.querySelector('.fecha'), v: c }));
+                container.innerHTML = ''; // remove current contents
+            if (asc) { 
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
+            } else {
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? -1 : 1 ); 
+            }
+            els.forEach(o => container.append(o.v));
+            }
+
+            else if(dataField.includes("Fecha") || dataField.includes("date")){
+            const els = [ ... container.children].map(c => ({
+                k:c.querySelector('.fecha'), v: c }));
             container.innerHTML = ''; // remove current contents
             if (asc) { 
                 els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
@@ -180,6 +111,7 @@
             }
             els.forEach(o => container.append(o.v));
             }
+        }
 
             function filterBy(containerSel, condition) {
             const container = document.querySelector(containerSel);
@@ -208,15 +140,15 @@
         }
 
         // enlazo ordenacion
-        const ord = document.querySelector("#ordenacion");
+        const ord = document.querySelector("#sort1");
         ord.addEventListener("change", () => sortBy(
-            "#datos", ord.value, 
-        ord.options[ord.selectedIndex].dataset.ord === 'asc')
+            "#posts", ord.value, 
+            ord.value.includes("asc"))
         )
         // enlazo filtrado
         const filters = document.querySelectorAll("#filtros input");
         [... filters].forEach(f => f.addEventListener("change", () => filterBy(
-            "#datos", filterCondition(filters))));
+            "#posts", filterCondition(filters))));
     </script>
 </body>
 </html>
