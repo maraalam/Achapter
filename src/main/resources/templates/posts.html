@@ -85,9 +85,7 @@
                 </div>
 
             </div>
-            <div  class="usuarios"  th:each="u: ${user.followed}">
-                <span  hidden class="myvar" th:text="${u.username}" ></span>
-            </div>
+            
             
         </div>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
@@ -98,6 +96,7 @@
         function sortBy(containerSel, dataField, asc) {
             console.log("Sorting", containerSel, "by", dataField);
             const container = document.querySelector(containerSel);
+           
              if(dataField.includes("Fecha")){
             const els = [ ... container.children].map(c => ({
                 k:c.querySelector('.fecha').innerText, v: c }));
@@ -109,6 +108,19 @@
             }
             els.forEach(o => container.append(o.v));
             }
+            else if(dataField.includes("popularity")){
+                const els = [ ... container.children].map(c => ({
+                k:c.querySelector('.likes').innerText, v: c }));
+                container.innerHTML = ''; // remove current contents
+            if (asc) { 
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
+            } else {
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? -1 : 1 ); 
+            }
+            els.forEach(o => container.append(o.v));
+            }
+
+            
 
         }
 
@@ -186,7 +198,31 @@
         const filters2 = document.querySelectorAll("#categories input");
         [... filters2].forEach(f => f.addEventListener("change", () => filterBy(
             "#posts", filterCondition2(filters2))));
+
+
+        
+        
+        
+
         /*]]>*/
     </script>
 </body>
 </html>
+
+
+<!--
+
+    let b = document.getElementById("buttonLike");
+        b.addEventListener('click', (e) => {
+        
+           
+        let target = e.currentTarget;
+        let post = target.parentNode.parentNode.parentNode.parentNode.parentNode;
+        let likes = post.childNodes[5].childNodes[1].children[2].innerHTML;
+        let numLikes = parseInt(likes.trim().split(/\s+/)[0]) +1;
+        //const values =  post.querySelector('.blike').innerText; 
+       // post.childNodes[5].childNodes[1].children[2].innerHTML = numLikes + " likes";
+        target.innerHTML= "LIKED";
+        
+        });
+-->

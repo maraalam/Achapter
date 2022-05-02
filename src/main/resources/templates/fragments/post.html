@@ -22,7 +22,10 @@
                         <h5 class="semibold ellipsis nm usuario" th:text="${post.author.username}">Usuario 1</h5>
                     </li>
                     <li class="text-right" style="width:70px;">
-                        <button type="button" class="btn btn-sm btn-success">Like</button>
+                        <form th:action="@{/likes/__${post.id}__}" method="POST">
+                            <button id="buttonLike" class="btn btn-sm btn-success" type="submit">Like</button>
+                        </form>
+                        
                     </li>
                 </ul>
             </div>
@@ -31,10 +34,16 @@
                 <li class="list-group-item">
                     <p class="nm" th:text="${post.text}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
                     <small class="text-muted fecha" th:text="${post.dateSent}">1 day ago</small>
+                    <small style ="float: right" class="text-muted likes" th:text="${post.likes}">0 </small> <small style ="float: right" class="text-muted"> likes: </small>
+                    
                 </li>
             </ul>
         </div>
     </div>
+    <script>
 
+       
+         
+    </script>
 </body>
 </html>

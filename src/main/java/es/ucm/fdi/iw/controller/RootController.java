@@ -362,6 +362,31 @@ public String registerRUser(Model model) throws IOException {
 }
 
 
+
+@PostMapping("likes/{id}")
+@Transactional
+public String crearLike( @PathVariable long id, Model model){
+   log.info("crearLike");
+   log.info("[RootController.crearLike] Post : " +id ) ;
+
+   Post p = entityManager.find(
+            Post.class, id);
+   //Post p = entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).
+   
+    int l = p.getLikes();
+    p.setLikes(l+1);
+
+   
+   
+   entityManager.persist(p);
+   
+   return "posts";
+
+}
+
+
+
+
 }
 
 /*

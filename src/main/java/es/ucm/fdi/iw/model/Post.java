@@ -17,7 +17,10 @@ import java.time.format.DateTimeFormatter;
 @Data
 @NamedQueries({
         @NamedQuery(name = "Post.all",
-                query = "SELECT p FROM Post p ORDER BY p.dateSent DESC")
+                query = "SELECT p FROM Post p ORDER BY p.dateSent DESC"),
+        @NamedQuery(name="Post.byId",
+	            query="SELECT m FROM Post m "
+			            + "WHERE m.id = :postId " )
 })
 public class Post implements Transferable<Post.Transfer> {
 
@@ -31,7 +34,7 @@ public class Post implements Transferable<Post.Transfer> {
     private User author;
     private String title;
     private String text;
-
+    private Integer likes;
     private LocalDateTime dateSent;
 
 
