@@ -3,7 +3,7 @@ $(document).ready(function() {
     var outputList = document.getElementById("list-output");
     var bookUrl = "https://www.googleapis.com/books/v1/volumes?q=";
     var apiKey = "AIzaSyDtXC7kb6a7xKJdm_Le6_BYoY5biz6s8Lw";
-    var placeHldr = 'https://via.placeholder.com/150';
+  
     var searchData;
 
     //listener del boton search
@@ -61,7 +61,7 @@ $(document).ready(function() {
           publisher1 = item.volumeInfo.publisher;
           bookLink1 = item.volumeInfo.previewLink;
           bookIsbn = item.volumeInfo.industryIdentifiers[0].identifier
-          bookImg1 = (item.volumeInfo.imageLinks) ? item.volumeInfo.imageLinks.thumbnail : placeHldr ;
+          bookImg1 = (item.volumeInfo.imageLinks) ? item.volumeInfo.imageLinks.thumbnail : "static/img/default-pic.jpg" ;
           bookPageCount = item.volumeInfo.pageCount;
           bookCategories="";
           
@@ -84,16 +84,10 @@ $(document).ready(function() {
         outputList.innerHTML +='</div> </div>  </div> </div>';
      }
   
-     /*
-     * card element formatter using es6 backticks and templates (indivial card)
-     * @param bookImg title author publisher bookLink
-     * @return htmlCard
-     */
+    
      function formatOutput(bookImg, title, author, publisher, bookLink, bookIsbn ,bookPageCount, bookCategories) {
        // console.log(title + ""+ author +" "+ publisher +" "+ bookLink+" "+ bookImg)
        
-
-       var viewUrl = 'book.html?isbn='+bookIsbn; //constructing link for bookviewer
        var htmlCard = ` 
        <div class="col-lg-6">
        <div class="card" style="">

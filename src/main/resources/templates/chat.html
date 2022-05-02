@@ -84,7 +84,7 @@
        
 
     </main>
-    <section> <table hidden class="datatable" id="datatable"></table> </section>
+    <section> <table  class="datatable" id="datatable"></table> </section>
     <th:block th:replace="fragments/footer.html :: footer" />
     <script>
 
@@ -129,22 +129,14 @@ function formatDate(d) {
 		}
 	);
 
-    let b2 = document.getElementById("liChat");
+   
         // sobreescribid esta funcion para especificar qué sucede cuando recibes un mensaje
 	    // aquí estoy metiendo el mensaje al final de la tabla
 	    ws.receive = (m) => {
-		    //dt.rows().add([m.from, m.to, formatDate(new Date().toISOString()), "", m.text, m.id]);		
-            let para = document.createElement("div");
-            para.style = "message-data";
-    
-            const para2 =  document.createElement("div");
-            para2.innerText = m.text;
-            para2.style = "color: #444; padding: 18px 20px; line-height: 26px; font-size: 16px; border-radius: 7px; display: inline-block; position: relative,  background: #efefef";
-            
-            
-            b2.appendChild(para);
-            b2.appendChild(para2);
+		    dt.rows().add([m.from, m.to, formatDate(new Date().toISOString()), "", m.text, m.id]);		
+           
 	    }
+        let b2 = document.getElementById("liChat");
 
     </script>
 
