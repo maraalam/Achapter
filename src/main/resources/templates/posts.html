@@ -35,11 +35,13 @@
                         </div>
                         <div class="py-2 border-bottom ml-3">
                             <h6 class="font-weight-bold">Categories</h6>
-                            <div id="categories"><span class="fa fa-minus"></span></div>
+                            <div><span class="fa fa-minus"></span></div>
                             <form>
-                                <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Todos</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Amigos</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Propios</label> </div>
+                                <div  id="categories">
+                                    <div class="form-group"> <input type="checkbox" id="Todos"> <label for="Todos">Todos</label> </div>
+                                    <div class="form-group"> <input type="checkbox" id="Seguidos"> <label for="Seguidos">Seguidos</label> </div>
+                                    <div class="form-group"> <input type="checkbox" id="Propios"> <label for="Propios">Propios</label> </div>
+                                </div>
                             </form>
                         </div>
                         <div class="py-2 border-bottom ml-3">
@@ -88,7 +90,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     </main>
     <th:block th:replace="fragments/footer.html :: footer" />
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
         function sortBy(containerSel, dataField, asc) {
             console.log("Sorting", containerSel, "by", dataField);
             const container = document.querySelector(containerSel);
@@ -113,9 +116,39 @@
             });
         }
 
+        function filterCondition2(filters) {
+            let fs = [ ... filters].map(f => ({
+            active: f.checked, field: f.id}));
+
+            let user = /*[[${session.u.username}]]*/ 'user';
+            let seguidos =  /*[[${user.followed}]]*/ [];
+            
+            
+            fs = fs.filter(f => f.active);
+            if (fs.length === 0) {
+                return () => true; // muestra todos los resultados
+            } else {
+                return (o) => {
+                // true sólo si alguna categoria coincide
+                    const values =  o.querySelector('.usuario').innerText; 
+                    const commonElements = values.filter(function(e) {
+                     return seguidos.indexOf(e) > -1;
+                    });
+                for (let f of fs) {
+                    console.log(values, f.field);
+                    if(f.field == "Propios" && values.indexOf(user) != -1 ) return true;
+                    else if (f.field == "Todos") return true;
+                    else if (f.field == "Seguidos" && commonElements.size()>0) return true;
+                }
+                return false;
+                }
+            }
+        }
+
         function filterCondition(filters) {
             let fs = [ ... filters].map(f => ({
             active: f.checked, field: f.id}));
+           
             fs = fs.filter(f => f.active);
             if (fs.length === 0) {
                 return () => true; // muestra todos los resultados
@@ -142,6 +175,11 @@
         const filters = document.querySelectorAll("#filtros input");
         [... filters].forEach(f => f.addEventListener("change", () => filterBy(
             "#posts", filterCondition(filters))));
+
+        const filters2 = document.querySelectorAll("#categories input");
+        [... filters2].forEach(f => f.addEventListener("change", () => filterBy(
+            "#posts", filterCondition2(filters2))));
+        /*]]>*/
     </script>
 </body>
 </html>
