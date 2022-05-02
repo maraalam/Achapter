@@ -85,7 +85,10 @@
                 </div>
 
             </div>
-
+            <div  class="usuarios"  th:each="u: ${user.followed}">
+                <span  hidden class="myvar" th:text="${u.username}" ></span>
+            </div>
+            
         </div>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     </main>
@@ -121,8 +124,11 @@
             active: f.checked, field: f.id}));
 
             let user = /*[[${session.u.username}]]*/ 'user';
-            let seguidos =  /*[[${user.followed}]]*/ [];
-            
+            let followed = document.querySelectorAll(".myvar");
+            let followedUsernames = []
+            for(let f of followed)
+                followedUsernames.push(f.innerHTML);
+
             
             fs = fs.filter(f => f.active);
             if (fs.length === 0) {
@@ -131,14 +137,15 @@
                 return (o) => {
                 // true sólo si alguna categoria coincide
                     const values =  o.querySelector('.usuario').innerText; 
-                    const commonElements = values.filter(function(e) {
-                     return seguidos.indexOf(e) > -1;
-                    });
+                    const commonElements= [];
+                   
+                    
                 for (let f of fs) {
                     console.log(values, f.field);
                     if(f.field == "Propios" && values.indexOf(user) != -1 ) return true;
                     else if (f.field == "Todos") return true;
-                    else if (f.field == "Seguidos" && commonElements.size()>0) return true;
+                    if(followed.length>0)
+                        if (f.field == "Seguidos" && followedUsernames.indexOf(values) != -1 ) return true;
                 }
                 return false;
                 }

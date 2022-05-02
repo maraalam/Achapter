@@ -69,7 +69,13 @@ public class RootController {
     }
 
     @GetMapping("/posts")
-    public String posts(Model model) {
+    public String posts(Model model, HttpSession session) {
+
+        User self = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
+        
+        model.addAttribute("user", self); // ???
+
         return "posts";
     }
 
