@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
@@ -365,10 +366,11 @@ public String registerRUser(Model model) throws IOException {
 
 @PostMapping("likes/{id}")
 @Transactional
-public String crearLike( @PathVariable long id, Model model){
+public String crearLike( @PathVariable long id, Model model,  HttpSession session){
    log.info("crearLike");
    log.info("[RootController.crearLike] Post : " +id ) ;
-
+   User self = entityManager.find(
+    User.class, ((User) session.getAttribute("u")).getId());
    Post p = entityManager.find(
             Post.class, id);
    //Post p = entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).
@@ -376,12 +378,19 @@ public String crearLike( @PathVariable long id, Model model){
     int l = p.getLikes();
     p.setLikes(l+1);
 
+    Set<User> s = p.getLikesTable();
+    if(!s.contains(self))
+        s.add(self);
+    else
+        s.remove(self);
+    
+    p.setLikesTable(s);
    
    
    entityManager.persist(p);
    
-   return "posts";
-
+   
+   return "redirect:../posts";
 }
 
 

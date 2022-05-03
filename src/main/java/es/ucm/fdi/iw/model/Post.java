@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A post a user can publish on their profile.
@@ -21,7 +23,9 @@ import java.time.format.DateTimeFormatter;
         @NamedQuery(name="Post.byId",
 	            query="SELECT m FROM Post m "
 			            + "WHERE m.id = :postId " )
+
 })
+//.createQuery(" SELECT l FROM Library l INNER JOIN  LIBRARY_BOOKS_QUIERO_LEER  nl " + "ON nl.LIBRARY_ID.id   <> :LIBRARY_ID   ", Tuple.class)
 public class Post implements Transferable<Post.Transfer> {
 
     private static Logger log = LogManager.getLogger(Message.class);
@@ -36,6 +40,8 @@ public class Post implements Transferable<Post.Transfer> {
     private String text;
     private Integer likes;
     private LocalDateTime dateSent;
+    @OneToMany
+    private Set<User> likesTable = new HashSet<>();
 
 
     /**
