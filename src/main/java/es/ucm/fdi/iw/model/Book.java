@@ -58,15 +58,15 @@ public class Book implements Transferable<Book.Transfer> {
 		private int numpaginas;
 		long id;
 		public Transfer(Book b) {
-				this.titulo = b.getTitulo();
-				this.autor = b.getAutor();
-				this.portada = b.getPortada();
-				this.saga = b.getSaga();
-				this.fecha = b.getFecha();//DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
-				this.descripcion = b.getDescripcion();
-				this.puntuación = b.getPuntuación();
-				this.numpaginas = b.getNumpaginas();
-				this.id = b.getId();
+                        this.titulo = b.getTitulo();
+                        this.autor = b.getAutor();
+                        this.portada = b.getPortada();
+                        this.saga = b.getSaga();
+                        this.fecha = b.getFecha();//DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(b.getFecha());
+                        this.descripcion = b.getDescripcion();
+                        this.puntuación = b.getPuntuación();
+                        this.numpaginas = b.getNumpaginas();
+                        this.id = b.getId();
 		}
     }
 
