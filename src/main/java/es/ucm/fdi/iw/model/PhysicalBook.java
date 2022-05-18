@@ -21,7 +21,11 @@ import java.time.format.DateTimeFormatter;
     @NamedQuery(name="PhysicalBook.allBookFromUser",
         query="SELECT DISTINCT b FROM PhysicalBook b WHERE b.owner.id = :id"),
         @NamedQuery(name="PhysicalBook.allBookToUser",
-        query="SELECT DISTINCT b FROM PhysicalBook b WHERE b.destinatario.id = :id")
+        query="SELECT DISTINCT b FROM PhysicalBook b WHERE b.destinatario.id = :id"),
+    @NamedQuery(name="PhysicalBook.allBookFromUserSinDest",
+        query="SELECT DISTINCT b FROM PhysicalBook b WHERE b.owner.id = :id AND   b.destinatario IS  NULL"),
+     @NamedQuery(name="PhysicalBook.allBookFromUserConDest",
+        query="SELECT DISTINCT b FROM PhysicalBook b WHERE b.owner.id = :id AND b.destinatario IS NOT NULL"),
 })
 public class PhysicalBook implements Transferable<PhysicalBook.Transfer> {
     @Id

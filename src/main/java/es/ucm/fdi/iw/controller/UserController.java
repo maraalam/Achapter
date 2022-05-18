@@ -501,6 +501,21 @@ public class UserController {
         return lIDPost;
     }
 
+    @ModelAttribute("prestamosMios")
+    public List getPhysicalBooksNoDestList(Model model, HttpSession session) {
+        return entityManager.createNamedQuery("PhysicalBook.allBookFromUserSinDest")
+        .setParameter("id", ((User) session.getAttribute("u")).getId())
+        .setMaxResults(10)
+        .getResultList();
+    }
+
+    @ModelAttribute("prestamosMiosHechos")
+    public List getPhysicalBookHechosMios(Model model, HttpSession session) {
+        return entityManager.createNamedQuery("PhysicalBook.allBookFromUserConDest")
+        .setParameter("id", ((User) session.getAttribute("u")).getId())
+        .setMaxResults(10)
+        .getResultList();
+    }
     /**
      * Exception to use when denying access to unauthorized users.
      * <p>

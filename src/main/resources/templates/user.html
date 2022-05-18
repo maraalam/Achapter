@@ -67,9 +67,11 @@
             <li class="nav-item h6">
                 <a class="nav-link" id="lends-tab" th:href="@{/user/__${user.id}__(tab = 'lends')}">Préstamos</a>
             </li>
+            <!--
             <li class="nav-item h6">
                 <a class="nav-link" id="lists-tab" th:href="@{/user/__${user.id}__(tab = 'lists')}">Listas de lectura</a>
             </li>
+            -->
             <li class="nav-item h6">
                 <a class="nav-link" id="stats-tab" th:href="@{/user/__${user.id}__(tab = 'stats')}">Objetivos y estadísticas</a>
             </li>
@@ -272,13 +274,62 @@
             </div>
 
             <div th:case="lends" class="tab-pane fade show active" id="lends">
-                <p>Prestamos</p>
+                
+                <div class="products-box" >
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="title-all ">
+                                <h4>Prestamos Míos disponibles</h4>
+                            </div>       
+                            <div class="row special-list" id="prestamoD">                              
+                                <div th:each="prestamo: ${prestamosMios}" class="col-lg-4 col-md-6 special-grid prestamosTodos">
+                                    <div class="products-single fix">
+                                        <div class="box-img-hover">
+                                            <img th:src="${prestamo.libro.portada}" class="img-fluid" alt="Image">
+                                        </div>
+                                        <div class="why-text">
+                                            <h5 class="booktitle" th:text="${prestamo.libro.titulo}"> Título </h5>
+                                            <h6  class="autorL" th:text="${prestamo.libro.autor}"> Autor</h6>
+                                            <h6 class="userD" th:text="'Propietario: ' + ${prestamo.owner.username}"> Propietario</h6>
+                                            <h6 class="fecha" th:text="${prestamo.libro.fecha}"> Fecha</h6>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="title-all ">
+                                <h4>Prestamos Míos Hechos</h4>
+                            </div>       
+                            <div class="row special-list" id="prestamoD">                              
+                                <div th:each="prestamo: ${prestamosMiosHechos}" class="col-lg-4 col-md-6 special-grid prestamosTodos">
+                                    <div class="products-single fix">
+                                        <div class="box-img-hover">
+                                            <img th:src="${prestamo.libro.portada}" class="img-fluid" alt="Image">
+                                        </div>
+                                        <div class="why-text">
+                                            <h5 class="booktitle" th:text="${prestamo.libro.titulo}"> Título </h5>
+                                            <h6  class="autorL" th:text="${prestamo.libro.autor}"> Autor</h6>
+                                            <h6 class="userD" th:text="'Propietario:  ' + ${prestamo.owner.username}"> Propietario</h6>
+                                            <h6 class="userD" th:text="'Destinario:  ' + ${prestamo.destinatario.username}"> Destinario</h6>
+                                            <h6 class="fecha" th:text="${prestamo.libro.fecha}"> Fecha</h6>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
+            <!--
             <div th:case="lists" class="tab-pane fade show active" id="lists">
                 <p>Listas de lectura</p>
             </div>
-
+        -->
             <div th:case="stats" class="tab-pane fade show active" id="stats">
                 <p>Estadísticas</p>
             </div>
