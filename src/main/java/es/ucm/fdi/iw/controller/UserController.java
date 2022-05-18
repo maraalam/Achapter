@@ -32,6 +32,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -516,6 +517,177 @@ public class UserController {
         .setMaxResults(10)
         .getResultList();
     }
+
+    @ModelAttribute("contQuieroLeer")
+    public int getcontQuieroLeer(Model model, HttpSession session) {
+        int contQuieroLeer=0;
+        User self = entityManager.find(
+            User.class, ((User) session.getAttribute("u")).getId());
+
+       
+        Library libreria = entityManager
+                .createNamedQuery("Library.byOwner", Library.class)
+                .setParameter("owner", self.getId()).getResultList()
+                .stream().findFirst().orElse(null);
+
+        if (libreria != null) {
+
+            if (self.getLibrary() == null) {
+                libreria.setOwner(self);
+                self.setLibrary(libreria);
+            }
+
+           
+            Map<Long, Progress> lista = libreria.getBooks();
+
+            for (Map.Entry<Long,Progress> entry : lista.entrySet()) {
+                if(entry.getValue().getEstado().equals("quieroLeer"))
+                contQuieroLeer = contQuieroLeer+1;
+            }
+
+           
+        } else
+            log.info("Libreria: vacio");
+        return contQuieroLeer;
+        
+    }
+
+    @ModelAttribute("contLeyendo")
+    public int getccontLeyendo(Model model, HttpSession session) {
+        int contQuieroLeer=0;
+        User self = entityManager.find(
+            User.class, ((User) session.getAttribute("u")).getId());
+
+       
+        Library libreria = entityManager
+                .createNamedQuery("Library.byOwner", Library.class)
+                .setParameter("owner", self.getId()).getResultList()
+                .stream().findFirst().orElse(null);
+
+        if (libreria != null) {
+
+            if (self.getLibrary() == null) {
+                libreria.setOwner(self);
+                self.setLibrary(libreria);
+            }
+
+           
+            Map<Long, Progress> lista = libreria.getBooks();
+
+            for (Map.Entry<Long,Progress> entry : lista.entrySet()) {
+                if(entry.getValue().getEstado().equals("leyendo"))
+                contQuieroLeer = contQuieroLeer+1;
+            }
+
+           
+        } else
+            log.info("Libreria: vacio");
+        return contQuieroLeer;
+        
+    }
+
+    @ModelAttribute("contTerminado")
+    public int getcontTerminado(Model model, HttpSession session) {
+        int contQuieroLeer=0;
+        User self = entityManager.find(
+            User.class, ((User) session.getAttribute("u")).getId());
+
+       
+        Library libreria = entityManager
+                .createNamedQuery("Library.byOwner", Library.class)
+                .setParameter("owner", self.getId()).getResultList()
+                .stream().findFirst().orElse(null);
+
+        if (libreria != null) {
+
+            if (self.getLibrary() == null) {
+                libreria.setOwner(self);
+                self.setLibrary(libreria);
+            }
+
+           
+            Map<Long, Progress> lista = libreria.getBooks();
+
+            for (Map.Entry<Long,Progress> entry : lista.entrySet()) {
+                if(entry.getValue().getEstado().equals("terminado"))
+                contQuieroLeer = contQuieroLeer+1;
+            }
+
+           
+        } else
+            log.info("Libreria: vacio");
+        return contQuieroLeer;
+        
+    }
+
+    @ModelAttribute("contabandonado")
+    public int getcontabandonado(Model model, HttpSession session) {
+        int contQuieroLeer=0;
+        User self = entityManager.find(
+            User.class, ((User) session.getAttribute("u")).getId());
+
+       
+        Library libreria = entityManager
+                .createNamedQuery("Library.byOwner", Library.class)
+                .setParameter("owner", self.getId()).getResultList()
+                .stream().findFirst().orElse(null);
+
+        if (libreria != null) {
+
+            if (self.getLibrary() == null) {
+                libreria.setOwner(self);
+                self.setLibrary(libreria);
+            }
+
+           
+            Map<Long, Progress> lista = libreria.getBooks();
+
+            for (Map.Entry<Long,Progress> entry : lista.entrySet()) {
+                if(entry.getValue().getEstado().equals("abandonado"))
+                contQuieroLeer = contQuieroLeer+1;
+            }
+
+           
+        } else
+            log.info("Libreria: vacio");
+        return contQuieroLeer;
+        
+    }
+
+    @ModelAttribute("contpausado")
+    public int getcontpausado(Model model, HttpSession session) {
+        int contQuieroLeer=0;
+        User self = entityManager.find(
+            User.class, ((User) session.getAttribute("u")).getId());
+
+       
+        Library libreria = entityManager
+                .createNamedQuery("Library.byOwner", Library.class)
+                .setParameter("owner", self.getId()).getResultList()
+                .stream().findFirst().orElse(null);
+
+        if (libreria != null) {
+
+            if (self.getLibrary() == null) {
+                libreria.setOwner(self);
+                self.setLibrary(libreria);
+            }
+
+           
+            Map<Long, Progress> lista = libreria.getBooks();
+
+            for (Map.Entry<Long,Progress> entry : lista.entrySet()) {
+                if(entry.getValue().getEstado().equals("pausado"))
+                contQuieroLeer = contQuieroLeer+1;
+            }
+
+           
+        } else
+            log.info("Libreria: vacio");
+        return contQuieroLeer;
+        
+    }
+
     /**
      * Exception to use when denying access to unauthorized users.
      * <p>

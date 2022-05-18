@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="fragments/head :: header"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>IW: Perfil</title>
 </head>
 
@@ -97,9 +98,9 @@
                                                 <div class="box-img-hover">
                                                     <div id="imgPortada" class=""></div>
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
-                                                        src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
+                                                       />
                                                 </div>
-                                                <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}" href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -136,7 +137,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                         src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
                                                 </div>
-                                                <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -173,7 +174,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                         src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
                                                 </div>
-                                                <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -210,7 +211,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                         src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
                                                 </div>
-                                                <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -245,9 +246,9 @@
                                                 <div class="box-img-hover">
                                                     <div id="imgPortada" class=""></div>
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
-                                                        src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
+                                                        />
                                                 </div>
-                                                <a th:href="@{/libro}" href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -332,6 +333,14 @@
         -->
             <div th:case="stats" class="tab-pane fade show active" id="stats">
                 <p>Estadísticas</p>
+  
+                <div class="container" style = "width: 25%; margin: 15px auto;">
+                    
+                    <div>
+                      <canvas id="myChart"></canvas>
+                    </div>
+                  </div>
+
             </div>
 
             <div th:case="settings" class="tab-pane fade show active" id="settings">
@@ -384,10 +393,20 @@
         </th:block>
 
     </div>
+
+    <a hidden id="contT" th:text="${contTerminado}" >0 </a>
+    <a hidden id="contQL" th:text="${contQuieroLeer}" >0 </a>
+    <a hidden id="contL" th:text="${contLeyendo}" >0 </a>
+    <a hidden id="contA" th:text="${contabandonado}" >0 </a>
+    <a hidden id="contP" th:text="${contpausado}" >0 </a>
 </main>
 
 <th:block th:replace="fragments/footer.html :: footer"/>
+
 <script>
+
+
+
 
     let b = document.getElementById("follow");
     b.addEventListener('click', (e) => {
@@ -439,6 +458,30 @@
         postState(state, url, "state").then(() => {
             document.getElementById("userState").innerText = state;
         });
+    });
+</script>
+
+<script>
+
+
+var contQL = document.getElementById("contQL").innerHTML;
+
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ["Leyendo", "Quiero leer", "Pausados", "Terminados", "Abandonados"],
+        datasets: [{
+        backgroundColor: [
+            "#2ecc71",
+            "#3498db",
+            "#95a5a6",
+            "#9b59b6",
+            "#f1c40f"
+        ],
+        data: [contL, contQL, contP, contT, contA]
+        }]
+    }
     });
 </script>
 

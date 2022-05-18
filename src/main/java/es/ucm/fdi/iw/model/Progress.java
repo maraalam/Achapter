@@ -55,10 +55,15 @@ public class Progress implements Transferable<Progress.Transfer> {
             this.numPaginas= p.getNumPaginas();
             this.id = p.getId();
         }
+
+        
     }
 
-	@Override
-	public Transfer toTransfer() {
-		return null;
+    @Override
+    public Transfer toTransfer() {
+            return new Transfer(estado, porcentaje, numPaginas, id
+    );
     }
+
+
 }

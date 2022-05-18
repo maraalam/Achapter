@@ -211,6 +211,8 @@ public class RootController {
     }
      */
 
+     
+
     @ModelAttribute("prestamosSinDestinatario")
     public List getPhysicalBooksNoDestList() {
         return entityManager.createNamedQuery("PhysicalBook.allNoDest").setMaxResults(10).getResultList();

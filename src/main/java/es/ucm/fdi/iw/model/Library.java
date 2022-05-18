@@ -28,6 +28,7 @@ public class Library {
     public static final String abandonados = "abandonados";
     public static final String pausados = "pausados";*/
 
+    
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,6 +52,10 @@ public class Library {
 
     public void put(Book b, Progress p) {
         this.books.put(b.getId(), p);
+    }
+
+    public Progress get(Book b) {
+        return this.books.get(b.getId());
     }
 
     /*public HashMap<Long, Progress> getQuieroLeer(){
