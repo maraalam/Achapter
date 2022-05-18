@@ -16,7 +16,7 @@
 
                     <ul class="list-table" >
                         <li style="width:70px;">
-                            <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
+                            <img class="img-circle img-bordered-primary" th:src="@{/user/{id}/pic(id=${user.id})}" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
                         </li>
                         <li class="text-left">
                             <h5 class="semibold ellipsis nm" th:text="${user.username}">Usuario 1</h5>
