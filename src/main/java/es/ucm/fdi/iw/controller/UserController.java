@@ -423,7 +423,7 @@ public class UserController {
 
     @PostMapping("post")
     @Transactional
-    public String publishPost(Model model, HttpSession session) {
+    public String publishPost(Model model, HttpSession session,  @RequestParam("query")String texto) {
         User u = entityManager.find(
                 User.class, ((User) session.getAttribute("u")).getId());
         model.addAttribute("user", u);
@@ -431,7 +431,7 @@ public class UserController {
         Post post = new Post();
         post.setAuthor(u);
         post.setTitle("this is a post and you couldn't edit the title");
-        post.setText("? pero yo no escribí esto");
+        post.setText(texto);
         post.setDateSent(LocalDateTime.now());
         entityManager.persist(post);
         entityManager.flush();
@@ -445,7 +445,7 @@ public class UserController {
     @Transactional
     public String registerUser(
             HttpServletResponse response,
-            @ModelAttribute User user,
+            @ModelAttribute User user, 
             Model model) throws IOException {
 
 

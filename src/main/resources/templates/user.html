@@ -306,9 +306,19 @@
                     <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys"
                          th:if="${session.u.id == user.id}">
                         <div class="widget panel" style="width:700px;">
+                            <!--
                             <form th:action="@{/user/post}" method="POST">
+                                
                                 <label for="new-post" class="semibold nm"><h5>What is on your mind</h5></label>
-                                <textarea id="new-post" placeholder="Write something here"></textarea>
+                                <textarea id="new-post" class="form-control" placeholder="Write something here"  name="query"></textarea>
+                                <button id="publish-post" class="btn btn-outline-success" type="submit">Publicar
+                                </button>
+                            </form>
+                        -->
+                            <form  th:action="@{/user/post}" action="/user/post" method="POST">
+                                <label for="new-post" class="semibold nm"><h5>What is on your mind</h5></label>
+        
+                                <input id=busquedaNav class="form-control" type="search" placeholder="Write something here"  name="query">
                                 <button id="publish-post" class="btn btn-outline-success" type="submit">Publicar
                                 </button>
                             </form>
