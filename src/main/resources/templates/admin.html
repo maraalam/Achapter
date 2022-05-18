@@ -22,6 +22,76 @@
 
             <div class="container" >
                 <div class="row">
+                    <div class="row special-list">              
+                        <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <div id="imgPortada" class="" > 
+                                        <img th:src="${book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" /> 
+                                    </div> 
+                                    
+                                    <form th:action="@{/admin/erase/__${book.id}__}" method="POST">
+                                        <button id="eraseBook" type="submit">Borrar</button>
+                                    </form>
+                                </div>
+                                <a th:href="@{/libro/__${book.id}__}" href="/libro" class="text-decoration-none link-dark">
+                                    <div class="why-text">
+                                        
+                                        <h5 th:text="${book.titulo}" >Nombre del libro</h5>
+                                       
+                                    </div>
+                                </a>
+                             </div>
+                        </div>     
+                    </div>
+                </div>
+                <div  class="row"  >
+
+                    <div class="row special-list">
+                       
+                            <br>
+                            <ul class="list-table" >
+                                
+                                <div th:each="u: ${usuarios}" class="col-md-3 col-sm-3">
+                                    <a class="pull-left" href="javascript:;">
+                                        <img  th:src="@{/user/{id}/pic(id=${u.id})}" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="media-object img-circle iwthumb rounded-2">
+                                    </a>
+                                    <h5><a th:text="${u.username}" 
+                                        th:href="@{/user/__${u.id}__}"
+                                        href="#" class="profile-link">Ana</a></h5>
+
+                                        <form th:action="@{/admin/eraseUser/__${u.id}__}" method="POST">
+                                            <button id="eraseUserID"type="submit">Borrar</button>
+                                        </form>
+                                </div>
+                                
+                                  
+                                
+                            </ul>
+                        
+                        
+                    </div>
+
+                    
+                </div>
+               
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>
+
+
+<!--
+
+
+    
                     <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
                         <div class="widget panel"  style="width:700px; border:1px solid grey;">
                             <div class="panel-body" >
@@ -86,13 +156,5 @@
                     </div>      
                 </div>
 
-            </div>
 
-        </section>
-
-    </main>
-
-    <th:block th:replace="fragments/footer.html :: footer" />
-</body>
-
-</html>
+-->

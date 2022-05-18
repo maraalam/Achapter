@@ -15,6 +15,13 @@ import java.time.format.DateTimeFormatter;
  */
 @Entity
 @Data
+@NamedQueries({
+    
+    @NamedQuery(name="Review.allBook",
+        query="SELECT DISTINCT b FROM Review b WHERE b.book.id = :id"),
+    @NamedQuery(name="Review.byUser",
+        query="SELECT DISTINCT b FROM Review b WHERE b.author.id = :id")
+})
 public class Review implements Transferable<Review.Transfer>{
 
     private static Logger log = LogManager.getLogger(Message.class);

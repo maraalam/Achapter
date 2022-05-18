@@ -13,9 +13,10 @@ import org.apache.logging.log4j.Logger;
  */
 @Data
 @Entity
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(name = "Library.byOwner",
                 query = "SELECT l FROM Library l WHERE l.owner.id = :owner")
+}
 )
 public class Library {
 

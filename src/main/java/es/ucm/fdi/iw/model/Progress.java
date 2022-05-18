@@ -11,9 +11,12 @@ import javax.persistence.*;
  */
 @Entity
 @Data
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(name="Progreso.byUser",
-                query = "SELECT p FROM Progress p " + "WHERE p.user.id <> :user")
+                query = "SELECT p FROM Progress p " + "WHERE p.user.id = :user"), // <> :
+        @NamedQuery(name="Progreso.allBook",
+        query="SELECT DISTINCT b FROM Progress b WHERE b.book.id = :id")
+}
 )
 public class Progress implements Transferable<Progress.Transfer> {
 
