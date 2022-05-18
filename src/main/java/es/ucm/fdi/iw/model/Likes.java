@@ -24,7 +24,8 @@ import javax.persistence.*;
                 query="SELECT l FROM Likes l "
                         + "WHERE l.usuario.id = :userId")
 })
-public class Likes{
+public class Likes implements Transferable<Likes.Transfer> {
+
     
     private static Logger log = LogManager.getLogger(Message.class);
     @Id
@@ -36,6 +37,29 @@ public class Likes{
     @ManyToOne
     private Post post; //post al que se dio like 
 
+    /**
+	 * Objeto para persistir a/de JSON
+	 * @author mfreire
+	 */
+        @Getter
+        @AllArgsConstructor
+            public static class Transfer {
+                    private User usuario;
+                    private Post post;
+                   
+                    private long id;
+                    public Transfer(Likes m) {
+                            this.usuario = m.getUsuario();
+                            this.post = m.getPost();
+                            this.id = m.getId();
+                    }
+            }
+    
+            @Override
+            public Transfer toTransfer() {
+                    return new Transfer(usuario, post, id
+            );
+        }
 
 
 }

@@ -74,8 +74,16 @@ public class RootController {
         User self = entityManager.find(
                 User.class, ((User) session.getAttribute("u")).getId());
         
-        model.addAttribute("user", self); // ???
+        List<Likes> lLikes= entityManager.createNamedQuery("Likes.byUser", Likes.class)
+            .setParameter("userId", self.getId())
+            .getResultList();
+        List<Long> lIDPost = new ArrayList<Long>();
 
+        for(Likes like: lLikes){
+            lIDPost.add(like.getPost().getId());
+        }
+
+        model.addAttribute("likesPost", lIDPost);
         return "posts";
     }
 
@@ -410,7 +418,7 @@ public String crearLike(@PathVariable long id_post, Model model, HttpSession ses
 
     model.addAttribute("Likes", l);
 
-    return "posts";
+    return "redirect:../posts";
 
 }
 

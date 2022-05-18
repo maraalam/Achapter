@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
         @NamedQuery(name="Post.byId",
 	            query="SELECT m FROM Post m "
 			            + "WHERE m.id = :postId " ),
-        @NamedQuery(name="PhysicalBook.allPostbyUser",
+        @NamedQuery(name="Post.allPostbyUser",
                     query="SELECT DISTINCT b FROM Post b WHERE b.author.id = :id"),
 })
 public class Post implements Transferable<Post.Transfer> {
