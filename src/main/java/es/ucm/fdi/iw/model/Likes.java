@@ -19,7 +19,10 @@ import javax.persistence.*;
                 query = "SELECT l FROM Likes l"),
         @NamedQuery(name="Likes.byId",
 	            query="SELECT l FROM Likes l "
-			            + "WHERE l.post.id = :postId")
+			            + "WHERE l.post.id = :postId"),
+        @NamedQuery(name="Likes.byId",
+                query="SELECT l FROM Likes l "
+                        + "WHERE l.usuario.id = :userId")
 })
 public class Likes{
     

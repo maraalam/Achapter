@@ -432,6 +432,7 @@ public class UserController {
         post.setAuthor(u);
         post.setTitle("this is a post and you couldn't edit the title");
         post.setText(texto);
+        post.setLikes(0);
         post.setDateSent(LocalDateTime.now());
         entityManager.persist(post);
         entityManager.flush();
