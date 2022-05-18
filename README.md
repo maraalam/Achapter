@@ -3,7 +3,22 @@
 Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuadas, limitadas en funcionamiento y complicadas de utilizar. ¿Quieres encontrar tu próxima lectura, o tal vez compartir con tus amigos el progreso de tu actual lectura? ¿Tienes una lista de libros pendientes de la que siempre te olvidas? Proponemos una nueva aplicación amigable y divertida en la que encontrar tus libros favoritos y expresarte en una comunidad con tus mismos intereses.
 
 ## En desarrollo
-- Websockets funcionan si accedes a un usuario desde el botón para ver los usuarios de la aplicación (muñeco en el nav), vas al perfil del usuario y presionas "Enviar mensaje" (Ejemplo: http://localhost:8080/user/21111/chat?  -> Usuario que queremos escribir tiene id 21111).
+- Websockets funcionan en mensajería pero usando tablas. Más adelante se planea que mensajeria se vea como un chat.
+- Existen estadísticas básicas de cómo va en la lectura el usuario pero se planea poner más gráficas y que funcione correctamente.
+- Faltas algunas pruebas Karate
+- Hay errores para subir una imagen de perfil y al actualizar el estado.
+- Hay errores cuando se quiere seguir a una persona en la página de usuarios.html. No deja dar unfollow desde esa página.
+- Que el uso API de Google se vea correctamente
+- Los botones de géneros en el index no realizan nada, se planea agregar una nueva página para esto
+- Los filtros en buscar.html se deben terminar. 
+- Terminar la pagina de libro.html. No se ven los comentarios de los usuarios tomados desde el modelo. 
+- Falta que el usuario pueda marcar como objetivos como cuántos libros quiere leer en el año. Esto puede ser en estadísticas. 
+
+En administrador se puede agregar que pueda:
+- Modificar la información de un libro.
+- Modificar los libros disponibles.
+- Ver reportes
+  
 
 ## Usuarios
 - Se puede registrar un usuario en la aplicación. Con estos datos luego se puede hacer login. 
@@ -39,12 +54,11 @@ Este usuario tendrá un perfil en el que puede:
   
 - Seguir perfiles de otros lectores y escritores.
   
-
-- Crear distintas listas de libros (leídos, en proceso, lista libros que leere,  lista de libros propuestos para leer durante un año, entre otras) y acceder a estadísticas generadas sobre estos.
+- Añadir un libro.
+- 
+- Crear distintas Biblioteca de libros (Leyendo, Quiero leer,  Pausados,Terminados, Abandonados) y acceder a estadísticas generadas sobre estos en su perfil.
   
 - Organizar su perfil como quiera para manifestar su creatividad en torno a este mundo. Incluyendo en este un muro de post en su perfil.
-  
-- Crear, unirse a clubes de lectura y seguir las últimas tendencias en el mundo de la lectura.
   
 - Marcarse objetivos como número de libros o páginas que se desean leer en un tiempo específico, géneros que desea leer, etc.
   
@@ -54,15 +68,9 @@ Este usuario tendrá un perfil en el que puede:
 ### Usuario administrador
 
 Administran la información pertinente de la aplicación:
-
-- Añadir un libro.
   
 - Eliminar un libro.
-  
-- Modificar la información de un libro.
-  
-- Modificar los libros disponibles.
-  
+- Añadir un libro.
 - Eliminar las cuentas de otros usuarios si estas han sido reportadas por malos comportamientos.
   
 
@@ -71,6 +79,10 @@ Administran la información pertinente de la aplicación:
 ### Índice [Achapter: índice](http://localhost:8080/)
 
 El índice varía dependiendo de si el usuario está logueado o no en la aplicación.
+- En este se muestra max 10 libros, se planea en un futuro que muestre el top 10 de libros que se estan leyendo actualmente.
+- Los géneros que más se están leyendo.
+- Con la barra de búsqueda debajo del banner (no la del nav) se puede acceder a la API de Google y buscar cualquier libro. Se debe estar logueado y además permite 
+guardar el libro en la Base de Datos. 
 
 #### Usuario logueado
 
@@ -87,12 +99,28 @@ El índice varía dependiendo de si el usuario está logueado o no en la aplicac
 
 - Se muestra información general sobre la aplicación (como libros más leídos, géneros más buscados...).
   
+### Mensajería [Achapter: mensajería](http://localhost:8080/mensajeria)
+
+- En la parte izquierda de la vista se encuentran los mensajes de las personas que te siguen y tú sigues.
+- Existe un botón para crear un nuevo chat con una persona
+
+### Registrar [Achapter: mensajería](http://localhost:8080/register)
+
+- Vista en la que se puede registrar un nuevo usuario
+
+### Login [Achapter: mensajería](http://localhost:8080/login)
+
+- Vista en la que se puede loguear un usuario ya registrado
 
 ### Mensajería [Achapter: mensajería](http://localhost:8080/mensajeria)
 
-En la parte izquierda de la vista se encuentran los mensajes de las personas que te siguen y tú sigues.
+- En la parte izquierda de la vista se encuentran los mensajes de las personas que te siguen y tú sigues.
+- Existe un botón para crear un nuevo chat con una persona
 
-En la parte derecha de la vista se encuentran los chats grupales (o clubs de lectura).
+### Chat entre usuarios [Achapter: mensajería](http://localhost:8080/chat)
+
+- Vista en la que se ven los mensajes entre dos usuarios. 
+
 
 ### Posts [Achapter: posts](http://localhost:8080/posts)
 
@@ -158,23 +186,21 @@ Desde el perfil de un usuario otro usuario puede:
   
 - Acceder a su biblioteca.
   
-- Acceder a sus préstamos (libros físicos que puede prestar).
-  
-- Acceder a sus listas de lectura.
+- Acceder a sus préstamos (libros físicos que puede prestar y libros físicos prestados).
   
 - Acceder a sus objetivos y estadísticas.
+
+- Ver sus seguidores y a quienes sigue
   
 
-Además, un usuario a través del perfil de otro usuario podrá:
+Además, un usuario a través del perfil de otro usuario podrá :
 
-- Seguir al usuario del perfil.
+- Seguir al usuario del perfil (Funciona la logica pero no se ve en la vista el "seguido". 
   
-- Escribirle un post.
+- Enviarle un mensaje (va la vista chat.html)
 
-### Administración [Achapter: administración](http://localhost:8080/admin/)
+### Administración [Achapter: administración](http://localhost:8080/admin/) (Por mejorar)
 En esta vista el administrador puede revisar los reportes que le llegan de los usuarios y acceder mediante botones a otras vistas que le permiten:
-- Añadir libros a la aplicación.
-- Editar libros de la aplicación.
 - Eliminar libros de la aplicación.
 - Banear usuarios.
 
@@ -186,15 +212,16 @@ A esta vista se puede acceder mediante el botón del menú de la parte superior 
 
 - Un conjunto de filtros para facilitar la búsqueda de préstamos que coincidan con los requisitos del usuario.
   
-- Una lista de libros a prestar de usuarios de la aplicación (usuarios generales, no tus amigos).
+- Una lista de libros a prestar de usuarios de la aplicación 
   
-- Una lista de libros a prestar de usuarios amigos (personas que sigues y te siguen).
+### Préstamos [Achapter: préstamos](http://localhost:8080/usuarios)
+
+En la vista de usuarios general de la aplicación.
+
+A esta vista se puede acceder mediante el botón con un niño en la parte superior y contiene lo siguiente:
+
+- Una lista de usuarios de la aplicación.
+- Puede seguir a otros usarios usando esta vista
   
 
-### Préstamos de un usuario (no desarrollada aún)
 
-En esta vista se mostrarán los préstamos que un usuario tiene disponibles.
-
-A esta vista solo se accederá desde el perfil del usuario en cuestión.
-
-En ambas vistas, al darle al botón de "Solicitar" se le enviará una notificación al dueño del libro con un mensaje en la vista de posts indicando que una persona solicita su libro
