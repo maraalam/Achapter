@@ -363,24 +363,54 @@ public String registerRUser(Model model) throws IOException {
 
 
 
-@PostMapping("likes/{id}")
+@PostMapping("likes/{id_post}")
 @Transactional
-public String crearLike( @PathVariable long id, Model model){
-   log.info("crearLike");
-   log.info("[RootController.crearLike] Post : " +id ) ;
+public String crearLike(@PathVariable long id_post, Model model, HttpSession session){
+    log.info("crearLike");
 
-   Post p = entityManager.find(
-            Post.class, id);
-   //Post p = entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).
-   
-    int l = p.getLikes();
-    p.setLikes(l+1);
+    User usuario = entityManager.find(
+        User.class, ((User)session.getAttribute("u")).getId());
+  
+    log.info("[RootController.crearLike] Post : " + id_post + " Usuario :" +  usuario.getId()) ;
 
-   
-   
-   entityManager.persist(p);
-   
-   return "posts";
+
+    Post post = entityManager.find(
+            Post.class, id_post);
+    //Post p = entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).
+    List<Likes> people = entityManager.createNamedQuery("Likes.byId", Likes.class)
+            .setParameter("postId", (id_post))
+            .getResultList();
+
+    Likes l;
+
+    int p = -1;
+    for (int i = 0; i < people.size(); ++i) {
+        if (people.get(i).getUsuario() == usuario) {
+            p = i;
+            break;
+        }
+    }
+
+    if (p == -1) {
+        l = new Likes();
+
+        l.setPost(post);
+        l.setUsuario(usuario);
+        post.setLikes(post.getLikes() + 1);
+
+        entityManager.persist(l);
+        entityManager.persist(post);
+    } else {
+        l = people.get(p);
+
+        post.setLikes(post.getLikes() - 1);
+
+        entityManager.remove(l);
+    }
+
+    model.addAttribute("Likes", l);
+
+    return "posts";
 
 }
 
