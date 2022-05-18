@@ -342,6 +342,7 @@ public class UserController {
     @GetMapping("/{id}/chat")
     @Transactional
     public String getChat(@PathVariable long id, Model model, HttpSession session) {
+        log.info("En funcion getChat");
         User u = entityManager.find(User.class, id);
         model.addAttribute("user", u);
 
@@ -364,6 +365,7 @@ public class UserController {
     @ResponseBody
     @Transactional
     public String getChat2(@PathVariable long id, Model model, HttpSession session) {
+        log.info("En funcion getChat2");
         User u = entityManager.find(User.class, id);
         model.addAttribute("user", u);
 

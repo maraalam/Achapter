@@ -21,7 +21,7 @@
         <div class="container">
             <div class="main">
                 <img class="iwthumb rounded-2" th:src="@{/user/{id}/pic(id=${user.id})}">
-                <h1 th:text="${user.username}" class="align-self-left">Chat</h1>
+                <h1 id = "idUsuarioEnvio" th:text="${user.username}" class="align-self-left">Chat</h1>
                 <div id="chatbox" >
                     
                     
@@ -87,6 +87,26 @@
     <section> <table  class="datatable" id="datatable"></table> </section>
     <th:block th:replace="fragments/footer.html :: footer" />
     <script>
+        let cont=1000
+    let dt = new simpleDatatables.DataTable(
+            '#datatable', { 
+                ajax: {
+                    url: config.rootUrl + "message/received", // empieza siempre por config.rootUrl
+                    load: function(xhr) {
+                        let data = JSON.parse(xhr.responseText);
+                        for (let i=0; i<data.length; i++) {
+                            let row = data[i];
+                            row.sent = formatDate(row.sent);
+                            if (row.received) {
+                                row.received = formatDate(row.received);
+                            }
+                        }
+                        
+                        return JSON.stringify(data);
+                    }
+                }
+            }
+        );
 
 function formatDate(d) {
 		// 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
@@ -106,29 +126,12 @@ function formatDate(d) {
             })
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
+            dt.rows().add([document.getElementById("idUsuario").value, document.getElementById("idUsuarioEnvio").value, formatDate(new Date().toISOString()), "", document.getElementById("message").value,cont]);	
+            cont=cont+1	
         });
-
+        
         // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
-	let dt = new simpleDatatables.DataTable(
-		'#datatable', { 
-		    ajax: {
-		        url: config.rootUrl + "message/received", // empieza siempre por config.rootUrl
-		        load: function(xhr) {
-		        	let data = JSON.parse(xhr.responseText);
-		        	for (let i=0; i<data.length; i++) {
-		        		let row = data[i];
-		        		row.sent = formatDate(row.sent);
-		        		if (row.received) {
-		        			row.received = formatDate(row.received);
-		        		}
-		        	}
-		        	
-		        	return JSON.stringify(data);
-		        }
-		    }
-		}
-	);
-
+	
    
         // sobreescribid esta funcion para especificar qué sucede cuando recibes un mensaje
 	    // aquí estoy metiendo el mensaje al final de la tabla
