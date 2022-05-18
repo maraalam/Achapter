@@ -18,7 +18,7 @@
                 <div class="col-md-3">
                     <section >
         
-                        <h1> Prestamos</h1>
+                        <h1> Préstamos</h1>
                         <br> <br>
                         
                     
@@ -26,14 +26,19 @@
                             <h4 >Filtros</h4>
                         </div>
                         <div class="d-flex flex-row">        
-                            <div class="ml-auto mr-lg-4">
-                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
-                                        <option value="libro"><b>Libros</b></option>
-                                        <option value="usuario"><b>Usuarios</b></option>
+                            <div  id="sort3" class="ml-auto mr-lg-4">
+                                <div id="sort2" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> 
+                                    <select id="sort1" name="sort">
+                                        <option value="libros Ascendete"><b>Título Ascendete</b></option>
+                                        <option value="libros Descendente"><b>Título Descendente</b></option>
+                                        <option value="usuarios Ascendente"><b>Usuarios Ascendete</b></option>
+                                        <option value="usuarios Descendente"><b>Usuarios Descendente</b></option>
                                     </select> </div>
                             </div>
+
+                            
                         </div>
-                        
+                        <!--
                         <div class="py-2 border-bottom ml-3">
                             <div class="d-flex flex-row">        
                                 <div class="ml-auto mr-lg-4">
@@ -45,34 +50,41 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                         <div class="py-2 border-bottom ml-3">
                             <h6 class="font-weight-bold">Autor</h6>
-                            <div id="orange"><span class="fa fa-minus"></span></div>            
+                            <div id="orange"><span class="fa fa-minus"></span></div>    
+                            
+                                <div class="input-group mb-n2 border rounded-pill">
+                                    <input id="searchA" onkeyup="buscarLibroAutor()" placeholder="Buscar autor..." aria-describedby="button-addon3" class="form-control bg-none border-0">
+                                    <div class="input-group-append border-0">
+                                    <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            <br>
+                            <br>
+                            <br>
+                            <h6 class="font-weight-bold">Propietario</h6>
+                            <div id="orange"><span class="fa fa-minus"></span></div>    
+                            
+                                <div class="input-group mb-n2 border rounded-pill">
+                                    <input id="searchP" onkeyup="buscarLibroPropietario()" placeholder="Buscar propietario..." aria-describedby="button-addon3" class="form-control bg-none border-0">
+                                    <div class="input-group-append border-0">
+                                    <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            <br>
+                            <!--
                             <div class="input-group mb-2 border rounded-pill">
                                 <input type="search" placeholder="Buscar autor..." aria-describedby="button-addon3" class="form-control bg-none border-0">
                                 <div class="input-group-append border-0">
                                 <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <form>
-                                        <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Autor1</label> </div>
-                                        <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Autor2</label> </div>
-                                        <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Autor3</label> </div>
-                                    </form>
-                                </div>
-                                <div class="col-6">
-                                    <form>
-                                        <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Autor4</label> </div>
-                                        <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Autor5</label> </div>
-                                        <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Autor6</label> </div>
-                                    </form>
-                                </div>
-                            </div>
+                            -->
                         </div>
                 
-                
+                <!--
                         <div class="py-2 border-bottom ml-3">
                             <h6 class="font-weight-bold">Género</h6>
                             <div id="orange"><span class="fa fa-minus"></span></div>
@@ -93,13 +105,15 @@
                                 </div>
                             </div>
                         </div>
+                    -->
                         <div class="py-2 border-bottom ml-3">
                             <h6 class="font-weight-bold">Fecha de publicación</h6>
                             <div id="orange"><span class="fa fa-minus"></span></div>
                             <form>
-                                <div class="form-group"> <input type="checkbox" id="tea"> <label for="tea">2022</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="cookies"> <label for="cookies">2021</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="pastries"> <label for="pastries">2020</label> </div>
+                                <div id="filtrosFecha">
+                                    
+                                    <div data-field="2015"  class="form-group"> <input type="checkbox" id="2015"> <label for="2015">2015</label> </div>
+                                </div>
                             </form>
                         </div>
                     
@@ -109,34 +123,37 @@
                 <div class="col-md-9">
                     <section>
                         <div class="input-group mb-n2 border rounded-pill">
-                            <input id="search-text" onkeyup="buscarLibro()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
+                            <input id="search-text" onkeyup="buscarLibroTtitulo()" placeholder="Búsqueda por Título" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
                             <div class="input-group-append border-0">
                             <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
                     </section>
+
                     <div class="products-box" >
                     <div class="row">
                         <div class="col-md-7">
                             <div class="title-all ">
                                 <h4>Prestamos disponibles</h4>
                             </div>       
-                            <div class="row special-list">                              
-                                <div th:each="prestamo: ${prestamosSinDestinatario}" class="col-lg-4 col-md-6 special-grid best-seller">
+                            <div class="row special-list" id="prestamoD">                              
+                                <div th:each="prestamo: ${prestamosSinDestinatario}" class="col-lg-4 col-md-6 special-grid prestamosTodos">
                                     <div class="products-single fix">
                                         <div class="box-img-hover">
                                             <img th:src="${prestamo.libro.portada}" class="img-fluid" alt="Image">
                                         </div>
                                         <div class="why-text">
                                             <h5 class="booktitle" th:text="${prestamo.libro.titulo}"> Título </h5>
-                                            <h6 th:text="${prestamo.libro.autor}"> Autor</h6>
-                                            <h6 th:text="${prestamo.owner.username}"> Propietario</h6>
+                                            <h6  class="autorL" th:text="${prestamo.libro.autor}"> Autor</h6>
+                                            <h6 class="userD" th:text="${prestamo.owner.username}"> Propietario</h6>
+                                            <h6 class="fecha" th:text="${prestamo.libro.fecha}"> Fecha</h6>
                                         </div>
                                     </div>
                                 </div>
         
                             </div>
                         </div>
+                        <!--
                         <div class="col-md-5">
                             <div class="title-all ">
                                 <h4>Prestamos de seguidos</h4>
@@ -169,6 +186,7 @@
                                 </div>
                             </div>
                         </div>
+                    -->
                     </div>
                     </div>
                 </div>
@@ -235,6 +253,151 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function sortBy(containerSel, dataField, asc) {
+            console.log("Sorting", containerSel, "by", dataField);
+            const container = document.querySelector(containerSel);
+           
+             if(dataField.includes("libros")){
+            const els = [ ... container.children].map(c => ({
+                k:c.querySelector('.booktitle').innerText, v: c }));
+                container.innerHTML = ''; // remove current contents
+            if (asc) { 
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
+            } else {
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? -1 : 1 ); 
+            }
+            els.forEach(o => container.append(o.v));
+            }
+            else if(dataField.includes("usuarios")){
+                const els = [ ... container.children].map(c => ({
+                k:c.querySelector('.userD').innerText, v: c }));
+                container.innerHTML = ''; // remove current contents
+            if (asc) { 
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? 1 : -1 );
+            } else {
+                els.sort((a,b) => (a.k == b.k) ? 0 : (a.k > b.k) ? -1 : 1 ); 
+            }
+            els.forEach(o => container.append(o.v));
+            }
+
+            
+
+        }
+
+        function filterBy(containerSel, condition) {
+            const container = document.querySelector(containerSel);
+                [ ... container.children].forEach(o => {
+                o.style.display = condition(o) ? 'block' : 'none';
+            });
+        }
+
+        function filterCondition(filters) {
+            let fs = [ ... filters].map(f => ({
+            active: f.checked, field: f.id}));
+           
+            fs = fs.filter(f => f.active);
+            if (fs.length === 0) {
+                return () => true; // muestra todos los resultados
+            } else {
+                return (o) => {
+                // true sólo si alguna categoria coincide
+                    const values =  o.querySelector('.fecha').innerText; 
+                for (let f of fs) {
+                    console.log(values, f.field);
+                    if (values.indexOf(f.field) != -1) return true;
+                }
+                return false;
+                }
+            }
+        }
+
+       
+
+        function buscarLibroTtitulo() {
+            console.log("getting books...");
+            var search = document.getElementById("search-text").value;
+            var rows = document.getElementsByClassName("prestamosTodos");
+
+            for(let r of rows){
+                let titulo = r.getElementsByClassName("booktitle")[0].innerHTML;
+                console.log(titulo);
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if (titulo.toLowerCase().search(search.toLowerCase())==-1){
+                    r.style.display = "none";
+                }
+                else{
+                    r.style.display = "block";
+                }
+            }
+        }
+
+        function buscarLibroAutor() {
+            console.log("getting books...");
+            var search = document.getElementById("searchA").value;
+            var rows = document.getElementsByClassName("prestamosTodos");
+
+            for(let r of rows){
+                let autor = r.getElementsByClassName("autorL")[0].innerHTML;
+                console.log(autor);
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if (autor.toLowerCase().search(search.toLowerCase())==-1){
+                    r.style.display = "none";
+                }
+                else{
+                    r.style.display = "block";
+                }
+            }
+        }
+
+        function buscarLibroPropietario() {
+            console.log("getting books...");
+            var search = document.getElementById("searchP").value;
+            var rows = document.getElementsByClassName("prestamosTodos");
+
+            for(let r of rows){
+                let autor = r.getElementsByClassName("userD")[0].innerHTML;
+                console.log(autor);
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if (autor.toLowerCase().search(search.toLowerCase())==-1){
+                    r.style.display = "none";
+                }
+                else{
+                    r.style.display = "block";
+                }
+            }
+        }
+
+        // enlazo ordenacion
+        const ord = document.querySelector("#sort1");
+        ord.addEventListener("change", () => sortBy(
+            "#prestamoD", ord.value, 
+            ord.value.includes("Asc"))
+        )
+       // enlazo filtrado
+       const filters = document.querySelectorAll("#filtrosFecha input");
+        [... filters].forEach(f => f.addEventListener("change", () => filterBy(
+            "#prestamoD", filterCondition(filters))));
+
+        
+
+       
+
+        
+        
+        
+
+        /*]]>*/
+    </script>
+
 </body>
 
 </html>
