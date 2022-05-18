@@ -27,6 +27,7 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
@@ -479,6 +480,25 @@ public class UserController {
 
 
         return "login";
+    }
+    
+    @ModelAttribute("likesPost")
+    public List<Long> getBooksList( Model model, HttpSession session) {
+
+            User self = entityManager.find(
+                    User.class, ((User) session.getAttribute("u")).getId());
+            
+            List<Likes> lLikes= entityManager.createNamedQuery("Likes.byUser", Likes.class)
+                .setParameter("userId", self.getId())
+                .getResultList();
+            List<Long> lIDPost = new ArrayList<Long>();
+    
+            for(Likes like: lLikes){
+                lIDPost.add(like.getPost().getId());
+            }
+    
+           
+        return lIDPost;
     }
 
     /**
