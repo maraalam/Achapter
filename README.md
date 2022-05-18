@@ -90,7 +90,7 @@ guardar el libro en la Base de Datos.
   
 - Se le muestran los últimos libros modificados para que si quiere editarlos pueda hacerlo de forma rápida.
   
-- Se muestran los objetivos establecidos por el usuario (páginas leídas por semana, libros leidos por mes, libros leídos este año...).
+- Se muestran los objetivos establecidos por el usuario (páginas leídas por semana, libros leidos por mes, libros leídos este año...). (Por desarrollar)
   
 - Se muestra información general sobre la aplicación (como libros más leidos, géneros más buscados...).
   
