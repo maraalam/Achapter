@@ -58,6 +58,10 @@ public class Library {
         return this.books.get(b.getId());
     }
 
+    public Boolean containsB(Long b) {
+        return this.books.containsKey(b);
+    }
+
     /*public HashMap<Long, Progress> getQuieroLeer(){
         HashMap<Long, Progress> quieroLeer = new HashMap<>();
         for (Map.Entry<Long, Progress> entry : this.books.entrySet()) {

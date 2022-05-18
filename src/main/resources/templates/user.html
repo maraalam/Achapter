@@ -113,6 +113,31 @@
                                                         </div>
                                                     </div>
                                                 </a>
+                                                <ul>
+                                                    <h5> Añadir a una lista de lectura </h5>
+                                                    <div class="d-flex flex-row" style="float:right" >
+                                                        <div class="ml-auto mr-lg-4">
+                                                            <div id="selectorLista" class="border rounded p-1 m-1">  
+                                                            
+                                                                <select name="sort" id="selectorListaLectura">
+                                                                   
+                                                                    <option value="pausados"><b>Pausados</b></option>
+                                                                    <option value="abandonados"><b>Abandonados</b></option>
+                                                                    <option value="terminados"><b>Terminados</b></option>
+                                                                    <option value="quieroLeer"><b>Quiero leer</b></option>
+                                                                </select> 
+                
+                                                                <!-- el action cambia dinamicamente utilizando una función definida abajo en js-->
+                                                                <form id = "listaLecturaForm" th:action="leyendo" method="POST">
+                                                                    <button id="addToLib" class="btn btn-primary" th:attr="onclick=|changeList('${user.library.books.get(entry.key).book.id}')|" >Agregar a la lista de lectura</button>
+                                                                    <button id="addToLibSubmit" hidden type="submit"></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        
+                                                    
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -150,6 +175,31 @@
                                                         </div>
                                                     </div>
                                                 </a>
+                                                <ul>
+                                                    <h5> Añadir a una lista de lectura </h5>
+                                                    <div class="d-flex flex-row" style="float:right" >
+                                                        <div class="ml-auto mr-lg-4">
+                                                            <div id="selectorLista" class="border rounded p-1 m-1">  
+                                                            
+                                                                <select name="sort" id="selectorListaLectura">
+                                                                    <option value="leyendo"><b>Leyendo</b></option>
+                                                                    <option value="pausados"><b>Pausados</b></option>
+                                                                    <option value="abandonados"><b>Abandonados</b></option>
+                                                                    <option value="terminados"><b>Terminados</b></option>
+                                                                    
+                                                                </select> 
+                
+                                                                <!-- el action cambia dinamicamente utilizando una función definida abajo en js-->
+                                                                <form id = "listaLecturaForm" th:action="leyendo" method="POST">
+                                                                    <button id="addToLib" class="btn btn-primary" th:attr="onclick=|changeList('${user.library.books.get(entry.key).book.id}')|" >Agregar a la lista de lectura</button>
+                                                                    <button id="addToLibSubmit" hidden type="submit"></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        
+                                                    
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -187,6 +237,31 @@
                                                         </div>
                                                     </div>
                                                 </a>
+                                                <ul>
+                                                    <h5> Añadir a una lista de lectura </h5>
+                                                    <div class="d-flex flex-row" style="float:right" >
+                                                        <div class="ml-auto mr-lg-4">
+                                                            <div id="selectorLista" class="border rounded p-1 m-1">  
+                                                            
+                                                                <select name="sort" id="selectorListaLectura">
+                                                                    <option value="leyendo"><b>Leyendo</b></option>
+                                                                    
+                                                                    <option value="abandonados"><b>Abandonados</b></option>
+                                                                    <option value="terminados"><b>Terminados</b></option>
+                                                                    <option value="quieroLeer"><b>Quiero leer</b></option>
+                                                                </select> 
+                
+                                                                <!-- el action cambia dinamicamente utilizando una función definida abajo en js-->
+                                                                <form id = "listaLecturaForm" th:action="leyendo" method="POST">
+                                                                    <button id="addToLib" class="btn btn-primary" th:attr="onclick=|changeList('${user.library.books.get(entry.key).book.id}')|" >Agregar a la lista de lectura</button>
+                                                                    <button id="addToLibSubmit" hidden type="submit"></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        
+                                                    
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -224,6 +299,31 @@
                                                         </div>
                                                     </div>
                                                 </a>
+                                                <ul>
+                                                    <h5> Añadir a una lista de lectura </h5>
+                                                    <div class="d-flex flex-row" style="float:right" >
+                                                        <div class="ml-auto mr-lg-4">
+                                                            <div id="selectorLista" class="border rounded p-1 m-1">  
+                                                            
+                                                                <select name="sort" id="selectorListaLectura">
+                                                                    <option value="leyendo"><b>Leyendo</b></option>
+                                                                    <option value="pausados"><b>Pausados</b></option>
+                                                                    <option value="abandonados"><b>Abandonados</b></option>
+                                                                    
+                                                                    <option value="quieroLeer"><b>Quiero leer</b></option>
+                                                                </select> 
+                
+                                                                <!-- el action cambia dinamicamente utilizando una función definida abajo en js-->
+                                                                <form id = "listaLecturaForm" th:action="leyendo" method="POST">
+                                                                    <button id="addToLib" class="btn btn-primary" th:attr="onclick=|changeList('${user.library.books.get(entry.key).book.id}')|" >Agregar a la lista de lectura</button>
+                                                                    <button id="addToLibSubmit" hidden type="submit"></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        
+                                                    
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -465,6 +565,10 @@
 
 
 var contQL = document.getElementById("contQL").innerHTML;
+var contL = document.getElementById("contL").innerHTML;
+var contP = document.getElementById("contP").innerHTML;
+var contT = document.getElementById("contT").innerHTML;
+var contA = document.getElementById("contA").innerHTML;
 
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -483,6 +587,24 @@ var contQL = document.getElementById("contQL").innerHTML;
         }]
     }
     });
+</script>
+
+<script>
+    // Procesamiento de la selección de lista de lectura
+    function changeList( idLibro){
+        let url = window.location.href
+        let action_base = "/save/"
+        let action_idLibro =  "/" + idLibro
+
+        //Lista de lectura
+        let selector = document.getElementById("selectorListaLectura")
+        let lista = selector.options[selector.selectedIndex].value
+
+        console.log(action_base + lista + action_idLibro)
+        document.getElementById("listaLecturaForm").action = action_base + lista + action_idLibro;
+        document.getElementById("listaLecturaForm").submit();
+    }
+
 </script>
 
 <!-- JavaScript, for the tabs-->

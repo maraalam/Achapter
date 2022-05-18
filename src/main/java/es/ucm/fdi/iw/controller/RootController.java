@@ -251,27 +251,56 @@ public String addToLibrary(@PathVariable String tipoLibreria, @PathVariable long
     log.info("Libreria:" + tipoLibreria);
     User user = entityManager.find(
             User.class, ((User)session.getAttribute("u")).getId());
-    Book book = entityManager.find(Book.class, id);
+    Book book = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
 
     if (user.getLibrary() == null) {
         Library lib = new Library(user);
         user.setLibrary(lib);
         entityManager.persist(lib);
+        entityManager.flush();
+        entityManager.persist(user);
+        entityManager.flush();
     }
 
     Progress progress = new Progress();
+    Library l = user.getLibrary();
+
+    if (user.getLibrary() == null) {
+        
+        log.info("sigue nulo");
+    }
+
+    
+    if(l.containsB(id)){
+        progress = l.get(book);
+        String antes = progress.getEstado();
+        progress.setEstado(tipoLibreria);
+        log.info("ya tiene progreso");
+        if(tipoLibreria.equals("terminado")){
+        int cont = (int) model.getAttribute("contTerminado");
+                    model.addAttribute("contTerminado", cont+1);
+        }
+        
+    }
+    else{
+    
     progress.setBook(book);
     progress.setUser(user);
     progress.setEstado(tipoLibreria);
-
+    log.info("nuevo progreso");
+    }
     entityManager.persist(progress);
     entityManager.flush();
 
-    user.addToLibrary(book, progress);
+    
+    l.put(book, progress);
+    //user.addToLibrary(book, progress);
+    entityManager.persist(l);
     entityManager.persist(user);
+    entityManager.flush();
 
     log.info("Book with id {} added to user {}'s library", id, user.getId());
-    return "index";
+    return "redirect:../../user/" + ((User)session.getAttribute("u")).getId();
 }
 
 
@@ -423,6 +452,8 @@ public String crearLike(@PathVariable long id_post, Model model, HttpSession ses
     return "redirect:../posts";
 
 }
+
+
 
 
 
