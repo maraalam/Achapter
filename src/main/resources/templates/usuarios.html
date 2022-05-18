@@ -52,7 +52,7 @@
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm  " >
                             <div  class="col mb-3 list-usuarios"  th:each="u: ${usuarios}">
                                 <div class="card">
-                                    <img src="https://via.placeholder.com/340x120/FFB6C1/000000"  alt="Cover" class="card-img-top">
+                                    <img  th:src="@{/img/bannerUser.png}" src="/img/bannerUser.png"   alt="Cover" class="card-img-top">
                                     <div class="card-body text-center">
                                         <a th:href="@{/user/__${u.id}__}" href="/user"  >
                                             <img 

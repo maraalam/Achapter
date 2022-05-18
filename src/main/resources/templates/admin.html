@@ -17,10 +17,19 @@
              <!-- left Messages -->
         <section id="leftMessages">
 
-            <h4> Reportes de usuarios</h4>
-            <br> <br>
+            <h4> Editar Base de Datos de libros</h4>
+            <br> 
 
             <div class="container" >
+                <section>
+                    <div class="input-group mb-n2 border rounded-pill">
+                        <input id="search-text" onkeyup="buscarLibro()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
+                        <div class="input-group-append border-0">
+                        <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </section>
+                <br>  <br>  
                 <div class="row">
                     <div class="row special-list">              
                         <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
@@ -37,7 +46,7 @@
                                 <a th:href="@{/libro/__${book.id}__}" href="/libro" class="text-decoration-none link-dark">
                                     <div class="why-text">
                                         
-                                        <h5 th:text="${book.titulo}" >Nombre del libro</h5>
+                                        <h5 class = "booktitle" th:text="${book.titulo}" >Nombre del libro</h5>
                                        
                                     </div>
                                 </a>
@@ -45,29 +54,44 @@
                         </div>     
                     </div>
                 </div>
+            <br>
+            <h4> Editar Base de Datos de Usuarios</h4>
+            <br> 
+            <section>
+                <div class="input-group mb-n2 border rounded-pill">
+                    <input id="search-textUser" onkeyup="buscarUsuario()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
+                    <div class="input-group-append border-0">
+                    <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </section>
+            <br>  <br>  
                 <div  class="row"  >
 
                     <div class="row special-list">
-                       
+                        <div class="products-single fix">
                             <br>
                             <ul class="list-table" >
                                 
-                                <div th:each="u: ${usuarios}" class="col-md-3 col-sm-3">
+                                <div  th:if="${session.u.id != u.id  }" th:each="u: ${usuarios}" class="col-md-3 col-sm-3 listaUser">
+                                <div> 
                                     <a class="pull-left" href="javascript:;">
                                         <img  th:src="@{/user/{id}/pic(id=${u.id})}" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="media-object img-circle iwthumb rounded-2">
                                     </a>
-                                    <h5><a th:text="${u.username}" 
+                                    <a th:text="${u.username}" 
                                         th:href="@{/user/__${u.id}__}"
-                                        href="#" class="profile-link">Ana</a></h5>
+                                        href="#" class="profile-link uUser">Ana</a>
 
                                         <form th:action="@{/admin/eraseUser/__${u.id}__}" method="POST">
                                             <button id="eraseUserID" type="submit">Borrar</button>
                                         </form>
+                                    </div>
                                 </div>
                                 
                                   
                                 
                             </ul>
+                        </div>
                         
                         
                     </div>
@@ -83,6 +107,49 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
+    <script>
+        function buscarUsuario() {
+            console.log("getting users...");
+            var search = document.getElementById("search-textUser").value;
+            var rows = document.getElementsByClassName("listaUser");
+
+            for(let r of rows){
+                let titulo = r.getElementsByClassName("uUser")[0].innerHTML;
+                console.log(titulo);
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if (titulo.toLowerCase().search(search.toLowerCase())==-1){
+                    r.style.display = "none";
+                }
+                else{
+                    r.style.display = "block";
+                }
+            }
+
+           
+        }
+
+        function buscarLibro() {
+            console.log("getting libros...");
+            var search = document.getElementById("search-text").value;
+            var rows = document.getElementsByClassName("best-seller");
+
+            for(let r of rows){
+                let titulo = r.getElementsByClassName("booktitle")[0].innerHTML;
+                console.log(titulo);
+                if (search === ""){
+                    r.style.display = "block";
+                }
+                else if (titulo.toLowerCase().search(search.toLowerCase())==-1){
+                    r.style.display = "none";
+                }
+                else{
+                    r.style.display = "block";
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
