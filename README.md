@@ -104,20 +104,16 @@ guardar el libro en la Base de Datos.
 - En la parte izquierda de la vista se encuentran los mensajes de las personas que te siguen y tú sigues.
 - Existe un botón para crear un nuevo chat con una persona
 
-### Registrar [Achapter: mensajería](http://localhost:8080/register)
+### Registrar [Achapter: register](http://localhost:8080/register)
 
 - Vista en la que se puede registrar un nuevo usuario
 
-### Login [Achapter: mensajería](http://localhost:8080/login)
+### Login [Achapter: login](http://localhost:8080/login)
 
 - Vista en la que se puede loguear un usuario ya registrado
 
-### Mensajería [Achapter: mensajería](http://localhost:8080/mensajeria)
 
-- En la parte izquierda de la vista se encuentran los mensajes de las personas que te siguen y tú sigues.
-- Existe un botón para crear un nuevo chat con una persona
-
-### Chat entre usuarios [Achapter: mensajería](http://localhost:8080/chat)
+### Chat entre usuarios [Achapter: chat](http://localhost:8080/chat)
 
 - Vista en la que se ven los mensajes entre dos usuarios. 
 
@@ -214,7 +210,7 @@ A esta vista se puede acceder mediante el botón del menú de la parte superior 
   
 - Una lista de libros a prestar de usuarios de la aplicación 
   
-### Préstamos [Achapter: préstamos](http://localhost:8080/usuarios)
+### Préstamos [Achapter: usuarios](http://localhost:8080/usuarios)
 
 En la vista de usuarios general de la aplicación.
 
