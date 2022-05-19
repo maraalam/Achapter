@@ -1,0 +1,32 @@
+/*Portada del index*/
+#div_portada{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/img/portada.jpg);
+    background-size: cover !important;
+    display: table;
+    width: 100%;
+}
+
+#contenido-portada{
+    padding: 9em 9em;
+    width: 55%;
+}
+
+#welcome-title{
+    color: white;
+    font-family:sans-serif;    
+}
+
+#welcome-subtitle{ 
+    color: rgba(255, 255, 255, 0.659);
+    font-family:sans-serif;
+    font-style:italic;
+}
+
+
+/*Pantalla pequeña*/
+@media screen and (max-width: 1200px) {
+    #contenido-portada{
+      width: 100%;
+      padding: 9em 4em;
+    }
+}
