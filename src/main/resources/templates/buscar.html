@@ -50,14 +50,13 @@
                         <h6 class="font-weight-bold">Autor</h6>
                         <div id="orange"><span class="fa fa-minus"></span></div>            
                         <div class="input-group mb-2 border rounded-pill">
-                            <input id="searchPorAutor" onkeyup="buscar()" type="search" placeholder="Buscar por autor..." aria-describedby="button-addon3" class="form-control bg-none border-0">
+                            <input id="searchPorAutor" onkeyup="buscarAutorFiltro()" type="search" placeholder="Buscar por autor..." aria-describedby="button-addon3" class="form-control bg-none border-0">
                             <div class="input-group-append border-0">
                             <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
                         <form class="row autores-filter pt-3">
-                            <div th:each="autor: ${booksAutores}" >
-
+                            <div th:each="autor: ${booksAutores}" class="filtro-autores" >
                                 <div class="products-single fix">
                                     <div class="form-group"> <!--th:onclick="'javascript:actualizarAutor([[${autor}]]);'">-->
                                         <input type="checkbox" th:id="${autor}" th:onclick="actualizarAutor([[${autor}]]);">
@@ -247,6 +246,26 @@
             }
         }
 
+        function buscarAutorFiltro(){
+            console.log("buscando autor...");
+            var search = document.getElementById("searchPorAutor").value;
+            var autores = document.getElementsByClassName("filtro-autores");
+
+            console.log(search);
+            for(let autor of autores){
+                let autorNombre = autor.getElementsByTagName("label")[0].innerHTML;
+
+                if (search === ""){
+                    autor.style.display = "block";
+                }
+                else if (autorNombre.toLowerCase().search(search.toLowerCase())!=0){
+                    autor.style.display = "none";
+                }
+                else{
+                    autor.style.display = "block";
+                }
+            }
+        }
         function actualizarAutor(autor){
             console.log('Seleccion de autor: ' + autor);
             var rows = document.getElementsByClassName("best-seller");
