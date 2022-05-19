@@ -413,7 +413,7 @@ form.search-form {
 }
 
 nav {
-    padding: 0px 100px
+    padding: 0em 1em;
 }
 
 .fa-user-o,
@@ -450,6 +450,7 @@ h6 {
     outline: none;
     border: none
 }
+
 
 
 
