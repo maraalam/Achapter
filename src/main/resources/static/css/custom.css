@@ -98,8 +98,7 @@ form.search-form {
 .filter-button-group button.active{
     background: #010101;
 }
-.filter-button-group button{
-}
+
 .products-single {
     overflow: hidden;
     position: relative;
@@ -159,7 +158,7 @@ form.search-form {
     display: inline-block;
 }
 .mask-icon ul li{
-    background: #7bca82;
+    background: rgb(29, 138, 41);
 }
 .mask-icon ul li a{
     color: #ffffff;
@@ -167,13 +166,14 @@ form.search-form {
     display: block;
 }
 .mask-icon .cart{  /* .mask-icon a.cart */
-    background: #53ca6f;
+    background: rgb(29, 138, 41);
     position: absolute;
     bottom: 0;
     right: 0px;
     padding: 10px 20px;
     font-weight: 700;
     color: #ffffff;
+    width: 90%;
 }
 .mask-icon .cart:hover{
     background: #010101;
@@ -212,13 +212,10 @@ form.search-form {
 }
 @keyframes bounceY {
     0% {
-        transform: translateY(-205px);
+        transform: translateY(-150px);
    }
-    40% {
-        transform: translateY(-100px);
-   }
-    65% {
-        transform: translateY(-52px);
+    55% {
+        transform: translateY(-70px);
    }
     82% {
         transform: translateY(-25px);
@@ -226,75 +223,75 @@ form.search-form {
     92% {
         transform: translateY(-12px);
    }
-    55%, 75%, 87%, 97%, 100% {
+    40%, 75%, 87%, 100% {
         transform: translateY(0px);
    }
 }
 @-moz-keyframes bounceY {
     0% {
-        -moz-transform: translateY(-205px);
+        transform: translateY(-150px);
    }
-    40% {
-        -moz-transform: translateY(-100px);
-   }
-    65% {
-        -moz-transform: translateY(-52px);
+    55% {
+        transform: translateY(-70px);
    }
     82% {
-        -moz-transform: translateY(-25px);
+        transform: translateY(-25px);
    }
     92% {
-        -moz-transform: translateY(-12px);
+        transform: translateY(-12px);
    }
-    55%, 75%, 87%, 97%, 100% {
-        -moz-transform: translateY(0px);
+    40%, 75%, 87%, 100% {
+        transform: translateY(0px);
    }
 }
 @-webkit-keyframes bounceY {
     0% {
-        -webkit-transform: translateY(-205px);
-   }
-    40% {
-        -webkit-transform: translateY(-100px);
-   }
-    65% {
-        -webkit-transform: translateY(-52px);
-   }
-    82% {
-        -webkit-transform: translateY(-25px);
-   }
-    92% {
-        -webkit-transform: translateY(-12px);
-   }
-    55%, 75%, 87%, 97%, 100% {
-        -webkit-transform: translateY(0px);
-   }
+        transform: translateY(-150px);
+    }
+        55% {
+            transform: translateY(-70px);
+    }
+        82% {
+            transform: translateY(-25px);
+    }
+        92% {
+            transform: translateY(-12px);
+    }
+        40%, 75%, 87%, 100% {
+            transform: translateY(0px);
+    }
 }
 
-/* Mas populares*/
-.btn-genre {
-    font-family: Raleway-SemiBold;
-    font-size: 13px;
-    color: rgb(29, 160, 60);
-    letter-spacing: 1px;
-    line-height: 15px;
-    border: 2px solid rgba(103, 192, 103, 0.75);
-    border-radius: 80px;
-    background: solid rgba(103, 192, 103, 0.75);
-    transition: all 0.3s ease 0s;
-    width:70%; 
-    
-  }
-  
-  .btn-genre:hover {
-    color: #FFF;
-    background: rgba(48, 172, 48, 0.75);
-    border: 2px solid rgba(17, 238, 17, 0.75);
-    width:70%; 
-  }
+.book-img{
+    height:30em;
+    overflow: hidden
+}
 
+.book-img img{
+    width: 100%;
+    height: auto;
+}
 
-/*                                        posts                                       */
+@supports(object-fit: cover){
+    .book-img img{
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+}
+
+.titulo-libro{
+    display: block;
+    display: -webkit-box;
+    height: 2em;
+    line-height: 1em;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* posts */
 
 
 .widget .panel, .widget.panel {

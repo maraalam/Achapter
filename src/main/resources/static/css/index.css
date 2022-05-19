@@ -22,11 +22,45 @@
     font-style:italic;
 }
 
+#search-portada{
+   background-color: rgb(29, 138, 41);
+   border-color: rgb(29, 138, 41);
+}
+
+
+
+
+
+/* Genéros más buscados*/
+.btn-genre {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    color: rgb(29, 160, 60);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(103, 192, 103, 0.75);
+    border-radius: 80px;
+    background: solid rgba(103, 192, 103, 0.75);
+    transition: all 0.3s ease 0s;
+    width:70%; 
+}
+
+.btn-genre:hover {
+    color: #FFF;
+    background: rgba(48, 172, 48, 0.75);
+    border: 2px solid rgba(17, 238, 17, 0.75);
+    width:70%; 
+}
+
+
 
 /*Pantalla pequeña*/
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1199.98px) {
     #contenido-portada{
       width: 100%;
       padding: 9em 4em;
+    }
+    .btn-genre{
+        width: 70%;
     }
 }

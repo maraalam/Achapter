@@ -22,18 +22,19 @@
                 
                 <p id="welcome-subtitle" class="font-italic mb-0 lead mb-0">
                 Esta es una aplicación que te permitirá mantener un control de los libros que te has leído, 
-                quieres leer y los que estás leyendo actualmente
-                . Además, ¡podrás conectarte con  
+                quieres leer y los que estás leyendo actualmente. Además, ¡podrás conectarte con  
                 una comunidad que tiene tus mismos intereses obteniendo ideas para tus próximas lecturas!
                 </p>        
             </div>
         </div>
         
+        <!-- Buscador del index -->
         <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
-            <input id="search-box" type="text" class="form-control" placeholder="Search Books!...">
-            <button id="search" class="btn btn-primary" onclick="">Search</button>
+            <input id="search-box" type="text" class="form-control" placeholder="Busca un libro!...">
+            <button id="search-portada" class="btn btn-primary" onclick="">Buscar</button>
         </div>
 
+        <!-- Libros del buscador -->
         <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
         <script src="js/index.js"></script>
 
@@ -51,19 +52,15 @@
 
         <div class="products-box">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="title-all ">
-                            <h1>Más Populares</h1>
-                        </div>
-                    </div>
+                <div class="row col-lg-12 title-all">
+                    <h1>Libros más populares</h1>
                 </div>
 
                 <div class="row special-list">              
                     <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
                         <div class="products-single fix">
                             <div class="box-img-hover">
-                                <div id="imgPortada" class="" > 
+                                <div class="book-img"> 
                                     <img th:src="${book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" /> 
                                 </div>
                                 
@@ -74,7 +71,7 @@
                             <a th:href="@{/libro/__${book.id}__}" href="/libro" class="text-decoration-none link-dark">
                                 <div class="why-text">
                                     
-                                    <h3 th:text="${book.titulo}" >Nombre del libro</h3>
+                                    <h3 class="titulo-libro"th:text="${book.titulo}" >Nombre del libro</h3>
                                     <h5 th:text="${book.autor}" > Por Autor</h5>
                                     <div class="product-rating mb-2">
                                         <i class="fas fa-star"></i>
@@ -85,37 +82,30 @@
                                     </div>
                                 </div>
                             </a>
-                         </div>
+                        </div>
                     </div>     
                 </div>
             </div>
         </div>
-        <!-- End Mas populares  -->
+        <!-- End mas populares  -->
         
         <!-- Géneros más buscados  -->
         <div class="products-box">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="title-all ">
-                            <h1>Géneros Más Buscados</h1>
-                        </div>
-                    </div>
+                <div class="row col-lg-12 title-all">
+                    <h1>Géneros Más Buscados</h1>
                 </div>
                 
-    
                 <div class="row special-list">
                     <div th:each="genero: ${generos}" class="col-lg-4 col-md-6 ">
                         <div class="products-single fix">
                             <button th:text="${genero}"  type="button" class="btn btn-genre"> Género 1</button>
                         </div>
-                    </div>
-    
-                    
+                    </div> 
                 </div>
             </div>
         </div>
-        <!-- End Products  -->
+        <!-- End géneros -->
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
  
