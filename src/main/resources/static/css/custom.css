@@ -767,3 +767,7 @@ h6 {
 
 
 /** estadisticas **/
+
+.widget{
+    width: 100%;
+}

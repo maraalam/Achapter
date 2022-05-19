@@ -15,7 +15,7 @@
                 <!--Columna filtros md(en pantallas pequeñas las dos columnas se convierten en filas)-->
                 <div class="col-md-3">
 
-                    <!-- Sidebar filter section -->
+                    <!-- Section de filtros-->
                     <section class="filters">
                         <h1> Posts</h1>
                         <br> <br>
@@ -24,7 +24,7 @@
                         </div>
                         <div class="d-flex flex-row">
 
-                            <div  id="sort3" class="ml-auto mr-lg-4">
+                            <div id="sort3" class="ml-auto mr-lg-4">
                                 <div id="sort2" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> 
                                     <select  id="sort1" name="sort" >
                                         <option value="popularity"><b>Popularidad</b></option>
@@ -72,23 +72,19 @@
                             </div>
                         </div>
                     </section>
-
-                    
-                        <div class="container" id="posts" >
-                            <div class="row" th:each="post : ${posts}">
-                                <div th:replace="fragments/post.html :: post(${post})"></div>
-                           
-                        </div>
-
-                       
+   
+                    <div class="container" id="posts" >
+                        <div class="row" th:each="post : ${posts}">
+                            <div th:replace="fragments/post.html :: post(${post})"></div>
+                        
+                        </div>                       
                     </div>
                 </div>
-
-            </div>
-            
-            
+            </div>       
         </div>
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    
     </main>
     <th:block th:replace="fragments/footer.html :: footer" />
     <script th:inline="javascript">
