@@ -24,7 +24,9 @@ import java.util.List;
                 query="SELECT DISTINCT b FROM Book b "
                 + "WHERE b.id = :id"),
         @NamedQuery(name="Book.autores",
-                query="SELECT DISTINCT b.autor from Book b")
+                query="SELECT DISTINCT b.autor from Book b"),
+        @NamedQuery(name="Book.generos",
+                query="SELECT DISTINCT b.generos from Book b")
 })
 public class Book implements Transferable<Book.Transfer> {
     @Id

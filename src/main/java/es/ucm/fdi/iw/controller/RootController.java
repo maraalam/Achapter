@@ -188,6 +188,8 @@ public class RootController {
     }
 
 
+
+
     // User u = entityManager.createNamedQuery("User.byUsername", User.class)
 
     @ModelAttribute("generos")

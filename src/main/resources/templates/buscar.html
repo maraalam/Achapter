@@ -58,9 +58,9 @@
                         <form class="row autores-filter pt-3">
                             <div th:each="autor: ${booksAutores}" class="filtro-autores" >
                                 <div class="products-single fix">
-                                    <div class="form-group"> <!--th:onclick="'javascript:actualizarAutor([[${autor}]]);'">-->
-                                        <input type="checkbox" th:id="${autor}" th:onclick="actualizarAutor([[${autor}]]);">
-                                        <label th:for="${autor}" th:text="${autor}">Autor1</label>
+                                    <div class="form-group">
+                                        <input type="checkbox" th:id="${autor}" onclick="filtrar()">
+                                        <label th:for="${autor}" th:text="${autor}">Autor</label>
                                     </div>
                                 </div>
                             
@@ -72,24 +72,29 @@
 
                     <div class="py-2 border-bottom ml-3">
                         <h6 class="font-weight-bold">Género</h6>
-                        <div id="orange"><span class="fa fa-minus"></span></div>
-                        <div class="row">
-                            <div class="col-6">
-                                <form>
-                                    <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Género1</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Género2</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Género3</label> </div>
-                                </form>
-                            </div>
-                            <div class="col-6">
-                                <form>
-                                    <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Género4</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Género5</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Género6</label> </div>
-                                </form>
+                        <div id="orange"><span class="fa fa-minus"></span></div>            
+                        <div class="input-group mb-2 border rounded-pill">
+                            <input id="searchPorGenero" onkeyup="buscarGeneroFiltro()" type="search" placeholder="Buscar por género..." aria-describedby="button-addon3" class="form-control bg-none border-0">
+                            <div class="input-group-append border-0">
+                            <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
+                        <form class="row generos-filter pt-3">
+                            <div th:each="genero: ${generos}" class="filtro-generos" >
+                                <div class="products-single fix">
+                                    <div class="form-group">
+                                        <input type="checkbox" th:id="${genero}" onclick="filtrar()">
+                                        <label th:for="${genero}" th:text="${genero}">Genero</label>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            
+                        </form>
                     </div>
+
+
+            
                     <div class="py-2 border-bottom ml-3">
                         <h6 class="font-weight-bold">Fecha de publicación</h6>
                         <div id="orange"><span class="fa fa-minus"></span></div>
@@ -108,7 +113,7 @@
             <div class="col-md-9">
                 <section>
                     <div class="input-group mb-n2 border rounded-pill">
-                        <input id="search-text" onkeyup="buscar()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
+                        <input id="search-text" onkeyup="filtrar()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
                         <div class="input-group-append border-0">
                         <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                         </div>
@@ -138,11 +143,12 @@
                                         <button id="addToLib" class="cart cart-buscar" type="submit">Agregar a mi biblioteca</button>
                                     </form>
                                 </div>
+
                                 <a th:href=@{/libro/{id}(id=${book.id})} href="/libro/"{id}(id=${book.id}) class="text-decoration-none link-dark">
-                                    <div class="why-text">
-                                        
+                                    <div class="why-text">  
                                         <h3 class="titulo-libro-buscar" th:text="${book.titulo}" >Nombre del libro</h3>
                                         <h5 class="isbn-libro" th:text="${book.ISBN}" hidden>isbn</h5>
+                                        <h5 class="genero-libro" th:text="${book.generos}" hidden>genero</h5>
                                         <h6 class="autor-libro" th:text="${book.autor}"> Por Autor</h6>
                                         <div class="product-rating mb-2">
                                             <i class="fas fa-star"></i>
@@ -186,65 +192,11 @@
                 
                 var types = document.querySelector('#sorting option[value='+result_type+']');
                 types.selected = "selected";
-            buscar();
+            filtrar();
         }
         window.addEventListener('load', changeSearch);
         
 
-        function buscar(){
-            var e = document.getElementById("sort");
-            
-            var result_type = e[e.selectedIndex].value;
-            if(result_type.localeCompare("titulo")==0){
-                buscarLibro();
-            }
-            else if(result_type.localeCompare("isbn")==0){
-                buscarISBN();
-            }
-            /*else if(result_type.localeCompare("usuario")==0){
-                buscarUsuario();
-            }*/
-        }
-
-        function buscarLibro() {
-            console.log("buscando libro por titulo...");
-            var search = document.getElementById("search-text").value;
-            var rows = document.getElementsByClassName("best-seller");
-
-            for(let r of rows){
-                let titulo = r.getElementsByClassName("titulo-libro-buscar")[0].innerHTML;
-                console.log(titulo);
-                if (search === ""){
-                    r.style.display = "block";
-                }
-                else if (titulo.toLowerCase().search(search.toLowerCase())==-1){
-                    r.style.display = "none";
-                }
-                else{
-                    r.style.display = "block";
-                }
-            }
-        }
-
-        function buscarISBN(){
-            console.log("buscando libro por ISBN...");
-            var search = document.getElementById("search-text").value;
-            var rows = document.getElementsByClassName("best-seller");
-
-            for(let r of rows){
-                let isbn = r.getElementsByClassName("isbn-libro")[0].innerHTML;
-                console.log(isbn);
-                if (search === ""){
-                    r.style.display = "block";
-                }
-                else if (isbn.toLowerCase().search(search.toLowerCase())!=0){
-                    r.style.display = "none";
-                }
-                else{
-                    r.style.display = "block";
-                }
-            }
-        }
 
         function buscarAutorFiltro(){
             console.log("buscando autor...");
@@ -266,38 +218,108 @@
                 }
             }
         }
-        function actualizarAutor(autor){
-            console.log('Seleccion de autor: ' + autor);
-            var rows = document.getElementsByClassName("best-seller");
+
+        function buscarGeneroFiltro(){
+            console.log("buscando genero...");
+            var search = document.getElementById("searchPorGenero").value;
+            var generos = document.getElementsByClassName("filtro-generos");
+
+            console.log(search);
+            for(let genero of generos){
+                let generosNombre = genero.getElementsByTagName("label")[0].innerHTML;
+
+                if (search === ""){
+                    genero.style.display = "block";
+                }
+                else if (generosNombre.toLowerCase().search(search.toLowerCase())!=0){
+                    genero.style.display = "none";
+                }
+                else{
+                    genero.style.display = "block";
+                }
+            }
+        }
+        
+        function filtrar(){
+            console.log("buscando y filtrando...");
+
+            /*Tipo de búsqueda*/
+            var e = document.getElementById("sort");
+            var type_search = e[e.selectedIndex].value; 
+            var search = document.getElementById("search-text").value;
+
+            /*Filtro de autores*/
             var autores = document.getElementsByClassName("autores-filter")[0];
             autores = autores.getElementsByTagName("input");
 
+            /*Filtro de generos*/
+            var generos = document.getElementsByClassName("generos-filter")[0];
+            generos = generos.getElementsByTagName("input");
+                        
+
             var librosMostrar = []
-            for(let r of rows){
+
+            for(let r of document.getElementsByClassName("best-seller")){
+                let generoLibro = r.getElementsByClassName("genero-libro")[0].innerHTML;
                 let autorlibro = r.getElementsByClassName("autor-libro")[0].innerHTML;
+                let isbn = r.getElementsByClassName("isbn-libro")[0].innerHTML;
+                let titulo = r.getElementsByClassName("titulo-libro-buscar")[0].innerHTML;
+
                 var incluir = true;
 
+                if (search === ""){
+                    incluir=true
+                }
+                else if (type_search.localeCompare("titulo")==0 &&
+                titulo.toLowerCase().search(search.toLowerCase())==-1){
+                    incluir = false;
+                }
+                else if (type_search.localeCompare("isbn")==0 &&
+                isbn.toLowerCase().search(search.toLowerCase())==-1){
+                    incluir = false;
+                }
+                else{
+                    incluir=true
+                }
 
-                for(let a in autores){             
-                    if(!autores[a].checked){                        
-                        incluir = incluir && true;
-                    }  
-                    else if(autores[a].checked && autores[a].id.search(autorlibro)==0){
-                        incluir = true;
-                        break;
+                
+                if(incluir){
+                    for(let a in autores){             
+                        if(!autores[a].checked){                        
+                            incluir = incluir && true;
+                        }  
+                        else if(autores[a].checked && autores[a].id.search(autorlibro)==0){
+                            incluir = true;
+                            break;                              
+                        }
+                        else{
+                            incluir = false;
+                        }   
                     }
-                    else{
-                        incluir = false;
+                }
+
+                if(incluir){
+                              
+                    generoLibro = generoLibro.split(",")
+                    for(let g in generos){              
+
+                        if(!generos[g].checked){                        
+                            incluir = incluir && true;
+                        }  
+                        else if(generos[g].checked && generoLibro.includes(generos[g].id)){
+                            incluir = true;
+                            break;
+                        }
+                        else{
+                            incluir = false;
+                        }   
                     }
-                    
                 }
                 
                 if(incluir){
                     r.style.display = "block";
-                    console.log("Incluir " + autorlibro)
                 }        
                 else{
-                    console.log("No incluir" + autorlibro)
                     r.style.display = "none";
                 }
             }
