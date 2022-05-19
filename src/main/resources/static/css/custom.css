@@ -19,7 +19,6 @@
     border-bottom: 1px solid gray;
 }
 
-/* propio*/
 .pfp {
     white-space:nowrap;
 }
@@ -33,6 +32,11 @@
     width: 700px;
     height: 100px;
     resize: none;
+}
+
+[id='toggle-heart'] {
+    position: absolute;
+    left: -100vw;
 }
 
 /*
@@ -173,11 +177,14 @@ form.search-form {
     padding: 10px 20px;
     font-weight: 700;
     color: #ffffff;
-    width: 90%;
 }
 .mask-icon .cart:hover{
     background: #010101;
     color: #ffffff;
+}
+.mask-icon .cart-buscar{
+    font-weight: 700 !important;
+    font-size: 0.7em !important;
 }
 .mask-icon ul li a:hover{
     background: #010101;
@@ -291,6 +298,21 @@ form.search-form {
     text-overflow: ellipsis;
 }
 
+.titulo-libro-buscar{
+    display: block;
+    display: -webkit-box;
+    height: 2em;
+    line-height: 1em;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1em;
+}
+/*buscar*/
+
+
+
 /* posts */
 
 
@@ -345,8 +367,8 @@ form.search-form {
 }
 
 .img-bordered-primary {
-    -webkit-box-shadow: 0 0 0 2px #fff,0 0 0 4px #446CB3;
-    box-shadow: 0 0 0 2px #fff,0 0 0 4px #446CB3;
+    -webkit-box-shadow: 0 0 0 2px #fff,0 0 0 4px #9c7659;
+    box-shadow: 0 0 0 2px #fff,0 0 0 4px #9c7659;
 }
 
 .img-circle {
@@ -530,72 +552,16 @@ h6 {
     #mobile-filter {
         display: none
     }
-}
-
-@media(min-width:992px) and (max-width:1199px) {
-    #search {
-        width: 300px;
-        padding: 5px;
+    .book-img{
+        height:30em;
     }
-
-    .search-nav-item {
-        margin-left: 200px;
-        width: 350px
-    }
-
-    .fa-user-o {
-        margin-left: 160px
-    }
-
-    .text {
-        display: none
-    }
-
-    #sidebar {
-        width: 30%;
-        padding: 20px;
-        float: left
-    }
-
-    #products {
-        width: 70%;
-        padding: 10px;
-        margin: 0;
-        float: right
-    }
-
-    .card {
-        width: 200px;
-        height: 330px;
-        border: none
-    }
-
-    .card-img-top {
-        width: 200px;
-        height: 200px;
-        border-radius: 10px
-    }
-
-    .fa-plus,
-    .fa-minus {
-        font-size: 12px
-    }
-
-    .sign {
-        height: 25px
-    }
-
-    .price {
-        width: 99px
-    }
-
-    .filter,
-    #mobile-filter {
-        display: none
+    .book-img-buscar{
+        height: 22em;
     }
 }
 
-@media(min-width:768px) and (max-width:991px) {
+
+@media(min-width:1000px) and (max-width:1200px) {
     #search {
         width: 300px;
         padding: 5px;
@@ -635,9 +601,15 @@ h6 {
     #mobile-filter {
         display: none
     }
+    .book-img{
+        height:21em;
+    }
+    .book-img-buscar{
+        height: 15em;
+    }
 }
 
-@media(min-width:576px) and (max-width:767px) {
+@media(min-width:800px) and (max-width:1000px) {
     .text {
         display: none
     }
@@ -687,9 +659,15 @@ h6 {
     #mobile-filter {
         display: none
     }
+    .book-img{
+        height:32em;
+    }
+    .book-img-buscar{
+        height: 24em;
+    }
 }
 
-@media(max-width:575px) {
+@media(max-width:800px) {
     .search-nav-item {
         margin: 0;
         width: 100%;
@@ -721,6 +699,9 @@ h6 {
     #res {
         font-size: 12px;
         margin-top: 2%
+    }
+    .book-img{
+        height:50em;
     }
 }
 

@@ -99,7 +99,7 @@ $(document).ready(function() {
              <div class="card-body">
 
                <div class="why-text">
-                    <h5 id ="title" class="booktitle" "> ${title} </h5>
+                    <h5 id ="title" <h3 class="titulo-libro" "> ${title} </h5>
                     <h6 id ="author"> ${author}</h6>
                     <h6 id ="publisher"> ${publisher}</h6>
                     <h6 hidden id ="isbn"> ${bookIsbn}</h6>
@@ -172,7 +172,7 @@ $(document).ready(function() {
                <div class="card-body">
 
                  <div class="why-text">
-                      <h5 id ="title" class="booktitle" "> ${title} </h5>
+                      <h5 id ="title" <h3 class="titulo-libro" "> ${title} </h5>
                       <h6 id ="author"> ${author}</h6>
                       <h6 id ="publisher"> ${publisher}</h6>
                       <h6 hidden id ="isbn"> ${bookIsbn}</h6>

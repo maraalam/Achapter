@@ -30,7 +30,6 @@
                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
                                     <option value="titulo"><b>Titulo</b></option>
                                     <option value="isbn"><b>ISBN</b></option>
-                                    <option value="autor"><b>Autor</b></option>
                                     <option value="usuario"><b>Usuarios</b></option>
                                 </select> </div>
                         </div>
@@ -51,27 +50,24 @@
                         <h6 class="font-weight-bold">Autor</h6>
                         <div id="orange"><span class="fa fa-minus"></span></div>            
                         <div class="input-group mb-2 border rounded-pill">
-                            <input type="search" placeholder="Buscar autor..." aria-describedby="button-addon3" class="form-control bg-none border-0">
+                            <input id="searchPorAutor" onkeyup="buscar()" type="search" placeholder="Buscar por autor..." aria-describedby="button-addon3" class="form-control bg-none border-0">
                             <div class="input-group-append border-0">
                             <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <form>
-                                    <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Autor1</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Autor2</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Autor3</label> </div>
-                                </form>
+                        <form class="row autores-filter pt-3">
+                            <div th:each="autor: ${booksAutores}" >
+
+                                <div class="products-single fix">
+                                    <div class="form-group"> <!--th:onclick="'javascript:actualizarAutor([[${autor}]]);'">-->
+                                        <input type="checkbox" th:id="${autor}" th:onclick="actualizarAutor([[${autor}]]);">
+                                        <label th:for="${autor}" th:text="${autor}">Autor1</label>
+                                    </div>
+                                </div>
+                            
                             </div>
-                            <div class="col-6">
-                                <form>
-                                    <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Autor4</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Autor5</label> </div>
-                                    <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Autor6</label> </div>
-                                </form>
-                            </div>
-                        </div>
+                            
+                        </form>
                     </div>
 
 
@@ -123,46 +119,45 @@
                 <!-- RESULTADOS DE LA BÚSQUEDA  -->
                 <div class="products-box" >
 
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="title-all ">
-                                    <h4>Resultados</h4>
-                                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="title-all ">
+                                <h4>Resultados</h4>
                             </div>
                         </div>
-                        
+                    </div>
+                    
 
-                        <div class="row special-list" id="results" >
-                            <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
-                                <div class="products-single fix">
-                                    <div class="box-img-hover">
+                    <div class="row special-list" id="results" >
+                        <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <div class="book-img book-img-buscar"> 
                                         <img th:src="${book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
-
-                                        <div class="mask-icon">
-                                            <a class="cart" href="#">Agregar a mi biblioteca</a>
+                                    </div>  
+                                    <form class="mask-icon" th:action="@{/save/quieroLeer/__${book.id}__}" method="POST">
+                                        <button id="addToLib" class="cart cart-buscar" type="submit">Agregar a mi biblioteca</button>
+                                    </form>
+                                </div>
+                                <a th:href=@{/libro/{id}(id=${book.id})} href="/libro/"{id}(id=${book.id}) class="text-decoration-none link-dark">
+                                    <div class="why-text">
+                                        
+                                        <h3 class="titulo-libro-buscar" th:text="${book.titulo}" >Nombre del libro</h3>
+                                        <h5 class="isbn-libro" th:text="${book.ISBN}" hidden>isbn</h5>
+                                        <h6 class="autor-libro" th:text="${book.autor}"> Por Autor</h6>
+                                        <div class="product-rating mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star mr-0"></i>
                                         </div>
                                     </div>
-                                    <a th:href=@{/libro/{id}(id=${book.id})} href="/libro/"{id}(id=${book.id}) class="text-decoration-none link-dark">
-                                        <div class="why-text">
-                                            
-                                            <h5 class="booktitle" th:text="${book.titulo}" >Nombre del libro</h5>
-                                            <h5 class="bookisbn" th:text="${book.ISBN}" hidden>isbn</h5>
-                                            <h6 th:text="${book.autor}"> Por Autor</h6>
-                                            <div class="product-rating mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star mr-0"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>     
-                        </div>
-
+                                </a>
+                            </div>
+                        </div>     
+                    </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -207,15 +202,18 @@
             else if(result_type.localeCompare("isbn")==0){
                 buscarISBN();
             }
+            /*else if(result_type.localeCompare("usuario")==0){
+                buscarUsuario();
+            }*/
         }
 
         function buscarLibro() {
-            console.log("getting books...");
+            console.log("buscando libro por titulo...");
             var search = document.getElementById("search-text").value;
             var rows = document.getElementsByClassName("best-seller");
 
             for(let r of rows){
-                let titulo = r.getElementsByClassName("booktitle")[0].innerHTML;
+                let titulo = r.getElementsByClassName("titulo-libro-buscar")[0].innerHTML;
                 console.log(titulo);
                 if (search === ""){
                     r.style.display = "block";
@@ -230,12 +228,12 @@
         }
 
         function buscarISBN(){
-            console.log("getting ISBN...");
+            console.log("buscando libro por ISBN...");
             var search = document.getElementById("search-text").value;
             var rows = document.getElementsByClassName("best-seller");
 
             for(let r of rows){
-                let isbn = r.getElementsByClassName("bookisbn")[0].innerHTML;
+                let isbn = r.getElementsByClassName("isbn-libro")[0].innerHTML;
                 console.log(isbn);
                 if (search === ""){
                     r.style.display = "block";
@@ -248,23 +246,44 @@
                 }
             }
         }
-/*
-            document.getElementById("results").innerHTML = '';
 
-            var search = document.getElementById("search-text").value;
-            
-            console.log("Getting books ...");
-            var books = /*[[${books}]]*/ /*'default';/*
-            var filteredBooks = []
-            for(book in books){
-                if(books[book]['titulo'].toLowerCase().search(search.toLowerCase())!=-1){
-                    filteredBooks.push(books[book]);
+        function actualizarAutor(autor){
+            console.log('Seleccion de autor: ' + autor);
+            var rows = document.getElementsByClassName("best-seller");
+            var autores = document.getElementsByClassName("autores-filter")[0];
+            autores = autores.getElementsByTagName("input");
+
+            var librosMostrar = []
+            for(let r of rows){
+                let autorlibro = r.getElementsByClassName("autor-libro")[0].innerHTML;
+                var incluir = true;
+
+
+                for(let a in autores){             
+                    if(!autores[a].checked){                        
+                        incluir = incluir && true;
+                    }  
+                    else if(autores[a].checked && autores[a].id.search(autorlibro)==0){
+                        incluir = true;
+                        break;
+                    }
+                    else{
+                        incluir = false;
+                    }
+                    
+                }
+                
+                if(incluir){
+                    r.style.display = "block";
+                    console.log("Incluir " + autorlibro)
+                }        
+                else{
+                    console.log("No incluir" + autorlibro)
+                    r.style.display = "none";
                 }
             }
-            console.log(filteredBooks);
-            books = filteredBooks;
-            
-        }*/
+        }
+        
     </script>
     </main>
 

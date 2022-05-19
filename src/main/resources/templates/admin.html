@@ -46,7 +46,7 @@
                                 <a th:href="@{/libro/__${book.id}__}" href="/libro" class="text-decoration-none link-dark">
                                     <div class="why-text">
                                         
-                                        <h5 class = "booktitle" th:text="${book.titulo}" >Nombre del libro</h5>
+                                        <h5 <h3 class="titulo-libro" th:text="${book.titulo}" >Nombre del libro</h5>
                                        
                                     </div>
                                 </a>
@@ -136,7 +136,7 @@
             var rows = document.getElementsByClassName("best-seller");
 
             for(let r of rows){
-                let titulo = r.getElementsByClassName("booktitle")[0].innerHTML;
+                let titulo = r.getElementsByClassName("titulo-libro")[0].innerHTML;
                 console.log(titulo);
                 if (search === ""){
                     r.style.display = "block";

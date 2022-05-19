@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import es.ucm.fdi.iw.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.boot.spi.InFlightMetadataCollector.EntityTableXref;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -179,6 +180,11 @@ public class RootController {
     @ModelAttribute("books")
     public List<Book> getBooksList() {
         return entityManager.createNamedQuery("Book.all", Book.class).getResultList();
+    }
+
+    @ModelAttribute("booksAutores")
+    public List<String> getAuthorList(){
+        return entityManager.createNamedQuery("Book.autores", String.class).getResultList();
     }
 
 
