@@ -380,16 +380,7 @@ public String followers(@PathVariable long tipo, Model model, HttpSession sessio
     
     return "usuariosfriends";
 }
-
-@PostMapping("{id}/state")
-@ResponseBody
-public String postState(@RequestParam("state") Model state, @PathVariable long id, 
-HttpServletResponse response, HttpSession session, Model model){
-    System.out.println("[Test] - Se ejecuta");
-    return "{\"result\": \"state updated.\"}";
-}	
     
-
 
 @ResponseStatus(
     value=HttpStatus.FORBIDDEN,

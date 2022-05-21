@@ -445,18 +445,17 @@
 
             <div th:case="settings" class="tab-pane fade show active" id="settings">
                 <h2>Actualizar foto de perfil</h2>
-
-                <input type="file" id="f_avatar" accept="image/jpeg,image/png">
-                <img id="avatar" alt="foto de perfil" hidden/>
-                <form th:action="@{/user/__${user.id}__/pic}">
+                <form th:action="@{/user/__${user.id}__/pic}" method="POST">
+                    <input type="file" id="f_avatar" accept="image/jpeg,image/png">
+                    <img id="avatar" alt="foto de perfil" hidden/>
                     <button id="postAvatar">Subir foto</button>
                 </form>
                 <br>
 
                 <h2>Actualizar estado </h2>
-                <input id="estado" type="text" placeholder="Estado anterior" size="60" maxlength="144"/>
-                <form th:action="@{/user/__${user.id}__/state}">
-                    <button id="postEstado">Actualizar estado</button>
+                <form th:action="@{/user/__${user.id}__/state}" method="POST">
+                    <input id="state" name="state" type="text" placeholder="Estado anterior" size="60" maxlength="144"/>
+                    <button id="postEstado" type="submit">Actualizar estado</button>
                 </form>
             </div>
 
@@ -546,17 +545,6 @@
             let cacheBuster = "?" + new Date().getTime();
             document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
             document.querySelector("div.img-wrapper>img.iwprof").src = url + cacheBuster;
-        });
-    });
-
-    // click en boton de enviar estado
-    document.querySelector("#postEstado").addEventListener('click', (e) => {
-        e.preventDefault();
-        let url = document.querySelector("#postEstado").parentNode.action;
-        let state = document.querySelector("#estado").value;
-        console.log(url, state);
-        postState(state, url, "state").then(() => {
-            document.getElementById("userState").innerText = state;
         });
     });
 </script>

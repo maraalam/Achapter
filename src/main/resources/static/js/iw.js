@@ -173,7 +173,7 @@ function readImageFileData(file, targetImg) {
 function postImage(img, endpoint, name, filename) {
     // from https://stackoverflow.com/a/30470303/15472
     function toBlob(dataurl) {
-        console.log(dataurl);
+        console.log("URL:" + dataurl);
         let arr = dataurl.split(','),
             mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]),
@@ -189,6 +189,7 @@ function postImage(img, endpoint, name, filename) {
     let imageBlob = toBlob(img.src);
     let fd = new FormData();
     fd.append(name, imageBlob, filename);
+    console.log("Enviando petición");
     return go(endpoint, "POST", fd, {})
 }
 

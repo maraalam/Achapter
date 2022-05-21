@@ -104,7 +104,7 @@ public class UserController {
      */
     @GetMapping("{id}")
     @Transactional
-    public String index(@PathVariable long id, @RequestParam(defaultValue = "posts") String tab, Model model, HttpSession session) {
+    public String index(@PathVariable long id,@RequestParam(defaultValue = "posts") String tab, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
 
         model.addAttribute("tab", tab); // tab.toUpperCase());
@@ -260,7 +260,7 @@ public class UserController {
                          new BufferedOutputStream(new FileOutputStream(f))) {
                 byte[] bytes = photo.getBytes();
                 stream.write(bytes);
-                log.info("Uploaded photo for {} into {}!", id, f.getAbsolutePath());
+                log.info("[!][!] - Uploaded photo for {} into {}!", id, f.getAbsolutePath());
             } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 log.warn("Error uploading " + id + " ", e);
@@ -415,12 +415,24 @@ public class UserController {
         return "{\"result\": \"ok.\"}";
     }
 
-    @PostMapping("{id}/state")
-    @ResponseBody
-    public String postState(@RequestParam("state") Model state, @PathVariable long id,
-                            HttpServletResponse response, HttpSession session, Model model) {
-        System.out.println("[Test] - Se ejecuta");
-        return "{\"result\": \"state updated.\"}";
+    @GetMapping(value = "/{id}/state")
+	public String profileEdit(Model model, HttpSession session, @RequestParam(defaultValue = "posts") String tab, @PathVariable long id) {
+        User user = entityManager.find(User.class, id);
+		model.addAttribute("user", user);
+        model.addAttribute("tab", tab);
+		return "redirect:/user/" + id + "?tab=settings";
+	}
+
+    @PostMapping(value = "/{id}/state")
+    @Transactional
+    public String postState(@RequestParam("state") String state, @PathVariable long id, HttpSession session, Model model) {
+        User user = entityManager.find(User.class, id);
+        user.setAbout(state); 
+        entityManager.persist(user);
+        entityManager.flush();
+
+        log.info("State from user {} changed into {}", user.getId(), state);
+        return "redirect:/user/" + id + "?tab=settings";
     }
 
     @PostMapping("post")
