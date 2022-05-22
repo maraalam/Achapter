@@ -54,7 +54,7 @@ public class RootController {
 */
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, HttpSession session) {
         return "login";
     }
 
@@ -139,10 +139,27 @@ public class RootController {
     }
 
     @GetMapping("/libro")
-    public String libro(Model model,  @RequestParam("id") long id) {
-        log.info("[RootController.Libro] Accediendo al libro" + id);
-        Book libro = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
-        model.addAttribute("searchBookById", libro);
+    public String libro(Model model,  @RequestParam long id, HttpSession session) {
+        log.info("[RootController.Libro] Accediendo al libro " + id);
+        
+        Book b = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
+        model.addAttribute("searchBookById", b);
+
+        User user = entityManager.find(
+            User.class, ((User)session.getAttribute("u")).getId());
+
+        log.info("[RootController.Libro]" + user.getId());
+        
+
+        String libreria = "";
+        if(user.getLibrary()!=null && user.getLibrary().containsB(b.getId())){
+            libreria = user.getLibrary().get(b).getEstado();
+        }
+        else{
+            libreria = "sinLibreria";
+        }
+        log.info("[RootController.Libro] " + libreria );
+        model.addAttribute("libreriaLibro", libreria);
         return "libro";
     }
 
@@ -239,29 +256,53 @@ public class RootController {
         b.setPortada(data.get("portada").asText());
         b.setTitulo(data.get("titulo").asText());
 
-        model.addAttribute("Book", b);// CRIS
+        model.addAttribute("Book", b);
         
         entityManager.persist(b);
-        //entityManager.flush(); //CRIS he añadido esto
+        entityManager.flush();
         
         return "index";
     }
 
 
-    @PostMapping("save/{tipoLibreria}/{id}")
+    @PostMapping("/save")
     @Transactional
-    public String addToLibrary(@PathVariable String tipoLibreria, @PathVariable long id,
+    public String addToLibrary(@RequestParam String tipoLibreria, @RequestParam Long id,
         Model model, HttpSession session, HttpServletRequest request/*Return a la página desde donde se llamo*/) {
 
-        log.info("En funcion GUARDAR EN LIBRERIA");
-        log.info("Libreria:" + tipoLibreria);
+        
+        log.info("[RootController.save] Guardar libro " + id + " en libreria " + tipoLibreria);
 
         // Busco el usuario por el id de la sesion
         User user = entityManager.find(
                 User.class, ((User)session.getAttribute("u")).getId());
 
         // Busco el libro por el id 
-        Book book = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
+        Book book = entityManager.createNamedQuery("Book.byId", Book.class)
+                                .setParameter("id", id).getSingleResult();
+
+
+        //Si el tipo de libreria es 'sinLibreria' entonces elimino el libro si está en la libreria
+        if(tipoLibreria.contains("sinLibreria")){
+
+            //Si el usuario tiene libreria y contiene el libro -> lo borro
+            if(user.getLibrary()!=null && user.getLibrary().containsB(book.getId())){
+                entityManager.remove(user.getLibrary().get(book));
+
+                user.getLibrary().removeBook(book.getId());
+                entityManager.persist(user.getLibrary());
+                entityManager.flush();
+                entityManager.persist(user);
+                entityManager.flush();
+                
+                log.info("[RootController.save] Book with id {} removed from user {}'s library", id, user.getId());
+                
+            }
+
+            return "redirect:"+ request.getHeader("Referer");
+
+        }
+
 
         // Si el usuario no tiene libreria la creo y persisto datos
         if (user.getLibrary() == null) {
@@ -280,7 +321,7 @@ public class RootController {
         if(l.containsB(id)){
             progress = l.get(book);
             progress.setEstado(tipoLibreria);
-            log.info("ya tiene progreso");
+            
             if(tipoLibreria.equals("terminado")){
             int cont = (int) model.getAttribute("contTerminado");
             model.addAttribute("contTerminado", cont+1);
@@ -299,10 +340,11 @@ public class RootController {
         l.put(book, progress);
         //user.addToLibrary(book, progress);
         entityManager.persist(l);
+        entityManager.flush();
         entityManager.persist(user);
         entityManager.flush();
 
-        log.info("Book with id {} added to user {}'s library", id, user.getId());
+        log.info("[RootController.save] Book with id {} added to user {}'s library", id, user.getId());
         return "redirect:"+ request.getHeader("Referer");
     }
 
@@ -348,7 +390,9 @@ public class RootController {
         usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
         
         entityManager.persist(usernameFollowed);
+        entityManager.flush();
         entityManager.persist(usernameFollowing);
+        entityManager.flush();
 
         
         // model.addAttribute("following",  list);
@@ -432,7 +476,9 @@ public class RootController {
             post.setLikes(post.getLikes() + 1);
 
             entityManager.persist(l);
+            entityManager.flush();
             entityManager.persist(post);
+            entityManager.flush();
         } else {
             l = people.get(p);
 

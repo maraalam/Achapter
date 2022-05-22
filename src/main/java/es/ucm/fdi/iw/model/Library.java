@@ -54,6 +54,10 @@ public class Library {
         this.books.put(b.getId(), p);
     }
 
+    public void removeBook(Long book_id) {
+        this.books.remove(book_id);
+    }
+
     public Progress get(Book b) {
         return this.books.get(b.getId());
     }
