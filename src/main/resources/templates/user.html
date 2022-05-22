@@ -100,7 +100,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                        />
                                                 </div>
-                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}" href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro(id=${user.library.books.get(entry.key).book.id})}" href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -162,7 +162,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                         src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
                                                 </div>
-                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro(id=${user.library.books.get(entry.key).book.id})}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -224,7 +224,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                         src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
                                                 </div>
-                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro(id=${user.library.books.get(entry.key).book.id})}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -286,7 +286,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                         src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
                                                 </div>
-                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro(id=${user.library.books.get(entry.key).book.id})}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
@@ -348,7 +348,7 @@
                                                     <img th:src="${user.library.books.get(entry.key).book.portada}"
                                                         />
                                                 </div>
-                                                <a th:href="@{/libro/__${user.library.books.get(entry.key).book.id}__}"  href="/libro" class="text-decoration-none link-dark">
+                                                <a th:href="@{/libro(id=${user.library.books.get(entry.key).book.id})}"  href="/libro" class="text-decoration-none link-dark">
                                                     <div class="why-text">
                                                         <h3 th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
                                                         <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>

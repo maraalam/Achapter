@@ -18,6 +18,9 @@ import java.util.List;
         @NamedQuery(name="Book.byTitulo",
                 query="SELECT DISTINCT b FROM Book b "
                 + "WHERE b.titulo LIKE CONCAT('%', :titulo, '%')"),
+        @NamedQuery(name="Book.byISBN",
+                query="SELECT DISTINCT b FROM Book b "
+                + "WHERE b.ISBN LIKE CONCAT('%', :isbn, '%')"),
         @NamedQuery(name="Book.allGenre",
                 query="SELECT DISTINCT b.generos FROM Book b "),
         @NamedQuery(name="Book.byId",

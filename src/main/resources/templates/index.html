@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="row special-list">              
-                    <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
+                    <div th:each="book , i: ${books}"  class="col-lg-3 col-md-6 special-grid best-seller" >
                         <div class="products-single fix">
                             <div class="box-img-hover">
                                 <div class="book-img"> 
@@ -68,7 +68,7 @@
                                     <button id="addToLib" class="cart" type="submit">Agregar a mi biblioteca</button>
                                 </form>
                             </div>
-                            <a th:href="@{/libro/__${book.id}__}" href="/libro" class="text-decoration-none link-dark">
+                            <a th:href="@{/libro(id=${book.id})}" href="/libro" class="text-decoration-none link-dark">
                                 <div class="why-text">
                                     
                                     <h3 class="titulo-libro" th:text="${book.titulo}" >Nombre del libro</h3>
@@ -112,31 +112,7 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
-    <script>
-        let b = document.getElementById("postBook");
-        b.addEventListener('click', (e) => {
-            e.preventDefault();
-           
- 
-        console.log(url, autor, titulo, isbn);
 
-        //var request = new XMLHttpRequest();
-
-        var url =  'addBook'
-        var myForm = document.getElementById('bookForm');
-        var fd = new FormData()
-        fd.append("titulo",  document.querySelector("#titulo").value);
-        fd.append("autor",  document.querySelector("#autor").value);
-        fd.append("isbn",  document.querySelector("#isbn").value);
-
-        console.log(url)
-         //fd.append(url, autor, titulo, isbn);
-            go(url, 'POST', fd, {})
-                .then(d => console.log("happy", d))
-                .catch(e => console.log("sad", e))
-            // hace falta recargar la pagina para q se vea
-        })
-    </script>
 </body>
 
 </html>

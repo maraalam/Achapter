@@ -43,7 +43,7 @@
                                         <button id="eraseBook" type="submit">Borrar</button>
                                     </form>
                                 </div>
-                                <a th:href="@{/libro/__${book.id}__}" href="/libro" class="text-decoration-none link-dark">
+                                <a th:href="@{/libro(id=${book.id})}" href="/libro" class="text-decoration-none link-dark">
                                     <div class="why-text">
                                         
                                         <h5 <h3 class="titulo-libro" th:text="${book.titulo}" >Nombre del libro</h5>

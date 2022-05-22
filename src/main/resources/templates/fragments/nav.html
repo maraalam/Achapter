@@ -48,7 +48,9 @@
                         <button id=submitNav class="btn btn-outline-success" type="submit">Buscar</button>
                     </form>
 
+
                     <th:block th:if="${session.u}">
+
                         <li class="nav-item align-self-left" th:if="${session.u.hasRole('ADMIN')}">
                             <a class="nav-link" th:href="@{/admin/}">Administrar</a>
                         </li>

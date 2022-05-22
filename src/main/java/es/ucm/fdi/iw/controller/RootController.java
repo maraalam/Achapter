@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -52,12 +53,12 @@ public class RootController {
     }
 */
 
-	@GetMapping("/login")
+    @GetMapping("/login")
     public String login(Model model) {
         return "login";
     }
 
-	@GetMapping("/")
+    @GetMapping("/")
     public String index(Model model) {
         //model.addAttribute("user", new User());
         //model.addAttribute("libros", bookservice.mockBooks());
@@ -124,11 +125,11 @@ public class RootController {
                 listId.add(m.getRecipient().getId());
             }
         }
- 
+
 
         model.addAttribute("mensajesR", f);
         model.addAttribute("mensajesS", f2);
-      
+        
         model.addAttribute("friends",
                 entityManager.createNamedQuery("User.friends", User.class)
                         .setParameter("username", ((User)session.getAttribute("u")).getUsername())
@@ -137,46 +138,42 @@ public class RootController {
         return "mensajeria";
     }
 
-    @GetMapping("/libro/{id}")
-    public String libro(Model model, @PathVariable long id) {
+    @GetMapping("/libro")
+    public String libro(Model model,  @RequestParam("id") long id) {
         log.info("[RootController.Libro] Accediendo al libro" + id);
-        model.addAttribute("searchBookById", entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult());
+        Book libro = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
+        model.addAttribute("searchBookById", libro);
         return "libro";
     }
 
     @GetMapping("/buscar")
-    public String buscar(Model model, @RequestParam("query")String consulta, @RequestParam("type")String tipo) {
-        log.info("buscando " + consulta + " " + tipo);
-        if(consulta.equals("titulo"))
-            model.addAttribute("searchBook", entityManager.createNamedQuery("Book.byTitulo", Book.class).setParameter("titulo", consulta).getResultList());
-        else if(consulta.equals("usuarios")){
+    public String buscar(Model model, @RequestParam(required = false) String query, @RequestParam(required = false) String type) {
+        log.info("[RootController.Buscar] Buscando "+ type + ": "+ query);
 
-        User u = entityManager.createNamedQuery("User.byUsername", User.class)
-                    .setParameter("username", consulta)
-                    .getSingleResult();
-            
-            model.addAttribute("searchUser", u);
-        }
-        
-        //else if(consulta.equals("isbn"))
-         //   model.addAttribute("searchBook", entityManager.createNamedQuery("Book.byISBN", Book.class).setParameter("ISBN", consulta).getResultList());
+        type = type!=null && !type.isEmpty() ? type : "titulo";
+
+        query = query!=null ? query : "";
+
+        model.addAttribute("query", query);
+        model.addAttribute("queryType", type);
+  
         return "buscar";
     }
-/*
-    @GetMapping("/buscar_usuarios")
-    public String buscarUsuarios(Model model, @RequestParam("query")String consulta, @RequestParam("type")String tipo) {
-        log.info("buscando " + consulta + " " + tipo);
-      
+    /*
+        @GetMapping("/buscar_usuarios")
+        public String buscarUsuarios(Model model, @RequestParam("query")String consulta, @RequestParam("type")String tipo) {
+            log.info("buscando " + consulta + " " + tipo);
         
-        User u = entityManager.createNamedQuery("User.byUsername", User.class)
-                    .setParameter("username", consulta)
-                    .getSingleResult();
             
-            model.addAttribute("usuarios", u);
+            User u = entityManager.createNamedQuery("User.byUsername", User.class)
+                        .setParameter("username", consulta)
+                        .getSingleResult();
+                
+                model.addAttribute("usuarios", u);
 
-        return "usuarios";
-    }
-*/
+            return "usuarios";
+        }
+    */
     @ModelAttribute("books")
     public List<Book> getBooksList() {
         return entityManager.createNamedQuery("Book.all", Book.class).getResultList();
@@ -217,247 +214,238 @@ public class RootController {
                 .setParameter("username", user.getUsername())
                 .getResultList();
     }
-     */
+        */
 
-     
+        
 
     @ModelAttribute("prestamosSinDestinatario")
     public List getPhysicalBooksNoDestList() {
         return entityManager.createNamedQuery("PhysicalBook.allNoDest").setMaxResults(10).getResultList();
     }
 
- @PostMapping("/addBook")
- @Transactional
-public String crearBook(@RequestBody JsonNode data, Model model){
-    log.info("crearBook");
-    log.info("[RootController.crearBook] Libro añadido : " + data.get("titulo").asText());
+    @PostMapping("/addBook")
+    @Transactional
+    public String crearBook(@RequestBody JsonNode data, Model model){
+        log.info("crearBook");
+        log.info("[RootController.crearBook] Libro añadido : " + data.get("titulo").asText());
 
-    Book b = new Book();
+        Book b = new Book();
 
-    b.setAutor(data.get("autor").asText());
-    b.setGeneros(data.get("categories").asText().trim());
-    b.setISBN(data.get("isbn").asText());
-    b.setNumpaginas(data.get("pagecount").asInt());
-    b.setPuntuación(0);
-    b.setPortada(data.get("portada").asText());
-    b.setTitulo(data.get("titulo").asText());
+        b.setAutor(data.get("autor").asText());
+        b.setGeneros(data.get("categories").asText().trim());
+        b.setISBN(data.get("isbn").asText());
+        b.setNumpaginas(data.get("pagecount").asInt());
+        b.setPuntuación(0);
+        b.setPortada(data.get("portada").asText());
+        b.setTitulo(data.get("titulo").asText());
 
-    model.addAttribute("Book", b);
-    
-    entityManager.persist(b);
-    
-    return "index";
+        model.addAttribute("Book", b);// CRIS
+        
+        entityManager.persist(b);
+        //entityManager.flush(); //CRIS he añadido esto
+        
+        return "index";
+    }
 
-}
 
+    @PostMapping("save/{tipoLibreria}/{id}")
+    @Transactional
+    public String addToLibrary(@PathVariable String tipoLibreria, @PathVariable long id,
+        Model model, HttpSession session, HttpServletRequest request/*Return a la página desde donde se llamo*/) {
 
-@PostMapping("save/{tipoLibreria}/{id}")
-@Transactional
-public String addToLibrary(@PathVariable String tipoLibreria, @PathVariable long id, Model model, HttpSession session, String libreria) {
+        log.info("En funcion GUARDAR EN LIBRERIA");
+        log.info("Libreria:" + tipoLibreria);
 
-    log.info("En funcion GUARDAR EN LIBRERIA");
-    log.info("Libreria:" + tipoLibreria);
-    User user = entityManager.find(
-            User.class, ((User)session.getAttribute("u")).getId());
-    Book book = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
+        // Busco el usuario por el id de la sesion
+        User user = entityManager.find(
+                User.class, ((User)session.getAttribute("u")).getId());
 
-    if (user.getLibrary() == null) {
-        Library lib = new Library(user);
-        user.setLibrary(lib);
-        entityManager.persist(lib);
+        // Busco el libro por el id 
+        Book book = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
+
+        // Si el usuario no tiene libreria la creo y persisto datos
+        if (user.getLibrary() == null) {
+            Library lib = new Library(user);
+            user.setLibrary(lib);
+            entityManager.persist(lib);
+            entityManager.flush();
+            entityManager.persist(user);
+            entityManager.flush();
+        }
+
+        // Progreso
+        Progress progress = new Progress();
+        Library l = user.getLibrary();
+
+        if(l.containsB(id)){
+            progress = l.get(book);
+            progress.setEstado(tipoLibreria);
+            log.info("ya tiene progreso");
+            if(tipoLibreria.equals("terminado")){
+            int cont = (int) model.getAttribute("contTerminado");
+            model.addAttribute("contTerminado", cont+1);
+        }       
+        }else{    
+            progress.setBook(book);
+            progress.setUser(user);
+            progress.setEstado(tipoLibreria);
+            log.info("nuevo progreso");
+        }
+
+        entityManager.persist(progress);
         entityManager.flush();
+
+
+        l.put(book, progress);
+        //user.addToLibrary(book, progress);
+        entityManager.persist(l);
         entityManager.persist(user);
         entityManager.flush();
+
+        log.info("Book with id {} added to user {}'s library", id, user.getId());
+        return "redirect:"+ request.getHeader("Referer");
     }
 
-    Progress progress = new Progress();
-    Library l = user.getLibrary();
 
-    if (user.getLibrary() == null) {
+    @ModelAttribute("usuarios")
+    public List<User> getUsuariosList( Model model) {
+        log.info("Obteniendo usuarios");
+
+        return entityManager.createNamedQuery("User.all", User.class).getResultList();
+    }
+
+    @ModelAttribute("following")
+    public List<User> getUsuariosfollowingList( Model model, HttpSession session) {
+        log.info("Obteniendo following");
         
-        log.info("sigue nulo");
-    }
+        User requester = (User)session.getAttribute("u");
+        if(requester!=null){
+        log.info(requester.getId());
+        User u = entityManager.createNamedQuery("User.byId", User.class)
+                    .setParameter("id", requester.getId())
+                    .getSingleResult();
 
-    
-    if(l.containsB(id)){
-        progress = l.get(book);
-        String antes = progress.getEstado();
-        progress.setEstado(tipoLibreria);
-        log.info("ya tiene progreso");
-        if(tipoLibreria.equals("terminado")){
-        int cont = (int) model.getAttribute("contTerminado");
-                    model.addAttribute("contTerminado", cont+1);
+        return u.getFollowed();
         }
-        
+        return new ArrayList<User>();
     }
-    else{
-    
-    progress.setBook(book);
-    progress.setUser(user);
-    progress.setEstado(tipoLibreria);
-    log.info("nuevo progreso");
-    }
-    entityManager.persist(progress);
-    entityManager.flush();
 
-    
-    l.put(book, progress);
-    //user.addToLibrary(book, progress);
-    entityManager.persist(l);
-    entityManager.persist(user);
-    entityManager.flush();
-
-    log.info("Book with id {} added to user {}'s library", id, user.getId());
-    return "redirect:../../user/" + ((User)session.getAttribute("u")).getId();
-}
-
-
-@ModelAttribute("usuarios")
-public List<User> getUsuariosList( Model model) {
-    log.info("Obteniendo usuarios");
-
-    return entityManager.createNamedQuery("User.all", User.class).getResultList();
-}
-
-@ModelAttribute("following")
-public List<User> getUsuariosfollowingList( Model model, HttpSession session) {
-    log.info("Obteniendo following");
-    
-    User requester = (User)session.getAttribute("u");
-    if(requester!=null){
-    log.info(requester.getId());
-    User u = entityManager.createNamedQuery("User.byId", User.class)
-                .setParameter("id", requester.getId())
-                .getSingleResult();
-
-    return u.getFollowed();
-    }
-    return new ArrayList<User>();
-}
-
-  
-    
-@PostMapping("/addFollow")
-@Transactional
-public String addFollow(@RequestBody  JsonNode data, Model model){
-    log.info("En funcion addFollow: " + data.get("usernameFollowed").asText() + " quiere seguir a " + data.get("usernameFollowing").asText());
-    User usernameFollowed = entityManager.createNamedQuery("User.byUsername", User.class)
-    .setParameter("username", data.get("usernameFollowed").asText())
-    .getSingleResult();
-    User usernameFollowing = entityManager.createNamedQuery("User.byUsername", User.class)
-    .setParameter("username", data.get("usernameFollowing").asText())
-    .getSingleResult();
     
         
-    usernameFollowed.getFollowers().add(usernameFollowing); //es que es seguido
-    usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
-    
-    entityManager.persist(usernameFollowed);
-    entityManager.persist(usernameFollowing);
+    @PostMapping("/addFollow")
+    @Transactional
+    public String addFollow(@RequestBody  JsonNode data, Model model){
+        log.info("En funcion addFollow: " + data.get("usernameFollowed").asText() + " quiere seguir a " + data.get("usernameFollowing").asText());
+        User usernameFollowed = entityManager.createNamedQuery("User.byUsername", User.class)
+        .setParameter("username", data.get("usernameFollowed").asText())
+        .getSingleResult();
+        User usernameFollowing = entityManager.createNamedQuery("User.byUsername", User.class)
+        .setParameter("username", data.get("usernameFollowing").asText())
+        .getSingleResult();
+        
+            
+        usernameFollowed.getFollowers().add(usernameFollowing); //es que es seguido
+        usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
+        
+        entityManager.persist(usernameFollowed);
+        entityManager.persist(usernameFollowing);
 
-    
-    // model.addAttribute("following",  list);
-    
+        
+        // model.addAttribute("following",  list);
+        
 
-    return "index";
-}
+        return "index";
+    }
 
 
-@PostMapping("{tipo}/usuariosfriends")
-@Transactional
-public String followers(@PathVariable long tipo, Model model, HttpSession session) {
-    log.info("En funcion followers: ");
-    
-    User self = entityManager.find(
+    @PostMapping("{tipo}/usuariosfriends")
+    @Transactional
+    public String followers(@PathVariable long tipo, Model model, HttpSession session) {
+        log.info("En funcion followers: ");
+        
+        User self = entityManager.find(
+                User.class, ((User)session.getAttribute("u")).getId());
+            
+        
+        if(tipo==1){
+            model.addAttribute("usuariosf", self.getFollowed());
+        }
+        else
+            model.addAttribute("usuariosf",self.getFollowers());
+        
+        return "usuariosfriends";
+    }
+        
+
+    @ResponseStatus(
+        value=HttpStatus.FORBIDDEN,
+        reason="Username ya existe en el sistema, usa otro")  // 403
+    public static class UsernameNoPermitidoException extends RuntimeException {}
+
+
+
+    @GetMapping("/register")
+    @Transactional
+    public String registerRUser(Model model) throws IOException {
+        log.info("createUser");
+
+        model.addAttribute("user", new User());
+
+        return "register";
+    }
+
+
+
+    @PostMapping("likes/{id_post}")
+    @Transactional
+    public String crearLike(@PathVariable long id_post, Model model, HttpSession session){
+        log.info("crearLike");
+
+        User usuario = entityManager.find(
             User.class, ((User)session.getAttribute("u")).getId());
-		
     
-    if(tipo==1){
-        model.addAttribute("usuariosf", self.getFollowed());
-    }
-    else
-        model.addAttribute("usuariosf",self.getFollowers());
-    
-    return "usuariosfriends";
-}
-    
-
-@ResponseStatus(
-    value=HttpStatus.FORBIDDEN,
-    reason="Username ya existe en el sistema, usa otro")  // 403
-public static class UsernameNoPermitidoException extends RuntimeException {}
+        log.info("[RootController.crearLike] Post : " + id_post + " Usuario :" +  usuario.getId()) ;
 
 
+        Post post = entityManager.find(
+                Post.class, id_post);
+        //Post p = entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).
+        List<Likes> people = entityManager.createNamedQuery("Likes.byId", Likes.class)
+                .setParameter("postId", (id_post))
+                .getResultList();
 
-@GetMapping("/register")
-@Transactional
-public String registerRUser(Model model) throws IOException {
-    log.info("createUser");
+        Likes l;
 
-    model.addAttribute("user", new User());
-
-    return "register";
-}
-
-
-
-@PostMapping("likes/{id_post}")
-@Transactional
-public String crearLike(@PathVariable long id_post, Model model, HttpSession session){
-    log.info("crearLike");
-
-    User usuario = entityManager.find(
-        User.class, ((User)session.getAttribute("u")).getId());
-  
-    log.info("[RootController.crearLike] Post : " + id_post + " Usuario :" +  usuario.getId()) ;
-
-
-    Post post = entityManager.find(
-            Post.class, id_post);
-    //Post p = entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).
-    List<Likes> people = entityManager.createNamedQuery("Likes.byId", Likes.class)
-            .setParameter("postId", (id_post))
-            .getResultList();
-
-    Likes l;
-
-    int p = -1;
-    for (int i = 0; i < people.size(); ++i) {
-        if (people.get(i).getUsuario() == usuario) {
-            p = i;
-            break;
+        int p = -1;
+        for (int i = 0; i < people.size(); ++i) {
+            if (people.get(i).getUsuario() == usuario) {
+                p = i;
+                break;
+            }
         }
+
+        if (p == -1) {
+            l = new Likes();
+
+            l.setPost(post);
+            l.setUsuario(usuario);
+            post.setLikes(post.getLikes() + 1);
+
+            entityManager.persist(l);
+            entityManager.persist(post);
+        } else {
+            l = people.get(p);
+
+            post.setLikes(post.getLikes() - 1);
+
+            entityManager.remove(l);
+        }
+
+        model.addAttribute("Likes", l);
+
+        return "redirect:../posts";
+
     }
-
-    if (p == -1) {
-        l = new Likes();
-
-        l.setPost(post);
-        l.setUsuario(usuario);
-        post.setLikes(post.getLikes() + 1);
-
-        entityManager.persist(l);
-        entityManager.persist(post);
-    } else {
-        l = people.get(p);
-
-        post.setLikes(post.getLikes() - 1);
-
-        entityManager.remove(l);
-    }
-
-    model.addAttribute("Likes", l);
-
-    return "redirect:../posts";
-
-}
-
-
-
-
-
-
-
 }
 
 /*
