@@ -64,7 +64,7 @@
                                     <img th:src="${book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" /> 
                                 </div>
                                 
-                                <form class="mask-icon" th:action="@{/save/quieroLeer/__${book.id}__}" method="POST">
+                                <form class="mask-icon" th:action="@{/save?tipoLibreria=quieroLeer&id=__${book.id}__}" method="POST">
                                     <button id="addToLib" class="cart" type="submit">Agregar a mi biblioteca</button>
                                 </form>
                             </div>
