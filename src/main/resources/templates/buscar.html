@@ -27,22 +27,33 @@
 
                     <div class="d-flex flex-row">        
                         <div class="ml-auto mr-lg-4">
-                            <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Tipo </span> <select name="sort" id="sort">
-                                    <option value="titulo"><b>Titulo</b></option>
-                                    <option value="isbn"><b>ISBN</b></option>
-                                    <option value="usuario"><b>Usuarios</b></option>
-                                </select> </div>
+                            <div id="type_div" class="border rounded p-1 m-1"> 
+                                <span class="text-muted">Tipo </span>
+                                <select name="type" id="type">
+                                    <th:block th:each="entry: ${ {titulo:'Titulo', isbn:'ISBN', usuario:'Usuarios'}}">
+                                        <option th:value="${entry.key}" value="tipo" 
+                                            th:selected="${queryType}==${entry.key}">
+                                            <b th:text="${entry.value}">Tipo</b>
+                                        </option>
+                                    </th:block>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="py-2 border-bottom ml-3">
                         <div class="d-flex flex-row">        
                             <div class="ml-auto mr-lg-4">
-                                <div id="type" class="border rounded p-1 m-1"> <span class="text-muted">Ordenar por </span> <select name="sort" id="sort">
-                                        <option value="popularity"><b>Popularidad</b></option>
-                                        <option value="prcie"><b>Fecha</b></option>
-                                        <option value="rating"><b>Rating</b></option>
-                                    </select> </div>
+                                <div id="sorting" class="border rounded p-1 m-1">
+                                    <span class="text-muted">Ordenar por </span> 
+                                    <select name="sort" id="sort">
+                                    <th:block th:each="entry: ${ {popularity:'Popularidad', date:'Fecha', rating:'Rating'}}">
+                                        <option th:value="${entry.key}" value="orden">
+                                            <b th:text="${entry.value}">Orden</b>
+                                        </option>
+                                    </th:block>
+                                    </select> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +124,7 @@
             <div class="col-md-9">
                 <section>
                     <div class="input-group mb-n2 border rounded-pill">
-                        <input id="search-text" onkeyup="filtrar()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
+                        <input th:value=${query} id="search-text" onkeyup="filtrar()" placeholder="Búsqueda avanzada" aria-describedby="button-addon3" class="form-control bg-none border-0 search-advanced">
                         <div class="input-group-append border-0">
                         <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
                         </div>
@@ -144,7 +155,7 @@
                                     </form>
                                 </div>
 
-                                <a th:href=@{/libro/{id}(id=${book.id})} href="/libro/"{id}(id=${book.id}) class="text-decoration-none link-dark">
+                                <a th:href=@{/libro(id=${book.id})} href="/libro" class="text-decoration-none link-dark">
                                     <div class="why-text">  
                                         <h3 class="titulo-libro-buscar" th:text="${book.titulo}" >Nombre del libro</h3>
                                         <h5 class="isbn-libro" th:text="${book.ISBN}" hidden>isbn</h5>
@@ -171,27 +182,6 @@
     
     <script th:inline="javascript">
         function changeSearch() {
-            //https://stackoverflow.com/questions/4842590/how-to-run-a-function-when-the-page-is-loaded
-            var result_query = null, result_type, tmp = [];
-            location.search
-                .substr(1)
-                .split("&")
-                .forEach(function (item) {
-                tmp = item.split("=");
-                if (tmp[0] === "query") result_query = decodeURIComponent(tmp[1]);
-                });
-                document.getElementById("search-text").value = result_query;
-
-                location.search
-                .substr(1)
-                .split("&")
-                .forEach(function (item) {
-                tmp = item.split("=");
-                if (tmp[0] === "type") result_type = decodeURIComponent(tmp[1]);
-                });
-                
-                var types = document.querySelector('#sorting option[value='+result_type+']');
-                types.selected = "selected";
             filtrar();
         }
         window.addEventListener('load', changeSearch);
@@ -244,7 +234,7 @@
             console.log("buscando y filtrando...");
 
             /*Tipo de búsqueda*/
-            var e = document.getElementById("sort");
+            var e = document.getElementById("type");
             var type_search = e[e.selectedIndex].value; 
             var search = document.getElementById("search-text").value;
 

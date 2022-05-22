@@ -22,6 +22,9 @@ import java.util.List;
         @NamedQuery(name="User.byUsername",
                 query="SELECT u FROM User u "
                         + "WHERE u.username = :username AND u.enabled = TRUE"),
+        @NamedQuery(name="User.byUsersnames",
+                query="SELECT DISTINCT u FROM User u "
+                        + "WHERE u.username LIKE CONCAT('%', :username, '%') AND u.enabled = TRUE"),
         @NamedQuery(name="User.byId",
                 query="SELECT u FROM User u "
                         + "WHERE u.id = :id AND u.enabled = TRUE"),
