@@ -549,9 +549,8 @@
             <!-- POSTS -->
             <div th:case="*" class="tab-pane fade show active show active" id="posts">
                 <div class="row">
-                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys"
-                         th:if="${session.u.id == user.id}">
-                        <div class="widget panel" style="width:700px;">
+                    <th:block th:if="${session.u.id == user.id}">
+                        <div class="widget panel">
                             <!--
                             <form th:action="@{/user/post}" method="POST">
                                 
@@ -561,15 +560,19 @@
                                 </button>
                             </form>
                         -->
-                            <form  th:action="@{/user/post}" action="/user/post" method="POST">
-                                <label for="new-post" class="semibold nm pt-2"><h5>Qué tienes en mente?</h5></label>
-        
-                                <input id=busquedaNav class="form-control" type="search" placeholder="Queridos seguidores..."  name="query">
-                                <button id="publish-post" class="btn btn-outline-success" type="submit">Publicar
+                            <form  th:action="@{/user/post}" action="/user/post" method="POST" class="w-100 align-items-center">
+                                <label for="new-post" class="semibold nm pt-2">
+                                    <div class="title-all pt-2">
+                                        <h2>Qué tienes en mente?</h2>
+                                    </div>
+                                </label>    
+
+                                <textarea id=busquedaNav class="md-textarea form-control shadow-sm w-100" type="search" placeholder="Queridos seguidores..."  name="query"></textarea>
+                                <button id="publish-post" class="btn btn-outline-success my-4 ml-auto" type="submit">Publicar
                                 </button>
                             </form>
                         </div>
-                    </div>
+                    </th:block>
                 </div>
                 <div class="row" th:each="post : ${user.posts}">
                     <div th:replace="fragments/post.html :: post(${post})"></div>
