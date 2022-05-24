@@ -442,7 +442,7 @@ public class RootController {
 
     @PostMapping("likes/{id_post}")
     @Transactional
-    public String crearLike(@PathVariable long id_post, Model model, HttpSession session){
+    public String crearLike(@PathVariable long id_post, Model model, HttpSession session,HttpServletRequest request){
         log.info("crearLike");
 
         User usuario = entityManager.find(
@@ -489,7 +489,8 @@ public class RootController {
 
         model.addAttribute("Likes", l);
 
-        return "redirect:../posts";
+
+        return "redirect:"+ request.getHeader("Referer");
 
     }
 }

@@ -315,7 +315,9 @@ form.search-form {
 
 /* posts */
 
-
+.like{
+    width: 4.6em;
+}
 .widget .panel, .widget.panel {
     border-bottom-width: 1px;
     border-bottom-color: #cfd9db;
