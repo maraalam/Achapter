@@ -22,38 +22,34 @@
             <div class="main">
                 <img class="iwthumb rounded-2" th:src="@{/user/{id}/pic(id=${user.id})}">
                 <h1 id = "idUsuarioEnvio" th:text="${user.username}" class="align-self-left">Chat</h1>
-                <div id="chatbox" >
-                    
-                    
-                        <!--
-                        <p th:text=" ${m.dateSent} "> Usuario: texto</p>
-                        <p th:text=" ${m.text}"> Usuario: texto</p>
-                    -->
-                        
-                        <div id="liChat"> 
-                            <div th:each="m: ${messages}" >
-                                <div th:switch="${m.sender.id}"> 
-                            
-                                    <div th:case="${session.u.id}">
-                                        <div class="message-data">
-                                            <span th:text=" ${m.dateSent}" class="message-data-time float-right">10:12 AM, Today</span>
-                                        </div>
-                                        <div th:text=" ${m.text}"  class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
-                                    </div> 
-                                    
-                                    <div th:case="*">
-                                        <div class="message-data">
-                                            <span th:text=" ${m.dateSent}" class="message-data-time">10:12 AM, Today</span>
-                                        </div>
-                                        <div th:text=" ${m.text}" class="message my-message">Are we meeting today?</div> 
-                                    </div>   
-                        
-                                </div>
+                
+                <section> <table  class="datatable" id="datatable"></table> </section>
+                <div hidden class = "oldMessages" th:each="m: ${messages}" >
+                    <div th:switch="${m.sender.id}"> 
+                
+                        <div th:case="${session.u.id}">
+                            <div class="message-data fechaMia">
+                                <span th:text=" ${m.dateSent}" class="message-data-time float-right">10:12 AM, Today</span>
                             </div>
-                        </div>
-                    
+                            <div th:text=" ${m.text}"  class="message other-message float-right textoMio"> Hi Aiden, how are you? How is the project coming along? </div>
+                            <div th:text=" ${m.id}"  class=" idMio"> Hi Aiden, how are you? How is the project coming along? </div>
+                        
+                        </div> 
+                        
+                        <div th:case="*">
+                            <div class="message-data fechaOtro">
+                                <span th:text=" ${m.dateSent}" class="message-data-time">10:12 AM, Today</span>
+                            </div>
+                            <div th:text=" ${m.text}" class="message my-message textoOtro">Are we meeting today?</div> 
+                            <div th:text=" ${m.id}"  class=" idOtro"> Hi Aiden, how are you? How is the project coming along? </div>
+                        </div>   
+            
+                    </div>
+                </div>
+                       
+                   
 
-                </div>                
+                              
 
         
 
@@ -65,7 +61,7 @@
     </section>
 
         <!-- Friends messages -->
-        <section id="leftMessages">
+        <section id="rightMessages">
 
            
             <br> <br>
@@ -84,8 +80,34 @@
        
 
     </main>
-    <section> <table  class="datatable" id="datatable"></table> </section>
+    
     <th:block th:replace="fragments/footer.html :: footer" />
+
+    <script>
+        let tabla = document.getElementById("datatable");
+        window.onload = function() {
+        const oldM = document.getElementsByClassName("oldMessages");
+        for (var i = 0; i < oldM.length; i++) {
+                var tableChild = oldM[i];
+                
+                var texto = tableChild.getElementsByClassName("textoMio");
+                var fecha = tableChild.getElementsByClassName("fechaMia");
+                var id1 = tableChild.getElementsByClassName("idMio");
+                var texto2 = tableChild.getElementsByClassName("textoOtro");
+                var fecha2 = tableChild.getElementsByClassName("fechaOtro");
+                var id2 = tableChild.getElementsByClassName("idOtro");
+
+                if(texto.length!=0)
+                    dt.rows().add([document.getElementById("idUsuario").innerHTML, document.getElementById("idUsuarioEnvio").innerHTML, 
+                    fecha[0].innerText, "", texto[0].innerText, id1[0].innerText]);	
+                else
+                    dt.rows().add([document.getElementById("idUsuarioEnvio").innerHTML, document.getElementById("idUsuario").innerHTML, 
+                    fecha2[0].innerText, "", texto2[0].innerText, id2[0].innerText]);	
+        }
+        cambiarTabla();
+        };
+    </script>
+
     <script>
         let cont=1000
     let dt = new simpleDatatables.DataTable(
@@ -107,12 +129,23 @@
                 }
             }
         );
-
+            /*
+        window.onload = function() {
+        const oldM = document.getElementsByClassName("oldMessages");
+        for (var i = 0; i < oldM.length; i++) {
+                var tableChild = oldM[i];
+                let texto = tableChild.getElementsByClassName("oldMessages");
+        }
+        doSomethingElse();
+        };
+*/
 function formatDate(d) {
 		// 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
 		return new Date(d).toLocaleString("es-ES").split(" ").join("@")
 	}
 
+
+    
 	
 
 	// envío de mensajes vía AJAX, sin recargar la página
@@ -126,8 +159,56 @@ function formatDate(d) {
             })
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
-            dt.rows().add([document.getElementById("idUsuario").value, document.getElementById("idUsuarioEnvio").value, formatDate(new Date().toISOString()), "", document.getElementById("message").value,cont]);	
+            dt.rows().add([document.getElementById("idUsuario").innerHTML, document.getElementById("idUsuarioEnvio").innerHTML, 
+            formatDate(new Date().toISOString()), "", document.getElementById("message").value,cont]);	
             cont=cont+1	
+            document.getElementById("message").value="";
+            cambiarTabla();
+            
+
+            /*
+            
+            let tabla = document.getElementById("datatable");
+        
+            let mensajes = tabla.children[1].children
+            
+            var tableChild = mensajes[mensajes.length-1];
+            while (tableChild.firstChild) {
+                tableChild.removeChild(tableChild.lastChild);
+            }
+            var tag = document.createElement("div");
+            tag.innerHTML =  document.getElementById("message").value; 
+            tableChild.appendChild(tag)
+
+            tag.classList.add("message");
+            tag.classList.add("other-message");
+            tag.classList.add("float-right");
+            
+            let msj = tableChild.children[4];
+            
+            
+            msj.classList.add("message");
+            msj.classList.add("other-message");
+            msj.classList.add("float-right");
+            let fecha = tableChild.children[2]
+            fecha.classList.add("message-data-time");
+            fecha.classList.add("float-right");
+            
+            for (var i = 0; i < mensajes.length; i++) {
+                
+                var tableChild = mensajes[i];
+                let msj = tableChild.children[4]
+                if(document.getElementById("message").value == msj.innerHTML){
+                //msj.style["color"] = "green";
+                msj.classList.add("message");
+                msj.classList.add("my-message");
+                let fecha = tableChild.children[2]
+                fecha.classList.add("message-data-time");
+                fecha.classList.add("float-right");
+                }
+            }
+            */
+
         });
         
         // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
@@ -137,12 +218,154 @@ function formatDate(d) {
 	    // aquí estoy metiendo el mensaje al final de la tabla
 	    ws.receive = (m) => {
 		    dt.rows().add([m.from, m.to, formatDate(new Date().toISOString()), "", m.text, m.id]);		
+            cambiarTabla();
+
+            /*
+
+             let tabla = document.getElementById("datatable");
+        
+
+            let mensajes = tabla.children[1].children
+            
+            var tableChild = mensajes[mensajes.length-1];
+            let msj = tableChild.children[4].innerHTML;
+            while (tableChild.firstChild) {
+                tableChild.removeChild(tableChild.lastChild);
+            }
+
            
+
+            var tag1 = document.createElement("div");
+            tag1.innerHTML = msj; 
+            tableChild.appendChild(tag1)
+            tag1.classList.add("message-data");
+            var tag2 = document.createElement("span");
+            tag2.classList.add("message-data-time"); tag2.classList.add("float-right");
+            innerHTML.appendChild(tag2);
+            
+            var tag = document.createElement("div");
+            tag.innerHTML = msj; 
+            tableChild.appendChild(tag)
+
+            tag.classList.add("message");
+            tag.classList.add("my-message");
+
+            let mensajes = tabla.children[1].children
+            var tableChild = mensajes[mensajes.length-1];
+            let msj = tableChild.children[4];
+            msj.classList.add("message");
+            msj.classList.add("my-message");
+            let fecha = tableChild.children[2]
+            fecha.classList.add("message-data-time");
+            fecha.classList.add("float-right");
+
+            
+            for (var i = 0; i < mensajes.length; i++) {
+                var tableChild = mensajes[i];
+                let msj = tableChild.children[4]
+               // msj.style["color"] = "green";
+               
+                msj.classList.add("message");
+                msj.classList.add("other-message");
+                msj.classList.add("float-right");
+                let fecha = tableChild.children[2]
+                fecha.classList.add("message-data-time");
+                fecha.classList.add("float-right");
+
+                let fecha = tableChild.children[2]
+                fecha.classList.add("message-data-time");
+               
+                
+            }
+            */
 	    }
-        let b2 = document.getElementById("liChat");
+
+        function cambiarTabla() {
+        let tabla = document.getElementById("datatable");
+        
+        let mensajes = tabla.children[1].children
+
+        for (var i = 0; i < mensajes.length; i++) {
+            var tableChild = mensajes[i];
+            let msj = tableChild.children[4].innerHTML;
+            let from = tableChild.children[0].innerHTML;
+            let to = tableChild.children[1].innerHTML;
+            let fecha = tableChild.children[2].innerHTML;
+            while (tableChild.firstChild) {
+                tableChild.removeChild(tableChild.lastChild);
+            }
+
+            if(document.getElementById("idUsuario").innerHTML == from){
+            var tag1 = document.createElement("div");
+            
+            tableChild.appendChild(tag1)
+            tag1.classList.add("message-data");
+            var tag2 = document.createElement("span");
+            tag2.innerHTML = fecha; 
+            tag2.classList.add("message-data-time"); tag2.classList.add("float-right");
+            tableChild.appendChild(tag2);
+
+            var tag = document.createElement("div");
+            tag.innerHTML = msj; 
+            tableChild.appendChild(tag)
+
+            tag.classList.add("message");
+            tag.classList.add("other-message");
+            tag.classList.add("float-right");
+
+            }
+            else{
+            var tag1 = document.createElement("div");
+            
+            tableChild.appendChild(tag1)
+            tag1.classList.add("message-data");
+            var tag2 = document.createElement("span");
+            tag2.innerHTML = fecha; 
+            tag2.classList.add("message-data-time");
+            tableChild.appendChild(tag2);
+
+            var tag = document.createElement("div");
+            tag.innerHTML = msj; 
+            tableChild.appendChild(tag)
+
+            tag.classList.add("message");
+            tag.classList.add("my-message");
+            
+            }
+               
+                
+        }
+    }
+        
+
 
     </script>
-
+   
 </body>
 
 </html>
+
+<!--
+
+    var theList = /*[[${messages}]]*/ [];
+            for (i = 0; i < theList.length; i++) {
+               
+                dt.rows().add([theList[i].from.username, theList[i].to.username, theList[i].dateSent, "", theList[i].text, theList[i].id]);	
+            }
+
+
+             <script th:inline="javascript">
+    /*<![CDATA[*/   
+    $(window).on('load', function () {             
+           //var springAttribute= '${messages}';
+           var data =/*[[${messages}]]*/ [].map(function(item) {
+               
+                return item[0];
+            });
+
+            
+            cambiarTabla();
+    });   
+    /*]]>*/
+    </script>
+-->
