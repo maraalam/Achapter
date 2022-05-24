@@ -7,7 +7,6 @@ Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuad
 - Que el uso API de Google se vea correctamente
 - Faltas algunas pruebas Karate
 - Los botones de géneros en el index no realizan nada, se planea agregar una nueva página para esto
-- Los filtros en buscar.html se deben terminar. 
 - Terminar la pagina de libro.html. No se ven los comentarios de los usuarios tomados desde el modelo. 
 - Falta que el usuario pueda marcar como objetivos como cuántos libros quiere leer en el año. Esto puede ser en estadísticas. 
 - Que en libros.html muestre libros solo de la saga. 
@@ -126,7 +125,7 @@ En la parte derecha de la vista encontramos una barra de búsqueda para filtrar 
 
 A través de esta vista el usuario podrá buscar libros.
 
-Podrá aplicar una serie de filtros (ordenaciones varias, filtrar por autor, fechas de publicación...) para facilitar la búsqueda.
+Podrá aplicar una serie de filtros (ordenaciones varias, filtrar por autor, fechas de publicación, géneros...) para facilitar la búsqueda. Además se podrá buscar un autor o un género dentro del filtro debido a que en ocasiones esta lista puede ser muy larga.
 
 En la parte central se le mostrarán los libros que corresponden a su búsqueda.
 
@@ -142,6 +141,7 @@ De cada libro se mostrará:
   
 
 Al seleccionar un libro se pasará a la vista de "Libro".
+Además puede añadirlo directamente a su biblioteca 'quiero leer' mediante el botón que aparece encima del libro.
 
 ### Información de un libro [Achapter: libro](http://localhost:8080/libro)
 
@@ -162,6 +162,8 @@ Se le mostrará:
 - Géneros.
   
 - Estado de la lectura (terminado, en progreso, sin empezar, pausado, abandonado).
+    - Además, aparecerá -sin biblioteca- en el caso de que el no se encuentre en ninguna de las biliotecas del usuario
+    - Aparecerá -eliminar de la bilioteca- en el caso de que el usuario la tenga en alguna de las bibliotecas y desee borrarlo. 
   
 - Libros pertenecientes a la misma saga.
   
@@ -179,6 +181,7 @@ Desde el perfil de un usuario otro usuario puede:
 - Acceder a sus posts.
   
 - Acceder a su biblioteca.
+    - Se muestran las diferentes bibliotecas que existen en la aplicación con la lista de libros del usuario que pertenecen a esa biblioteca.
   
 - Acceder a sus préstamos (libros físicos que puede prestar y libros físicos prestados).
   
