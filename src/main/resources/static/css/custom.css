@@ -472,7 +472,10 @@ h6 {
 
 
 
-
+.scroll_horizontal{
+    overflow-y: hidden; 
+    overflow-x:  auto;
+}
 
 
 .card-body {

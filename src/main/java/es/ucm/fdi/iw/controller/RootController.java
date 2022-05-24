@@ -212,14 +212,14 @@ public class RootController {
     @ModelAttribute("years")
     public List<Integer> getBooksYears(){
         List<String> anios = entityManager.createNamedQuery("Book.allYears", String.class).getResultList();
-
+        log.info("[RootController.years] ", anios);
         Pattern pattern = Pattern.compile("[0-9][0-9][0-9][0-9]");
         java.util.regex.Matcher matcher = pattern.matcher("");
         String anio = "";
 
         for (int i = 0; i <anios.size(); i++) {
             matcher = pattern.matcher(anios.get(i));
-            anio = (matcher.find()) ? matcher.group() : "desconocido";
+            anio = (matcher.find()) ? matcher.group() : "0000";
             anios.set(i, anio);
         }
 
@@ -481,6 +481,7 @@ public class RootController {
         Post post = entityManager.find(
                 Post.class, id_post);
         //Post p = entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).
+        
         List<Likes> people = entityManager.createNamedQuery("Likes.byId", Likes.class)
                 .setParameter("postId", (id_post))
                 .getResultList();
@@ -495,6 +496,7 @@ public class RootController {
             }
         }
 
+        //Like
         if (p == -1) {
             l = new Likes();
 
@@ -506,7 +508,7 @@ public class RootController {
             entityManager.flush();
             entityManager.persist(post);
             entityManager.flush();
-        } else {
+        } else { //Dislike
             l = people.get(p);
 
             post.setLikes(post.getLikes() - 1);

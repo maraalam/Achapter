@@ -109,8 +109,10 @@
                             <div th:each="year: ${years}" class="filtro-generos">
                                 <div class="products-single fix">
                                     <div class="form-group">
-                                        <input type="checkbox" th:id="${year}" onclick="filtrar()">
-                                        <label th:for="${genero}" th:text="${year}">Fecha</label>
+                                        <input th:if="${year!=0}"type="checkbox" th:id="${year}" onclick="filtrar()">
+                                        <input th:if="${year==0}"type="checkbox" th:id="sinfecha" onclick="filtrar()">
+                                        <label th:if="${year!=0}" th:for="${genero}" th:text="${year}">Fecha</label>
+                                        <label th:if="${year==0}" th:for="${genero}">Sin fecha</label>
                                     </div>
                                 </div>                       
                             </div>
@@ -314,9 +316,9 @@
                 }
 
                 if(incluir){
-                              
-                    for(let f in fechas){       
-                        if(!fechas[f].checked){                        
+                    
+                    for(let f in fechas){   
+                        if(!fechas[f].checked){                     
                             incluir = incluir && true;
                         }  
                         else if(fechas[f].checked && fechaLibro.includes(fechas[f].id)){

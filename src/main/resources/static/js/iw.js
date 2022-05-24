@@ -225,7 +225,7 @@ function submitBook() {
     let b = document.getElementById("sendBook");
     const parent  = b.parentElement;
     let request = {titulo: "", autor: "", isbn: "", portada: "", pagecount: "", categories: ""};
-    console.log(parent);
+
     for (var i = 0; i < parent.childNodes.length; i++) {
         var inner = parent.childNodes[i];
         
@@ -250,10 +250,11 @@ function submitBook() {
         }
         
     }
-    
-    go('addBook', 'POST', request )
+
+
+    go('addBook', 'POST', request)
         .then(d => console.log("happy", d))
-        .catch(e => console.log("sad", e));
+        .catch(e => console.log("sad", request));
 
     const para = document.createElement("p");
     para.innerText = "Guardado";

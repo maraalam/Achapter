@@ -22,7 +22,11 @@ import javax.persistence.*;
 			            + "WHERE l.post.id = :postId"),
         @NamedQuery(name="Likes.byUser",
                 query="SELECT l FROM Likes l "
-                        + "WHERE l.usuario.id = :userId")
+                        + "WHERE l.usuario.id = :userId"),
+        @NamedQuery(name="Likes.byuserpost",
+                query="SELECT l FROM Likes l "
+                        + "WHERE l.usuario.id = :userId and l.post.id=:postId"),
+                        
 })
 public class Likes implements Transferable<Likes.Transfer> {
 

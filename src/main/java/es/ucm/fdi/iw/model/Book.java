@@ -45,7 +45,8 @@ public class Book implements Transferable<Book.Transfer> {
     private String saga;
     private String volumen;
     private String generos; // split by ','
-    private String fecha;
+
+    private String fecha = "sinfecha";
     private String descripcion;
     private long puntuación;
    
