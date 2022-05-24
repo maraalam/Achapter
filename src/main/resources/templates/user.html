@@ -83,77 +83,78 @@
 
         
         <!-- Contenido del perfil (pestaña activa) -->
-        <th:block th:switch="${tab}" class="tab-content">
+        <th:block th:switch="${tab}" class="tab-content">          
             <div th:case="library" class="tab-pane fade show active" id="library">
-                <div th:if="${user.library} != null">
-                    <div class="container">
-                        <!--Por cada estado de los libros-->
-                        <th:block th:each="estado: ${ {leyendo:'Leyendo', pausados:'Pausados',
-                        abandonados:'Abandonados', terminados:'terminados',quieroLeer:'Quiero Leer'}}"><th:block>
+                
+                <div class="container">
+                    <!--Por cada estado de los libros-->
+                    <th:block th:each="estado: ${ {leyendo:'Leyendo', pausados:'Pausados',
+                    abandonados:'Abandonados', terminados:'terminados',quieroLeer:'Quiero Leer'}}"><th:block>
 
-                            <div class="row col-lg-12 title-all">
-                                <h4 th:text="${estado.value}">Estado</h4>
-                            </div>
-                                
-                            <div class="row special-list">
-                                <!--Por cada libro de la libreria-->
-                                <th:block th:each="entry, stat: ${user.library.books}">
+                        <div class="row col-lg-12 title-all">
+                            <h4 th:text="${estado.value}">Estado</h4>
+                        </div>
+                            
+                        <div class="row special-list scroll_horizontal" th:if="${user.library} != null">
+                            <!--Por cada libro de la libreria-->
+                            <th:block th:each="entry, stat: ${user.library.books}">
 
-                                    <!--Lo añado si coinciden las librerias-->
-                                    <th:block th:if="${entry.value.estado}==${estado.key}"  th:class="${estado.key}">
-                                        <div class="col-lg-3 col-md-6 special-grid best-seller">
-                                            <div class="products-single fix">
-                                                <div class="box-img-hover">
-                                                    <div id="imgPortada" class="book-img">
-                                                        <img th:src="${user.library.books.get(entry.key).book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
+                                <!--Lo añado si coinciden las librerias-->
+                                <th:block th:if="${entry.value.estado}==${estado.key}">
+                                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                                        <div class="products-single fix">
+                                            <div class="box-img-hover">
+                                                <div id="imgPortada" class="book-img">
+                                                    <img th:src="${user.library.books.get(entry.key).book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg"/>
+                                                </div>
+                                            </div>
+                                            <a th:href="@{/libro(id=${user.library.books.get(entry.key).book.id})}" href="/libro" class="text-decoration-none link-dark">
+                                                <div class="why-text">
+                                                    <h3 class="titulo-libro" th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
+                                                    <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
+                                                    <div class="product-rating mb-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star mr-0"></i>
                                                     </div>
                                                 </div>
-                                                <a th:href="@{/libro(id=${user.library.books.get(entry.key).book.id})}" href="/libro" class="text-decoration-none link-dark">
-                                                    <div class="why-text">
-                                                        <h3 class="titulo-libro" th:text="${user.library.books.get(entry.key).book.titulo}">Nombre del libro</h3>
-                                                        <h5 th:text="${user.library.books.get(entry.key).book.autor}">Por Autor</h5>
-                                                        <div class="product-rating mb-2">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star mr-0"></i>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                
+                                            </a>
+                                            
+                                            
+                                        
+                                            <div id="selectorLista" class="why-text">  
+                                                <form id="listaLecturaForm" th:action="@{/save}" method="POST" class="form-inline input-group mb-3">
+                                                    <input type="number" name="id" th:value="${user.library.books.get(entry.key).book.id}" hidden/>                                              
+
+                                                    <select name="tipoLibreria" class="form-select" >
+                                                        <th:block th:each="librerias: ${ {sinLibreria:'Eliminar de libreria', leyendo:'Leyendo', pausados:'Pausados',
+                                                        abandonados:'Abandonados', terminados:'terminados',quieroLeer:'Quiero Leer'}}">
+                                                            <option th:value="${librerias.key}" value="libreria" 
+                                                                th:selected="${estado.key}==${librerias.key}">
+                                                                <b th:text="${librerias.value}">Libreria</b>
+                                                            </option>
+                                                        </th:block>
+                                                    </select>
+
+                                                    <button id="addToLib" class="btn btn-outline-success" type="submit">Aceptar</button>
+                                                </form>                                                            
+                                            </div>
                                                 
                                             
-                                                <div id="selectorLista" class="why-text">  
-                                                    <form id="listaLecturaForm" th:action="@{/save}" method="POST" class="form-inline input-group mb-3">
-                                                        <input type="number" name="id" th:value="${user.library.books.get(entry.key).book.id}" hidden/>                                              
-    
-                                                        <select name="tipoLibreria" class="form-select" >
-                                                            <th:block th:each="librerias: ${ {sinLibreria:'Eliminar de libreria', leyendo:'Leyendo', pausados:'Pausados',
-                                                            abandonados:'Abandonados', terminados:'terminados',quieroLeer:'Quiero Leer'}}">
-                                                                <option th:value="${librerias.key}" value="libreria" 
-                                                                    th:selected="${estado.key}==${librerias.key}">
-                                                                    <b th:text="${librerias.value}">Libreria</b>
-                                                                </option>
-                                                            </th:block>
-                                                        </select>
-    
-                                                        <button id="addToLib" class="btn btn-outline-success" type="submit">Aceptar</button>
-                                                    </form>                                                            
-                                                </div>
-                                                    
-                                               
-                                                
-                                            </div>
+                                            
                                         </div>
-                                        
-                                    </th:block>          
-                                </th:block>
-                            </div>
-                        <th:block>
+                                    </div>
+                                    
+                                </th:block>          
+                            </th:block>
+                        </div>
+                        
+                    <th:block>
 
-                    </div>
                 </div>
+                
             </div>
                     <!--
                     <p>Leyendo</p>
