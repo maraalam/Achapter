@@ -92,7 +92,7 @@
                         abandonados:'Abandonados', terminados:'terminados',quieroLeer:'Quiero Leer'}}"><th:block>
 
                             <div class="row col-lg-12 title-all">
-                                <h2 th:text="${estado.value}">Estado</h2>
+                                <h4 th:text="${estado.value}">Estado</h4>
                             </div>
                                 
                             <div class="row special-list">
@@ -466,6 +466,7 @@
                 <div class="products-box" >
                     <div class="row">
                         <div class="col-md-7">
+                                
                             <div class="title-all ">
                                 <h4>Prestamos Míos disponibles</h4>
                             </div>       
@@ -563,7 +564,7 @@
                             <form  th:action="@{/user/post}" action="/user/post" method="POST" class="w-100 align-items-center">
                                 <label for="new-post" class="semibold nm pt-2">
                                     <div class="title-all pt-2">
-                                        <h2>Qué tienes en mente?</h2>
+                                        <h4>Qué tienes en mente?</h4>
                                     </div>
                                 </label>    
 

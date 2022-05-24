@@ -25,38 +25,34 @@
                         <h4>Filtros</h4>
                     </div>
 
-                    <div class="d-flex flex-row">        
-                        <div class="ml-auto mr-lg-4">
-                            <div id="type_div" class="border rounded p-1 m-1"> 
-                                <span class="text-muted">Tipo </span>
-                                <select name="type" id="type">
-                                    <th:block th:each="entry: ${ {titulo:'Titulo', isbn:'ISBN', usuario:'Usuarios'}}">
-                                        <option th:value="${entry.key}" value="tipo" 
-                                            th:selected="${queryType}==${entry.key}">
-                                            <b th:text="${entry.value}">Tipo</b>
-                                        </option>
-                                    </th:block>
-                                </select>
-                            </div>
-                        </div>
+
+                    <div id="sorting" class="d-flex flex-wrap mr-lg-4 mt-3">
+                        <label for="name" class="text-muted">Tipo </label>
+                        <select name="name" class="form-select" id="type">
+                            <th:block th:each="entry: ${ {titulo:'Titulo', isbn:'ISBN', usuario:'Usuarios'}}">
+                                <option th:value="${entry.key}" value="tipo" 
+                                    th:selected="${queryType}==${entry.key}">
+                                    <b th:text="${entry.value}">Tipo</b>
+                                </option>
+                            </th:block>
+                        </select>
                     </div>
+
+
                     
-                    <div class="py-2 border-bottom ml-3">
-                        <div class="d-flex flex-row">        
-                            <div class="ml-auto mr-lg-4">
-                                <div id="sorting" class="border rounded p-1 m-1">
-                                    <span class="text-muted">Ordenar por </span> 
-                                    <select name="sort" id="sort">
-                                    <th:block th:each="entry: ${ {popularity:'Popularidad', date:'Fecha', rating:'Rating'}}">
-                                        <option th:value="${entry.key}" value="orden">
-                                            <b th:text="${entry.value}">Orden</b>
-                                        </option>
-                                    </th:block>
-                                    </select> 
-                                </div>
-                            </div>
-                        </div>
+
+                    <div id="sorting" class="d-flex flex-wrap mr-lg-4 py-3 border-bottom ml-3">
+                        <label for="sort" class="text-muted">Ordenar por </label> 
+                        <select name="sort" class="form-select" id="sort">
+                        <th:block th:each="entry: ${ {popularity:'Popularidad', date:'Fecha', rating:'Rating'}}">
+                            <option th:value="${entry.key}" value="orden">
+                                <b th:text="${entry.value}">Orden</b>
+                            </option>
+                        </th:block>
+                        </select> 
                     </div>
+
+
                     <div class="py-2 border-bottom ml-3">
                         <h6 class="font-weight-bold">Autor</h6>
                         <div id="orange"><span class="fa fa-minus"></span></div>            
@@ -91,7 +87,7 @@
                             </div>
                         </div>
                         <form class="row generos-filter pt-3">
-                            <div th:each="genero: ${generos}" class="filtro-generos" >
+                            <div th:each="genero: ${generos}" class="filtro-generos">
                                 <div class="products-single fix">
                                     <div class="form-group">
                                         <input type="checkbox" th:id="${genero}" onclick="filtrar()">
@@ -105,14 +101,20 @@
                     </div>
 
 
-            
+
                     <div class="py-2 border-bottom ml-3">
                         <h6 class="font-weight-bold">Fecha de publicación</h6>
                         <div id="orange"><span class="fa fa-minus"></span></div>
-                        <form>
-                            <div class="form-group"> <input type="checkbox" id="tea"> <label for="tea">2022</label> </div>
-                            <div class="form-group"> <input type="checkbox" id="cookies"> <label for="cookies">2021</label> </div>
-                            <div class="form-group"> <input type="checkbox" id="pastries"> <label for="pastries">2020</label> </div>
+                        <form class="row fecha-filter pt-3">
+                            <div th:each="year: ${years}" class="filtro-generos">
+                                <div class="products-single fix">
+                                    <div class="form-group">
+                                        <input type="checkbox" th:id="${year}" onclick="filtrar()">
+                                        <label th:for="${genero}" th:text="${year}">Fecha</label>
+                                    </div>
+                                </div>                       
+                            </div>
+        
                         </form>
                     </div>
                 
@@ -159,6 +161,7 @@
                                     <div class="why-text">  
                                         <h3 class="titulo-libro-buscar" th:text="${book.titulo}" >Nombre del libro</h3>
                                         <h5 class="isbn-libro" th:text="${book.ISBN}" hidden>isbn</h5>
+                                        <h5 class="fecha-libro" th:text="${book.fecha}" hidden>fecha</h5>
                                         <h5 class="genero-libro" th:text="${book.generos}" hidden>genero</h5>
                                         <h6 class="autor-libro" th:text="${book.autor}"> Por Autor</h6>
                                         <div class="product-rating mb-2">
@@ -246,10 +249,14 @@
             var generos = document.getElementsByClassName("generos-filter")[0];
             generos = generos.getElementsByTagName("input");
                         
+            /*filtro de fecha*/arguments
+            var fechas = document.getElementsByClassName("fecha-filter")[0];
+            fechas = fechas.getElementsByTagName("input");
 
             var librosMostrar = []
 
             for(let r of document.getElementsByClassName("best-seller")){
+                let fechaLibro = r.getElementsByClassName("fecha-libro")[0].innerHTML;
                 let generoLibro = r.getElementsByClassName("genero-libro")[0].innerHTML;
                 let autorlibro = r.getElementsByClassName("autor-libro")[0].innerHTML;
                 let isbn = r.getElementsByClassName("isbn-libro")[0].innerHTML;
@@ -297,6 +304,22 @@
                             incluir = incluir && true;
                         }  
                         else if(generos[g].checked && generoLibro.includes(generos[g].id)){
+                            incluir = true;
+                            break;
+                        }
+                        else{
+                            incluir = false;
+                        }   
+                    }
+                }
+
+                if(incluir){
+                              
+                    for(let f in fechas){       
+                        if(!fechas[f].checked){                        
+                            incluir = incluir && true;
+                        }  
+                        else if(fechas[f].checked && fechaLibro.includes(fechas[f].id)){
                             incluir = true;
                             break;
                         }

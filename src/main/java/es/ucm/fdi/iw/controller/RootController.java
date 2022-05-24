@@ -2,9 +2,13 @@ package es.ucm.fdi.iw.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
+import com.fasterxml.jackson.databind.ser.std.NumberSerializers.IntegerSerializer;
+
 import es.ucm.fdi.iw.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.tomcat.util.file.Matcher;
 import org.hibernate.boot.spi.InFlightMetadataCollector.EntityTableXref;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +30,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
@@ -203,8 +209,29 @@ public class RootController {
 
 
 
+    @ModelAttribute("years")
+    public List<Integer> getBooksYears(){
+        List<String> anios = entityManager.createNamedQuery("Book.allYears", String.class).getResultList();
 
-    // User u = entityManager.createNamedQuery("User.byUsername", User.class)
+        Pattern pattern = Pattern.compile("[0-9][0-9][0-9][0-9]");
+        java.util.regex.Matcher matcher = pattern.matcher("");
+        String anio = "";
+
+        for (int i = 0; i <anios.size(); i++) {
+            matcher = pattern.matcher(anios.get(i));
+            anio = (matcher.find()) ? matcher.group() : "desconocido";
+            anios.set(i, anio);
+        }
+
+        List<Integer> anios_int = new ArrayList<Integer>();
+        for(String s : anios) anios_int.add(Integer.valueOf(s));
+
+        // Ordeno fechas de más reciente a más antiguo
+        Collections.sort(anios_int,Collections.reverseOrder());
+
+        return anios_int;
+    }
+
 
     @ModelAttribute("generos")
     public HashSet<String> getGenerosList() {

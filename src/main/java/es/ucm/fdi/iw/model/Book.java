@@ -29,8 +29,11 @@ import java.util.List;
         @NamedQuery(name="Book.autores",
                 query="SELECT DISTINCT b.autor from Book b"),
         @NamedQuery(name="Book.generos",
-                query="SELECT DISTINCT b.generos from Book b")
+                query="SELECT DISTINCT b.generos from Book b"),
+        @NamedQuery(name="Book.allYears",
+                query="SELECT DISTINCT b.fecha from Book b")
 })
+
 public class Book implements Transferable<Book.Transfer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
