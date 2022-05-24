@@ -533,8 +533,8 @@
 
             <div th:case="settings" class="tab-pane fade show active" id="settings">
                 <h2>Actualizar foto de perfil</h2>
-                <form th:action="@{/user/__${user.id}__/pic}" method="POST">
-                    <input type="file" id="f_avatar" accept="image/jpeg,image/png">
+                <form th:action="@{/user/__${user.id}__/pic}" method="POST"  enctype="multipart/form-data">
+                    <input type="file" id="f_avatar" name="photo" accept="image/jpeg,image/png">
                     <img id="avatar" alt="foto de perfil" hidden/>
                     <button id="postAvatar">Subir foto</button>
                 </form>
