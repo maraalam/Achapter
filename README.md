@@ -3,10 +3,9 @@
 Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuadas, limitadas en funcionamiento y complicadas de utilizar. ¿Quieres encontrar tu próxima lectura, o tal vez compartir con tus amigos el progreso de tu actual lectura? ¿Tienes una lista de libros pendientes de la que siempre te olvidas? Proponemos una nueva aplicación amigable y divertida en la que encontrar tus libros favoritos y expresarte en una comunidad con tus mismos intereses.
 
 ## En desarrollo
-- Websockets funcionan en mensajería pero usando tablas. Más adelante se planea que mensajeria se vea como un chat.
 - Existen estadísticas básicas de cómo va en la lectura el usuario pero se planea poner más gráficas y que funcione correctamente.
 - Faltas algunas pruebas Karate
-- Hay errores para subir una imagen de perfil y al actualizar el estado.
+- Hay errores para subir una imagen de perfiL.
 - Hay errores cuando se quiere seguir a una persona en la página de usuarios.html. No deja dar unfollow desde esa página.
 - Que el uso API de Google se vea correctamente
 - Los botones de géneros en el index no realizan nada, se planea agregar una nueva página para esto
