@@ -4,10 +4,9 @@ Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuad
 
 ## En desarrollo
 - Que el uso API de Google se vea correctamente
-- Faltas algunas pruebas Karate
-- Terminar la pagina de libro.html. No se ven los comentarios de los usuarios tomados desde el modelo. 
+- Faltas algunas pruebas Karate 
 - Falta que el usuario pueda marcar como objetivos como cuántos libros quiere leer en el año. Esto puede ser en estadísticas. 
-- Que en libros.html muestre libros solo de la saga. 
+- Que en libros.html muestre libros solo de la saga. (Falta relacion en el modelo)
 
 En administrador se puede agregar que pueda:
 - Modificar la información de un libro.
