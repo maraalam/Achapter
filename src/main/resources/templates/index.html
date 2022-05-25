@@ -29,7 +29,7 @@
         </div>
         
         <!-- Buscador del index -->
-        <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
+        <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12" th:if="${session.u}">
             <input id="search-box" type="text" class="form-control" placeholder="Busca un libro!...">
             <button id="search-portada" class="btn btn-primary" onclick="">Buscar</button>
         </div>
@@ -38,7 +38,7 @@
         <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
         <script src="js/index.js"></script>
 
-        <div class="book-list" >
+        <div class="book-list">
             <div id="list-output" class="">
               <div class="row">
                 <!-- card  -->
@@ -97,12 +97,15 @@
                 </div>
                 
                 <div class="row special-list">
+
                     <div th:each="genero: ${generos}" class="col-lg-4 col-md-6 ">
                         <div class="products-single fix">
-                            <button th:text="${genero}"  type="button" class="btn btn-genre"> Género 1</button>
+                            <a th:href="@{/buscar?genero=__${genero}__}" th:text="${genero}" class="btn btn-genre"> Género 1</a>
                         </div>
-                    </div> 
-                </div>
+                    </div>
+
+                 </div>
+                
             </div>
         </div>
         <!-- End géneros -->
