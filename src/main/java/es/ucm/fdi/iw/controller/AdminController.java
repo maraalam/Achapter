@@ -93,7 +93,7 @@ public class AdminController {
         .stream().findFirst().orElse(null);
         */
 
-        List<Review> reviewBook = entityManager.createNamedQuery("Review.allBook", Review.class)
+        List<Review> reviewBook = entityManager.createNamedQuery("Review.byBook", Review.class)
         .setParameter("id", id)
         .getResultList();
         
