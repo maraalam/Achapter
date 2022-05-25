@@ -593,6 +593,29 @@ public class UserController {
         return "index";
     }
 
+    @PostMapping("review")
+    @Transactional
+    public String publishReview(Model model, HttpSession session,  @RequestParam("query")String texto,  @RequestParam long id) {
+       log.info("Enn funcion publishReview  {}", id);
+        User u = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
+        model.addAttribute("user", u);
+        Book b = entityManager.createNamedQuery("Book.byId", Book.class).setParameter("id", id).getSingleResult();
+        Review post = new Review();
+        post.setAuthor(u);
+        post.setTitle("this is a post and you couldn't edit the title");
+        post.setText(texto);
+        post.setBook(b);
+        post.setDateSent(LocalDateTime.now());
+        entityManager.persist(post);
+        entityManager.flush();
+
+        log.info("published review with id {} by user with id {} with book id {}", post.getId(), u.getId(), id);
+
+        return "redirect:../libro?id=" + id;
+    }
+
+
 	/*
 		@GetMapping("/messagebox")
     public String messagebox(Model model, HttpSession session) {

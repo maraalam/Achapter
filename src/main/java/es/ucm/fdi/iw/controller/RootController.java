@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -166,6 +167,10 @@ public class RootController {
         }
         log.info("[RootController.Libro] " + libreria );
         model.addAttribute("libreriaLibro", libreria);
+
+        List<Review> listR = entityManager.createNamedQuery("Review.byBook", Review.class) .setParameter("id", id).setMaxResults(10).getResultList();
+        model.addAttribute("reviews", listR);
+
         return "libro";
     }
 
@@ -527,6 +532,9 @@ public class RootController {
         return "redirect:"+ request.getHeader("Referer");
 
     }
+
+ 
+   
 }
 
 /*

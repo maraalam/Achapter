@@ -101,7 +101,7 @@
         </div>
 
          <!-- Saga -->
-
+  <!-- 
         <div class="products-box">
             <div class="container">
                 <div class="row">
@@ -204,96 +204,72 @@
                 </div>
             </div>
         </div>
-        <!-- End Mas populares  -->
+        -->
         
         <section id="products" style="float:left">
-            <h1>Comentarios de tus amigos</h1>
-            <div class="container" >
-                <div class="row">
-                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
-                        <div class="widget panel"  style="width:700px;">
-                            <div class="panel-body" >
-                            <br>
-                                <ul class="list-table" >
-                                    <li style="width:70px;">
-                                        <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" width="65px" height="65px">
-                                    </li>
-                                    <li class="text-left">
-                                        <h5 class="semibold ellipsis nm">Usuario 1</h5>
-                                    </li>
-                                    <li class="text-right" style="width:70px;">
-                                        <button type="button" class="btn btn-sm btn-success">Like</button>
-                                    </li>
-                                </ul>
+            <h1>Comentarios</h1>
+           
+               
+                    <div class="row">
+                        <th:block >
+                            <div class="widget panel">
+                               
+                                <form  th:action="@{/user/review(id=${searchBookById.id})}" action="/user/review" method="POST" class="w-100 align-items-center">
+                                    <label for="new-post" class="semibold nm pt-2">
+                                        <div class="title-all pt-2">
+                                            <h4>Qué te parece este libro?</h4>
+                                        </div>
+                                    </label>    
+                                    
+                                    <textarea id=busquedaNav class="md-textarea form-control shadow-sm w-100" type="search" placeholder="Queridos seguidores..."  name="query"></textarea>
+                                    <button id="publish-post" class="btn btn-outline-success my-4 ml-auto" type="submit">Publicar
+                                    </button>
+                                </form>
                             </div>
-                            <br>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
-                                <small class="text-muted">1 day ago</small>
-                            </li>  
-                        </ul>
+                        </th:block>
                     </div>
-    
-                        
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
-                        <div class="widget panel"  style="width:700px;">
-                            <div class="panel-body" >
+                    <div class="row" th:each="r : ${reviews}">
+                        <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
+                            <div class="widget panel"  style="width:700px;">
+                                <div class="panel-body" >
+                                    <br>
+                                    <ul class="list-table" >
+                                        <li style="width:70px;">
+                                            <img class="img-circle img-bordered-primary" th:src="@{/user/{id}/pic(id=${r.author.id})}" 
+                                            src="" alt="" width="65px" height="65px">
+                                           
+                                        </li>
+                                        <li class="text-left">
+                                            <h5 class="semibold ellipsis nm usuario" th:text="${r.author.username}">Usuario 1</h5>
+                                        </li>
+                                        <!--
+                                       <div th:if="${#lists.contains(likesPost, post.id)} "  style="float: right;" >
+                                        <form class="text-right" style="width:70px;" th:action="@{/likes/__${post.id}__}" method="POST">
+                                            <button id="buttonLike" class="btn btn-sm btn-danger like" type="submit">Dislike</button>
+                                        </form>
+                                       </div>
+                    
+                                        <div th:unless="${#lists.contains(likesPost, post.id)} "  style="float: right;">
+                                            <form class="text-right" style="width:70px;" th:action="@{/likes/__${post.id}__}" method="POST">
+                                                <button id="buttonLike" class="btn btn-sm btn-success like" type="submit">Like</button>
+                                            </form>                    
+                                        </div>   
+                                        -->  
+                                    </ul>
+                                </div>
                                 <br>
-                                <ul class="list-table" >
-                                    <li style="width:70px;">
-                                        <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="65px" height="65px">
-                                    </li>
-                                    <li class="text-left">
-                                        <h5 class="semibold ellipsis nm">Usuario 1</h5>
-                                    </li>
-                                    <li class="text-right" style="width:70px;">
-                                        <button type="button" class="btn btn-sm btn-success">Like</button>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <p class="nm" th:text="${r.text}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                                        <small class="text-muted fecha" th:text="${r.dateSent}">1 day ago</small>
+                                        <!--
+                                        <small style ="float: right" class="text-muted likes" th:text="${post.likes}">0 </small> <small style ="float: right" class="text-muted"> likes: </small>    
+                                    -->
                                     </li>
                                 </ul>
-                            </div>
-                            <br>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
-                                <small class="text-muted">1 day ago</small>
-                            </li>  
-                        </ul>
+                        </div>
                     </div>
-    
-                        
-                </div>
-    
-                <div class="row">
-                    <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys">
-                        <div class="widget panel"  style="width:700px;">
-                            <div class="panel-body" >
-                                <br>
-                                <ul class="list-table" >
-                                    <li style="width:70px;">
-                                        <img class="img-circle img-bordered-primary" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" width="65px" height="65px">
-                                    </li>
-                                    <li class="text-left">
-                                        <h5 class="semibold ellipsis nm">Usuario 1</h5>
-                                    </li>
-                                    <li class="text-right" style="width:70px;">
-                                        <button type="button" class="btn btn-sm btn-success">Like</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <br>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <p class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
-                                <small class="text-muted">1 day ago</small>
-                            </li>  
-                        </ul>
-                    </div>
-    
-                        
-                </div>
+                
                
             </div>
         </section>
