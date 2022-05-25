@@ -6,7 +6,6 @@ Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuad
 - Hay errores cuando se quiere seguir a una persona en la página de usuarios.html. No deja dar unfollow desde esa página.
 - Que el uso API de Google se vea correctamente
 - Faltas algunas pruebas Karate
-- Los botones de géneros en el index no realizan nada, se planea agregar una nueva página para esto
 - Terminar la pagina de libro.html. No se ven los comentarios de los usuarios tomados desde el modelo. 
 - Falta que el usuario pueda marcar como objetivos como cuántos libros quiere leer en el año. Esto puede ser en estadísticas. 
 - Que en libros.html muestre libros solo de la saga. 
@@ -36,6 +35,10 @@ En administrador se puede agregar que pueda:
 2. Para cargar una imagen de perfil a un usuario (user.html y iw.js): 
 
 Perfil del usuario [Achapter: perfil](http://localhost:8080/user/2#)
+
+3. Para seguir a usuarios en usuarios.html y usuariosfriends.html
+Lista de usuarios en la App (usuarios.html) [Achapter: usuarios](http://localhost:8080/usuarios)
+Lista de usuarios que sigo o me siguen (Depende del boton escogido antes) en la App (usuariosfriends.html) [Achapter: usuariosfriends](http://localhost:8080/usuariosfriends)
 
 ## ROLES DE USUARIO
 

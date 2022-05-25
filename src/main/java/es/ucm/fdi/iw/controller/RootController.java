@@ -411,17 +411,23 @@ public class RootController {
         .setParameter("username", data.get("usernameFollowing").asText())
         .getSingleResult();
         
+        if(!(usernameFollowed.getFollowers().contains(usernameFollowing)&&  
+            usernameFollowing.getFollowed().contains(usernameFollowed))){
             
-        usernameFollowed.getFollowers().add(usernameFollowing); //es que es seguido
-        usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
-        
+            usernameFollowed.getFollowers().add(usernameFollowing); //es que es seguido
+            usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
+        }
+        else{
+            usernameFollowed.getFollowers().remove(usernameFollowing); //es que es seguido
+            usernameFollowing.getFollowed().remove(usernameFollowed); //el que esta siguiendo 
+        }
         entityManager.persist(usernameFollowed);
         entityManager.flush();
         entityManager.persist(usernameFollowing);
         entityManager.flush();
 
         
-        // model.addAttribute("following",  list);
+        model.addAttribute("usuarios",  entityManager.createNamedQuery("User.all", User.class).getResultList());
         
 
         return "index";

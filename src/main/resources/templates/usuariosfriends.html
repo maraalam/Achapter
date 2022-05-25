@@ -42,7 +42,7 @@
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm  " >
                             <div  class="col mb-3 list-usuarios"  th:each="u: ${usuariosf}">
                                 <div class="card">
-                                    <img src="https://via.placeholder.com/340x120/FFB6C1/000000"  alt="Cover" class="card-img-top">
+                                    <img th:src="@{/img/bannerUser.png}" src="/img/bannerUser.png"  alt="Cover" class="card-img-top">
                                     <div class="card-body text-center">
                                         <a th:href="@{/user/__${u.id}__}" href="/user"  >
                                             <img 
@@ -110,27 +110,39 @@
             }
         }
 
-        let b = document.getElementById("addF");
-        b.addEventListener('click', (e) => {
-            if(b.innerHTML==="Follow"){
-            e.preventDefault();
-            let request = {usernameFollowed: "", usernameFollowing: ""};
-            var card = b.parentNode.parentNode.parentNode;
-            request.usernameFollowed  =card.getElementsByClassName("card-title")[0].innerHTML;
-            request.usernameFollowing  = /*[[${session.u.username}]]*/ 'defaultanyvalue';
+        const lb = Array.from(document.getElementsByClassName("addF"));
+        lb.forEach(b => {
+            b.addEventListener('click', (e) => {
+                if(b.innerHTML==="Follow"){
+                e.preventDefault();
+                let request = {usernameFollowed: "", usernameFollowing: ""};
+                var card = b.parentNode.parentNode.parentNode;
+                request.usernameFollowed  =card.getElementsByClassName("card-title")[0].innerHTML;
+                request.usernameFollowing  = /*[[${session.u.username}]]*/ 'defaultanyvalue';
+                    
+                go('addFollow', 'POST', request )
+                .then(d => console.log("happy", d))
+                .catch(e => console.log("sad", e))
+        
+                /*
+                const para = document.createElement("p");
+                para.innerText = "Following";
+                para.style="margin-left:100px; color: #5cca60; ";
+                para.class= "btn btn-light btn-sm bg-white has-icon btn-block";
+                b.parentNode.parentNode.appendChild(para);
+                b.parentNode.removeChild(b);
+                */
+                     b.classList.remove(...b.classList);
+                     b.classList.add("btn", "btn-light", "btn-sm", "bg-white", "has-icon", "btn-block");
+                     b.innerText = "Following";
+                     b.removeAttribute('style');
+                     
+                     b.style["color"]="#5cca60";
+                   
 
-            go('addFollow', 'POST', request )
-            .then(d => console.log("happy", d))
-            .catch(e => console.log("sad", e))
-      
-            const para = document.createElement("p");
-            para.innerText = "Following";
-            para.style="margin-left:100px; color: #5cca60; ";
-            para.class= "btn btn-light btn-sm bg-white has-icon btn-block";
-            b.parentNode.parentNode.appendChild(para);
-            b.parentNode.removeChild(b);
-            }
-        })
+                }
+            });
+        });
 
     </script>
     </main>
