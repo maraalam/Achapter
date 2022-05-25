@@ -543,8 +543,55 @@ public class UserController {
     public static class NoEsTuPerfilException extends RuntimeException {
     }
 
+    @ModelAttribute("following")
+    public List<User> getUsuariosfollowingList( Model model, HttpSession session) {
+        log.info("Obteniendo following");
+        
+        User requester = (User)session.getAttribute("u");
+        if(requester!=null){
+        log.info(requester.getId());
+        User u = entityManager.createNamedQuery("User.byId", User.class)
+                    .setParameter("id", requester.getId())
+                    .getSingleResult();
+
+        return u.getFollowed();
+        }
+        return new ArrayList<User>();
+    }
 
 
+    @PostMapping("/addFollow")
+    @Transactional
+    public String addFollow(@RequestBody  JsonNode data, Model model){
+        log.info("En funcion addFollow: " + data.get("usernameFollowed").asText() + " quiere seguir a " + data.get("usernameFollowing").asText());
+        User usernameFollowed = entityManager.createNamedQuery("User.byUsername", User.class)
+        .setParameter("username", data.get("usernameFollowed").asText())
+        .getSingleResult();
+        User usernameFollowing = entityManager.createNamedQuery("User.byUsername", User.class)
+        .setParameter("username", data.get("usernameFollowing").asText())
+        .getSingleResult();
+        
+        if(!(usernameFollowed.getFollowers().contains(usernameFollowing)&&  
+            usernameFollowing.getFollowed().contains(usernameFollowed))){
+            
+            usernameFollowed.getFollowers().add(usernameFollowing); //es que es seguido
+            usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
+        }
+        else{
+            usernameFollowed.getFollowers().remove(usernameFollowing); //es que es seguido
+            usernameFollowing.getFollowed().remove(usernameFollowed); //el que esta siguiendo 
+        }
+        entityManager.persist(usernameFollowed);
+        entityManager.flush();
+        entityManager.persist(usernameFollowing);
+        entityManager.flush();
+
+        
+        model.addAttribute("usuarios",  entityManager.createNamedQuery("User.all", User.class).getResultList());
+        
+
+        return "index";
+    }
 
 	/*
 		@GetMapping("/messagebox")

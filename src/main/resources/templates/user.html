@@ -21,7 +21,7 @@
 
             <div class="mx-3 w-100">
                 <div class="mx-4">
-                    <h1 class="mt-5">@ <span th:text="${user.username}">Paco</span></h1>
+                    <h1 class="mt-5">@ <span id="usernameUser" th:text="${user.username}">Paco</span></h1>
                     <p id="userState" th:text="${user.about}">About me...</p>
                 </div>
 
@@ -41,12 +41,13 @@
 
             <div th:if="${session.u.id != user.id}">
                 <div class="button flex-row">
-                    <form th:action="@{/user/__${user.id}__/follow}" method="POST">
-                        <button id="follow" class="btn btn-outline-success" type="submit"
-                                th:text="${session.u.followed.contains(user)} ? 'Siguiendo' : 'Seguir'">Seguir
+                   
+                        <button id="btnfollow" class="btn btn-outline-success" 
+                                th:text="${#lists.contains(following, user)} ? 'Followed' : 'Follow'" >Seguir
                         </button>
-                        <!-- session.u.followed.contains(user) no funciona -->
-                    </form>
+                                         
+                        
+                   
                 </div>
                 <div class="button flex-row">
                     <form th:action="@{/user/__${user.id}__/chat}" method="GET">
@@ -665,28 +666,48 @@
 
 <script>
 
-
-
-
-    let b = document.getElementById("follow");
+let b = document.getElementById("btnfollow");
     b.addEventListener('click', (e) => {
         e.preventDefault();
-        go(b.parentNode.action, 'POST')
+        let request = {usernameFollowed: "", usernameFollowing: ""};
+        request.usernameFollowed  =  document.getElementById("usernameUser").innerHTML;
+        request.usernameFollowing  =document.getElementById("idUsuario").innerHTML;
+        go('addFollow', 'POST', request)
             .then(d => console.log("happy", d))
             .catch(e => console.log("sad", e))
         // hace falta recargar la pagina para q se vea
+
+        if(b.innerHTML==="Follow"){
+                
+            b.innerText = "Followed";
+            b.removeAttribute('style');
+            
+            b.style["bacolor"]="red";
+
+        }
+        else
+        {   
+            b.innerText = "Follow";
+            b.style["color"]="green";
+
+        }
+
     });
 
+
+    
+
     let c = document.getElementById("publish-post")
-    c.addEventListener('click', (e) => {
-        e.preventDefault();
-        go(c.parentNode.action, 'POST', {
-            text: document.getElementById("new-post").value
-        })
-            .then(d => console.log("happy", d))
-            .catch(e => console.log("sad", e))
-        // hace falta recargar la pagina para q se vea
-    });
+    if(c!=null)
+        c.addEventListener('click', (e) => {
+            e.preventDefault();
+            go(c.parentNode.action, 'POST', {
+                text: document.getElementById("new-post").value
+            })
+                .then(d => console.log("happy", d))
+                .catch(e => console.log("sad", e))
+            // hace falta recargar la pagina para q se vea
+        });
 
     document.querySelector("#f_avatar").addEventListener('change', (e) => {
         let img = document.querySelector("#avatar");
@@ -709,7 +730,7 @@
         });
     });
 
-
+   
     
 </script>
 

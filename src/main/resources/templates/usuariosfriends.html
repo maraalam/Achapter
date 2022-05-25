@@ -113,7 +113,6 @@
         const lb = Array.from(document.getElementsByClassName("addF"));
         lb.forEach(b => {
             b.addEventListener('click', (e) => {
-                if(b.innerHTML==="Follow"){
                 e.preventDefault();
                 let request = {usernameFollowed: "", usernameFollowing: ""};
                 var card = b.parentNode.parentNode.parentNode;
@@ -122,8 +121,10 @@
                     
                 go('addFollow', 'POST', request )
                 .then(d => console.log("happy", d))
-                .catch(e => console.log("sad", e))
+                .catch(e => console.log("sad", e));
         
+                if(b.innerHTML==="Follow"){
+                
                 /*
                 const para = document.createElement("p");
                 para.innerText = "Following";
@@ -133,13 +134,22 @@
                 b.parentNode.removeChild(b);
                 */
                      b.classList.remove(...b.classList);
-                     b.classList.add("btn", "btn-light", "btn-sm", "bg-white", "has-icon", "btn-block");
-                     b.innerText = "Following";
+                     b.classList.add("btn", "btn-light", "btn-sm", "bg-white", "has-icon", "btn-block", "addF");
+                     b.innerText = "Followed";
                      b.removeAttribute('style');
                      
                      b.style["color"]="#5cca60";
                    
 
+                }
+                else
+                {   b.removeAttribute('style');
+                    b.classList.remove(...b.classList);
+                     b.classList.add("btn", "btn-light", "btn-sm", "bg-white", "has-icon", "btn-block", "addF");
+                     b.innerText = "Follow";
+                     
+                     
+                    
                 }
             });
         });
