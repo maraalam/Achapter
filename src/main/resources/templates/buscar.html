@@ -90,7 +90,7 @@
                             <div th:each="genero: ${generos}" class="filtro-generos">
                                 <div class="products-single fix">
                                     <div class="form-group">
-                                        <input type="checkbox" th:id="${genero}" onclick="filtrar()">
+                                        <input type="checkbox" th:id="${genero}" onclick="filtrar()" th:checked="${genero}==${queryGenero}">
                                         <label th:for="${genero}" th:text="${genero}">Genero</label>
                                     </div>
                                 </div>

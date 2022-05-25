@@ -170,13 +170,12 @@ public class RootController {
     }
 
     @GetMapping("/buscar")
-    public String buscar(Model model, @RequestParam(required = false) String query, @RequestParam(required = false) String type) {
-        log.info("[RootController.Buscar] Buscando "+ type + ": "+ query);
+    public String buscar(Model model, @RequestParam(defaultValue = "") String query, 
+    @RequestParam(defaultValue = "titulo") String type, @RequestParam(defaultValue = "") String genero) {
+        log.info("[RootController.Buscar] Buscando "+ type + ": "+ query +" genero: " + genero);
 
-        type = type!=null && !type.isEmpty() ? type : "titulo";
 
-        query = query!=null ? query : "";
-
+        model.addAttribute("queryGenero", genero);
         model.addAttribute("query", query);
         model.addAttribute("queryType", type);
   
