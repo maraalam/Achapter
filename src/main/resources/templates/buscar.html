@@ -154,9 +154,22 @@
                                     <div class="book-img book-img-buscar"> 
                                         <img th:src="${book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
                                     </div>  
-                                    <form class="mask-icon" th:action="@{/save?tipoLibreria=quieroLeer&id=__${book.id}__}" method="POST">
-                                        <button id="addToLib" class="cart cart-buscar" type="submit">Agregar a mi biblioteca</button>
-                                    </form>
+                                    <th:block th:if="${userLibrary==null} or !${userLibrary.books.containsKey(${book.id})}">
+                                        <form class="mask-icon" th:action="@{/save}" method="POST">
+                                            <input name="tipoLibreria" value="quieroLeer" hidden/>
+                                            <input name="id" th:value="${book.id}" hidden/>
+                                            <button id="addToLib" class="cart cart-buscar" type="submit">Agregar a mi biblioteca</button>
+                                        </form>
+                                    </th:block>
+
+                                    <th:block th:unless="${userLibrary==null} or !${userLibrary.books.containsKey(${book.id})}">
+                                        <form class="mask-icon" th:action="@{/save}" method="POST">
+                                            <input name="tipoLibreria" value="quieroLeer" hidden/>
+                                            <input name="id" th:value="${book.id}" hidden/>
+                                            <button id="addToLib" class="cart cart-buscar" type="submit">Añadir progreso</button>
+                                        </form>
+                                    </th:block>
+                                    
                                 </div>
 
                                 <a th:href=@{/libro(id=${book.id})} href="/libro" class="text-decoration-none link-dark">
