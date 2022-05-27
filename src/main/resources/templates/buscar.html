@@ -154,7 +154,7 @@
                                     <div class="book-img book-img-buscar"> 
                                         <img th:src="${book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
                                     </div>  
-                                    <th:block th:if="${userLibrary==null} or !${userLibrary.books.containsKey(${book.id})}">
+                                    <th:block th:if="${userLibrary==null} or !${userLibrary.books[__${book.id}__]}">
                                         <form class="mask-icon" th:action="@{/save}" method="POST">
                                             <input name="tipoLibreria" value="quieroLeer" hidden/>
                                             <input name="id" th:value="${book.id}" hidden/>
@@ -162,12 +162,11 @@
                                         </form>
                                     </th:block>
 
-                                    <th:block th:unless="${userLibrary==null} or !${userLibrary.books.containsKey(${book.id})}">
-                                        <form class="mask-icon" th:action="@{/save}" method="POST">
-                                            <input name="tipoLibreria" value="quieroLeer" hidden/>
+                                    <th:block th:unless="${userLibrary==null} or !${userLibrary.books[__${book.id}__]}">
+                                        <div class="mask-icon">
                                             <input name="id" th:value="${book.id}" hidden/>
-                                            <button id="addToLib" class="cart cart-buscar" type="submit">Añadir progreso</button>
-                                        </form>
+                                            <button th:id="btnprogress-__${book.id}__" class="cart cart-buscar btn-progress" type="submit">Añadir progreso</button>
+                                        </div>
                                     </th:block>
                                     
                                 </div>
@@ -188,6 +187,30 @@
                                         </div>
                                     </div>
                                 </a>
+                            </div>
+                            <div th:if="${userLibrary!=null}" class="widget panel progressText border rounded" th:id="progress-__${book.id}__" style="display : none;">
+                                <form  th:action="@{/user/postProgress}" action="/user/postProgress" method="POST" class="w-100 align-items-center">
+                                    <label for="new-post" class="semibold nm pt-2">
+                                        <div class="title-all pt-2">
+                                            <h4>Nuevo progreso!!</h4>
+                                        </div>
+                                    </label>   
+                                    
+                                    <div th:each="entry, stat : ${userLibrary.books}" >
+                                        <input name="bookId" th:value="${book.id}" hidden/>
+                                        <input name="paginas" class="d-inline-block" type="number" min=0 th:max="${book.numpaginas}" th:if="${book.id}==${entry.value.book.id}" th:value="${entry.value.numPaginas}"/>
+                                        <p class="d-inline-block" th:if="${book.id}==${entry.value.book.id}"th:text="|de ${book.numpaginas}|">de 0</p>
+                                    </div>
+                                    <textarea id=busquedaNav class="md-textarea form-control shadow-sm w-100" type="search" placeholder="Queridos seguidores..."  name="query"></textarea>
+                                    <div class="my-4 d-flex">
+                                        
+                                        <button th:id="btncancel-__${book.id}__" class="btn btn-danger btncancel" type="button">Cancelar
+                                        </button>
+                                        <button id="publish-post" class="btn btn-success  ml-auto" type="submit">Publicar
+                                        </button>
+                                    </div>
+                                    
+                                </form>
                             </div>
                         </div>     
                     </div>
@@ -353,6 +376,61 @@
             }
         }
         
+
+
+        let btncancel = document.getElementsByClassName("btncancel");
+        if(btncancel) {
+            for (let btn of btncancel){
+                
+                btn.addEventListener('click', (e) => {
+                    let id = e.target.id.split("-")[1]
+                    var div = document.getElementById('progress-'+id);
+                    if(div)
+                        
+                        if (div.style.display !== 'none') {
+                            div.style.display = 'none';
+                            overlay.style.visibility="hidden";
+                        }
+                        else {
+                            div.style.display = 'block';
+                            var windowHeight = document.documentElement.clientHeight;
+
+                            var elHeight = div.style.height;
+                            console.log(div)
+                            
+                        }
+                        
+                });  
+            }
+        }
+
+        let btnsprogress = document.getElementsByClassName("btn-progress");
+        if(btnsprogress) {
+            for (let btn of btnsprogress){
+                
+                btn.addEventListener('click', (e) => {
+                    let id = e.target.id.split("-")[1]
+                    var div = document.getElementById('progress-'+id);
+                    if(div)
+                        
+                        if (div.style.display !== 'none') {
+                            div.style.display = 'none';
+                            overlay.style.visibility="hidden";
+                        }
+                        else {
+                            div.style.display = 'block';
+                            var windowHeight = document.documentElement.clientHeight;
+
+                            var elHeight = div.style.height;
+                            console.log(div)
+                            
+                        }
+                        
+                });  
+            }
+        }
+        
+
     </script>
     </main>
 

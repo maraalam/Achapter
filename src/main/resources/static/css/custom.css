@@ -179,12 +179,31 @@ form.search-form {
     color: #ffffff;
 }
 .mask-icon .cart:hover{
-    background: #010101;
+    background: rgb(19, 59, 24);
     color: #ffffff;
+}
+.progressText{
+    width: 40% !important;
+    background-color: rgb(247, 243, 241);
+    padding: 2em;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    position: absolute !important;
+    z-index: 5;
+    
 }
 .mask-icon .cart-buscar{
     font-weight: 700 !important;
     font-size: 0.7em !important;
+}
+
+.btn-progress{
+    background-color: rgb(195, 106, 58) !important;
+}
+.btn-progress:hover{
+    background-color: rgb(104, 64, 42) !important;
 }
 .mask-icon ul li a:hover{
     background: #010101;

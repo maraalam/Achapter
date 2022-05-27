@@ -39,7 +39,23 @@
 
             <ul class="list-group">
                 <li class="list-group-item">
-                    <p class="nm" th:text="${post.text}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+
+                    <th:block th:if="${#strings.contains('__${post.text}__', '[PROGRESS]')}" th:with="progress=${#strings.listSplit(#strings.replace('__${post.text}__', '[PROGRESS]', '~'),'~')}">
+
+                        <div class="d-flex" th:if="${#strings.contains('__${progress[0]}__', '[BOOK]')}" 
+                            th:with="libroPost=${#strings.listSplit(#strings.replace('__${progress[0]}__', '[BOOK]', '~'),'~')}">
+
+                            <p class="text-muted" th:text="${libroPost[0]}+'&nbsp'">Comentario</p>
+                            <a th:href="@{../libro/?id=__${libroPost[1]}__}" th:text="${books[T(Long).parseLong(__${libroPost[1]}__)].titulo}">Libro</a>
+
+                            <p class="text-muted" th:text="'&nbsp'+${libroPost[2]}">Comentario</p>
+                        </div>
+
+                        <p class="nm"  th:if="${progress.size}>1" th:text="${progress[1]}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                    </th:block>
+                    <th:block th:unless="${#strings.contains('__${post.text}__', '[PROGRESS]')}">
+                        <p class="nm" th:text="${post.text}">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
+                    </th:block> 
                     <small class="text-muted fecha" th:text="${post.dateSent}">1 day ago</small>
                     <small style ="float: right" class="text-muted likes" th:text="${post.likes}">0 </small> <small style ="float: right" class="text-muted"> likes: </small>    
                 </li>
