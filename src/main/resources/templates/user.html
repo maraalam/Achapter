@@ -667,7 +667,7 @@
 <script>
 
 let b = document.getElementById("btnfollow");
-    b.addEventListener('click', (e) => {
+    if(b) b.addEventListener('click', (e) => {
         e.preventDefault();
         let request = {usernameFollowed: "", usernameFollowing: ""};
         request.usernameFollowed  =  document.getElementById("usernameUser").innerHTML;
@@ -709,7 +709,8 @@ let b = document.getElementById("btnfollow");
             // hace falta recargar la pagina para q se vea
         });
 
-    document.querySelector("#f_avatar").addEventListener('change', (e) => {
+    let avatar = document.querySelector("#f_avatar")
+    if(avatar) avatar.addEventListener('change', (e) => {
         let img = document.querySelector("#avatar");
         let fileInput = document.querySelector("#f_avatar");
         console.log(img, fileInput);
@@ -717,7 +718,8 @@ let b = document.getElementById("btnfollow");
     });
 
     // click en boton de enviar avatar
-    document.querySelector("#postAvatar").addEventListener('click', (e) => {
+    let avatar2 = document.querySelector("#postAvatar")
+    if(avatar2) avatar2.addEventListener('click', (e) => {
         e.preventDefault();
         let url = document.querySelector("#postAvatar").parentNode.action;
         let img = document.querySelector("#avatar");
@@ -743,8 +745,9 @@ var contP = document.getElementsByClassName("pausados").length;
 var contT = document.getElementsByClassName("terminados").length;
 var contA = document.getElementsByClassName("abandonados").length;
 
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
+    var ctx = document.getElementById("myChart")
+    if(ctx) ctx = ctx.getContext('2d');
+    if(ctx) var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
         labels: ["Leyendo", "Quiero leer", "Pausados", "Terminados", "Abandonados"],
