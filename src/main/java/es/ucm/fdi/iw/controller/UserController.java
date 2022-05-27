@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -159,6 +160,11 @@ public class UserController {
         model.addAttribute("user", target);
 
         return "user";
+    }
+
+    @ModelAttribute("books")
+    public List<Book> getBooksList() {
+        return entityManager.createNamedQuery("Book.all", Book.class).getResultList();
     }
 
     /**
@@ -457,6 +463,36 @@ public class UserController {
         return "user";
     }
 
+    @PostMapping("postProgress")
+    @Transactional
+    public String publishPostProgress(Model model, HttpSession session,  @RequestParam("query")String texto,
+    @RequestParam Long paginas, @RequestParam Long bookId, HttpServletRequest request) {
+        User u = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
+        model.addAttribute("user", u);
+
+
+        u.getLibrary().get(entityManager.find(Book.class, bookId)).setNumPaginas(paginas);
+        entityManager.persist(u.getLibrary());
+        entityManager.persist(u);
+        Post post = new Post();
+        post.setAuthor(u);
+        post.setTitle("this is a post and you couldn't edit the title");
+        String final_text = "[PROGRESS]Ha avanzado el libro [BOOK]"+ bookId +"[BOOK] hasta la página " + paginas.toString() + " de " + entityManager.find(Book.class, bookId).getNumpaginas();
+        final_text += "[PROGRESS]" + texto;  
+        post.setText(final_text);
+        post.setLikes(0);
+        post.setDateSent(LocalDateTime.now());
+        entityManager.persist(post);
+        entityManager.flush();
+
+        log.info("published post with id {} by user with id {}", post.getId(), u.getId());
+
+        return "redirect:"+ request.getHeader("Referer");
+    }
+
+
+    
     @PostMapping("/register")
     @Transactional
     public String registerUser(
@@ -615,6 +651,8 @@ public class UserController {
         return "redirect:../libro?id=" + id;
     }
 
+
+    
 
 	/*
 		@GetMapping("/messagebox")

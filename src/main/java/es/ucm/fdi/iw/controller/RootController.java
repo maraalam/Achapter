@@ -176,7 +176,7 @@ public class RootController {
 
     @GetMapping("/buscar")
     public String buscar(Model model, @RequestParam(defaultValue = "") String query, 
-    @RequestParam(defaultValue = "titulo") String type, @RequestParam(defaultValue = "") String genero) {
+    @RequestParam(defaultValue = "titulo") String type, @RequestParam(defaultValue = "") String genero, HttpSession session) {
         log.info("[RootController.Buscar] Buscando "+ type + ": "+ query +" genero: " + genero);
 
 
@@ -184,6 +184,35 @@ public class RootController {
         model.addAttribute("query", query);
         model.addAttribute("queryType", type);
   
+        User user = entityManager.find(
+                User.class, ((User)session.getAttribute("u")).getId());
+
+
+        Library libreria = entityManager
+                .createNamedQuery("Library.byOwner", Library.class)
+                .setParameter("owner", user.getId()).getResultList()
+                .stream().findFirst().orElse(null);
+
+        if (libreria != null) {
+
+            if (user.getLibrary() == null) {
+                libreria.setOwner(user);
+                user.setLibrary(libreria);
+            }
+
+            Progress progress = entityManager
+                    .createNamedQuery("Progreso.byUser", Progress.class)
+                    .setParameter("user", user.getId()).getResultList()
+                    .stream().findFirst().orElse(null);
+
+            if (progress != null) {
+
+                Library l = user.getLibrary();
+                l.put(progress.getBook(), progress);
+            }
+            model.addAttribute("userLibrary",user.getLibrary());
+        }    
+        
         return "buscar";
     }
     /*
@@ -254,16 +283,6 @@ public class RootController {
     public List<Post> getPostsList() {
         return entityManager.createNamedQuery("Post.all", Post.class).setMaxResults(10).getResultList();
     }
-
-    /*
-    @ModelAttribute("friends")
-    public List<User> getFriendsList(User user) {
-        return entityManager.createNamedQuery("User.friends", User.class)
-                .setParameter("username", user.getUsername())
-                .getResultList();
-    }
-        */
-
         
 
     @ModelAttribute("prestamosSinDestinatario")
@@ -361,6 +380,8 @@ public class RootController {
             progress.setBook(book);
             progress.setUser(user);
             progress.setEstado(tipoLibreria);
+            progress.setNumPaginas((long) 0);
+            progress.setPorcentaje((long)0);
             log.info("nuevo progreso");
         }
 
@@ -376,6 +397,9 @@ public class RootController {
         entityManager.flush();
 
         log.info("[RootController.save] Book with id {} added to user {}'s library", id, user.getId());
+        log.info("[RootController.save] Library " + user.getLibrary());
+
+
         return "redirect:"+ request.getHeader("Referer");
     }
 
@@ -537,44 +561,4 @@ public class RootController {
    
 }
 
-/*
-        List<Usuario> l = new ArrayList<Usuario>();
-        for(User u : entityManager.createQuery("select u FROM User u", User.class).getResultList()){
-            log.info(new Usuario(u.getUsername(), u.getFirstName() + " " + u.getLastName(), u.getAbout()));
-            l.add(new Usuario(u.getUsername(), u.getFirstName() + " " + u.getLastName(), u.getAbout()));
-        }
-        */
 
-    /*
-     @PostMapping("/addBook")
- @ResponseBody
- @Transactional
-   public String crearBook(@RequestParam(required=false) String autor, @RequestParam(required=false) String titulo, @RequestParam(required=false) String isbn,
-        Model model){
-            log.info("En funcion");
-            Book b = new Book();
-            
-            b.setAutor(autor);
-           
-            b.setISBN(isbn);
-         
-            b.setNumpaginas(500);
-            b.setPuntuación(5);
-   
-            b.setTitulo(titulo);
-            model.addAttribute("Book", b);
-            
-           //Do Something
-            
-           //model.addAttribute(b);
-          // entityManager.getTransaction().begin();
-           entityManager.persist(b);
-          // entityManager.getTransaction().commit();
-
-   
-            entityManager.flush();  
-        
-        return "{\"titulo\": " + titulo + "}";
-}
-
-    */

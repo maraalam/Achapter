@@ -96,10 +96,10 @@ ATRIBUTOS:
    fecha_devolución -> fecha de la devulucion [String]*/
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(1, 0, 11111,21111, '2022-03-01', null);
+VALUES(1, 0, 11111,21111, '2022-03-01', '2022-07-01');
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
-VALUES(2, 2, 11111, 21111, '2022-03-02', null);
+VALUES(2, 2, 11111, 21111, '2022-03-02', '2022-07-12');
 
 INSERT INTO physical_book (id, libro_id, owner_id, destinatario_id, fecha_prestamo, fecha_devolucion)
 VALUES(3, 3, 21111, null, '2022-03-05', null);
@@ -130,26 +130,26 @@ VALUES(1, 3, 30, 'abandonado', 1, 21111);
 
 
 
----------- LIBRARY ----------
-/* 
-DESCRIPCION: Libreria del usuario
-ATRIBUTOS: 
-   id -> id de la libreria [Long]
-   user_id -> id del usuario al que pertenece la libreria [User]*/
+-- ---------- LIBRARY ----------
+-- /* 
+-- DESCRIPCION: Libreria del usuario
+-- ATRIBUTOS: 
+--    id -> id de la libreria [Long]
+--    user_id -> id del usuario al que pertenece la libreria [User]*/
 
-INSERT INTO LIBRARY (id, USER_ID)
-VALUES(0, 21111);
+-- INSERT INTO LIBRARY (id, USER_ID)
+-- VALUES(0, 21111);
 
 
 
----------- LIBRARY_BOOKS ----------
-/* 
-DESCRIPCION: lista de libros de la libreria (Library). 
-ATRIBUTOS: 
-   library_id -> id de la libreria [Library]
-   books_id -> id del libro [Book]
-   books_key -> id del progreso [Progress]*/
+-- ---------- LIBRARY_BOOKS ----------
+-- /* 
+-- DESCRIPCION: lista de libros de la libreria (Library). 
+-- ATRIBUTOS: 
+--    library_id -> id de la libreria [Library]
+--    books_id -> id del libro [Book]
+--    books_key -> id del progreso [Progress]*/
 
-INSERT INTO LIBRARY_BOOKS(LIBRARY_ID, BOOKS_ID, BOOKS_KEY)
-VALUES(0, 0, 0);
-VALUES(0, 1, 1);
+-- INSERT INTO LIBRARY_BOOKS(LIBRARY_ID, BOOKS_ID, BOOKS_KEY)
+-- VALUES(0, 0, 0);
+-- VALUES(0, 1, 1);
