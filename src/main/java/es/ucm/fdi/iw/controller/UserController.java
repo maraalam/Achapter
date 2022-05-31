@@ -28,13 +28,7 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -444,7 +438,9 @@ public class UserController {
 
     @PostMapping("post")
     @Transactional
-    public String publishPost(Model model, HttpSession session,  @RequestParam("query")String texto) {
+    public String publishPost(Model model, HttpSession session, @RequestBody JsonNode o) {
+        String text = o.get("text").asText();
+
         User u = entityManager.find(
                 User.class, ((User) session.getAttribute("u")).getId());
         model.addAttribute("user", u);
@@ -452,7 +448,7 @@ public class UserController {
         Post post = new Post();
         post.setAuthor(u);
         post.setTitle("this is a post and you couldn't edit the title");
-        post.setText(texto);
+        post.setText(text);
         post.setLikes(0);
         post.setDateSent(LocalDateTime.now());
         entityManager.persist(post);
