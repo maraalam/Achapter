@@ -66,9 +66,15 @@ public class RootController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
         //model.addAttribute("user", new User());
         //model.addAttribute("libros", bookservice.mockBooks());
+        log.info("[RootController.index] "+ session.getAttribute("u"));
+        if(session.getAttribute("u") != null){
+            User user = entityManager.find(
+                    User.class, ((User)session.getAttribute("u")).getId());
+            model.addAttribute("userLibrary",user.getLibrary());
+        }
         return "index";
     }
 
