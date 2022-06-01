@@ -9,12 +9,12 @@
 <body class="d-flex flex-column h-100">
     <header th:replace="fragments/nav.html :: nav"></header>
     
-    <h3> Búsqueda</h3>
     <main class="flex-shrink-0">
         <div class="container" >
             <div class="row">
-                <div class="col-xs-12 col-md-5 col-lg-4 bootstrap snippets bootdeys " >
-                    <div class="widget panel"  style="width:900px; border:1px solid grey;">
+                <div class="col-xs-12  bootstrap snippets bootdeys " >
+                    <h1>Ver libro</h1>
+                    <div class="widget panel"  style="border:1px solid grey;">
                         <div class="panel-body" >
                            
                             <section id="leftMessages">
@@ -25,19 +25,19 @@
                                    
             
                                 </ul>
-                                <ul>
-                                    <h5> Añadir a una lista de lectura </h5>
-                                    <div class="d-flex flex-row" style="float:right" >
-                                        <div class="ml-auto mr-lg-4">
-                                            <div id="selectorLista" class="border rounded p-1 m-1">  
+                                <ul class="pt-5">
+                                    <h4> Añadir a una lista de lectura </h4>
+                                    <div class="d-flex flex-row">
+                                        <div class="mr-lg-4">
+                                            <div id="selectorLista">  
                                             
 
                                                 
                                                 <!-- el action cambia dinamicamente utilizando una función definida abajo en js-->
-                                                <form id="listaLecturaForm" th:action="@{/save}" method="POST">
+                                                <form class="form-inline input-group mt-3" id="listaLecturaForm" th:action="@{/save}" method="POST">
                                                     <input type="number" name="id" th:value="${searchBookById.id}" hidden/>                                              
 
-                                                    <select name="tipoLibreria" id="selectorListaLectura" th:if="${libreriaLibro}!='sinLibreria'">
+                                                    <select class="form-select" name="tipoLibreria" id="selectorListaLectura" th:if="${libreriaLibro}!='sinLibreria'">
                                                         <th:block th:each="entry: ${ {sinLibreria:'Eliminar de libreria', leyendo:'Leyendo', pausados:'Pausados',
                                                         abandonados:'Abandonados', terminados:'terminados',quieroLeer:'Quiero Leer'}}">
                                                             <option th:value="${entry.key}" value="libreria" 
@@ -47,7 +47,7 @@
                                                         </th:block>
                                                     </select>
 
-                                                    <select name="tipoLibreria" id="selectorListaLectura" th:if="${libreriaLibro}=='sinLibreria'">
+                                                    <select class="form-select" name="tipoLibreria" id="selectorListaLectura" th:if="${libreriaLibro}=='sinLibreria'">
                                                         <th:block th:each="entry: ${ {sinLibreria:'Sin libreria', leyendo:'Leyendo', pausados:'Pausados',
                                                         abandonados:'Abandonados', terminados:'terminados',quieroLeer:'Quiero Leer'}}">
                                                             <option th:value="${entry.key}" value="libreria" 
@@ -57,7 +57,7 @@
                                                         </th:block>
                                                     </select>
 
-                                                    <button id="addToLib" class="btn btn-primary" type="submit">Agregar a la lista de lectura</button>
+                                                    <button id="addToLib" class="btn btn-primary" type="submit">Aceptar</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -76,20 +76,21 @@
                                 
                                 <p th:text="${searchBookById.descripcion}" class="nm">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.</p>
                             
-                                                            <!-- Géneros más buscados  -->
-                                    <div class="products-box">
-                                        <div class="container">
-                                            
-                                            <div class="row special-list">
-                                                <div th:each="genero,count : ${#strings.arraySplit(searchBookById.generos, ',')}" class="col-lg-4 col-md-6 ">
-                                                    <div class="products-single fix">
-                                                        <button type="button" th:text="${#strings.arraySplit(genero,',')[0]}" class="btn btn-genre"> Género 1</button>
-                                                    </div>
-                                                </div>          
-                                            </div>
+                                                          
+                                <div class="products-box">
+                                    <h5>Géneros</h5>
+                                    <div class="container pt-1">
+                                        
+                                        <div class="row special-list">
+                                            <div th:each="genero,count : ${#strings.arraySplit(searchBookById.generos, ',')}">
+                                                <div class="products-single fix">
+                                                    <button type="button" th:text="${#strings.arraySplit(genero,',')[0]}" class="btn btn-genre"> Género 1</button>
+                                                </div>
+                                            </div>          
                                         </div>
                                     </div>
-                                    <!-- End Products  -->
+                                </div>
+                                   
                             
                             </section>
                             

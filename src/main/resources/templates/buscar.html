@@ -151,6 +151,17 @@
                         <div th:each="book: ${books}" class="col-lg-3 col-md-6 special-grid best-seller" >
                             <div class="products-single fix">
                                 <div class="box-img-hover">
+                                    <th:block th:if="${userLibrary!=null}">
+
+                                        <th:block th:if="${book.id}==${entry.value.book.id}" th:each="entry, stat : ${userLibrary.books}">
+                                            <progress 
+                                            class="progress-bar" max="100"
+                                            th:value="${entry.value.numPaginas*100/book.numpaginas}"
+                                            th:text="${entry.value.numPaginas*100/book.numpaginas}"> 70% </progress>
+                                        </th:block>
+
+                                    </th:block>
+                                    
                                     <div class="book-img book-img-buscar"> 
                                         <img th:src="${book.portada}" src="https://i.pinimg.com/564x/f9/d8/99/f9d899d2d0f9676e89ba4ab83d85bd45.jpg" />
                                     </div>  
@@ -201,7 +212,7 @@
                                         <input name="paginas" class="d-inline-block" type="number" min=0 th:max="${book.numpaginas}" th:if="${book.id}==${entry.value.book.id}" th:value="${entry.value.numPaginas}"/>
                                         <p class="d-inline-block" th:if="${book.id}==${entry.value.book.id}"th:text="|de ${book.numpaginas}|">de 0</p>
                                     </div>
-                                    <textarea id=busquedaNav class="md-textarea form-control shadow-sm w-100" type="search" placeholder="Queridos seguidores..."  name="query"></textarea>
+                                    <textarea id=busquedaNav class="md-textarea form-control shadow-sm w-100" type="search" value=" " placeholder="Queridos seguidores..."  name="query"></textarea>
                                     <div class="my-4 d-flex">
                                         
                                         <button th:id="btncancel-__${book.id}__" class="btn btn-danger btncancel" type="button">Cancelar

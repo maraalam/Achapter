@@ -205,6 +205,25 @@ form.search-form {
 .btn-progress:hover{
     background-color: rgb(104, 64, 42) !important;
 }
+
+.box-img-hover progress {
+    float: left;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 90;
+    width: 100%;
+}
+/* .box-img-hover progress:before {
+    content: attr(data-label);
+    font-size: 0.8em;
+    vertical-align: 0;
+    display: flex;
+    position:absolute;
+    left:0;
+    right:0;
+} */
+
 .mask-icon ul li a:hover{
     background: #010101;
     color: #ffffff;
@@ -772,4 +791,25 @@ h6 {
 
 .widget{
     width: 100%;
+}
+
+/* Genéros más buscados*/
+.btn-genre {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    color: rgb(29, 160, 60);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(103, 192, 103, 0.75);
+    border-radius: 80px;
+    background: solid rgba(103, 192, 103, 0.75);
+    transition: all 0.3s ease 0s;
+    width:70%; 
+}
+
+.btn-genre:hover {
+    color: #FFF;
+    background: rgba(48, 172, 48, 0.75);
+    border: 2px solid rgba(17, 238, 17, 0.75);
+    width:70%; 
 }
