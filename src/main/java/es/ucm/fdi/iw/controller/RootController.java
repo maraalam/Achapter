@@ -28,7 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -564,7 +566,47 @@ public class RootController {
     }
 
  
-   
+    @PostMapping("prestamo/{id_libro}")
+    @Transactional
+    public String crearPrestamo(@PathVariable long id_libro, Model model, HttpSession session){
+        log.info("crearPrestamo");
+    
+        
+        User usuario = entityManager.find(
+            User.class, ((User)session.getAttribute("u")).getId());
+    
+    
+      
+        log.info("[RootController.crearPrestamo] Prest : " + id_libro + " Usuario :" +  usuario.getId()) ;
+    
+        PhysicalBook p= entityManager.createNamedQuery("PhysicalBook.byId", PhysicalBook.class)
+            .setParameter("id", id_libro).getSingleResult();
+    log.info("[RootController.crearPrestamo] Existe : " + p.getId());
+        p.setDestinatario(usuario);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDate localDate = localDateTime.toLocalDate();
+        p.setFechaPrestamo(localDate);
+        LocalDate result = localDate.plus(1, ChronoUnit.WEEKS);
+        p.setFechaDevolucion(result);
+    
+        entityManager.persist(p);
+        entityManager.flush();
+        model.addAttribute("prestamosSinDestinatario", entityManager.createNamedQuery("PhysicalBook.allNoDest").setMaxResults(10).getResultList());
+        model.addAttribute("prestamosConDestinatario", entityManager.createNamedQuery("PhysicalBook.allConDest").setMaxResults(10).getResultList());
+    
+        
+    
+        return "redirect:../prestamos";
+    
+    }
+
+
+
+    @ModelAttribute("prestamosConDestinatario")
+    public List getPhysicalBooksConDestList() {
+        return entityManager.createNamedQuery("PhysicalBook.allConDest").setMaxResults(10).getResultList();
+    }
+
 }
 
 

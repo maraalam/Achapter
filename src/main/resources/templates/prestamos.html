@@ -137,8 +137,8 @@
                                 <h4>Prestamos disponibles</h4>
                             </div>       
                             <div class="row special-list" id="prestamoD">                              
-                                <div th:each="prestamo: ${prestamosSinDestinatario}" class="col-lg-4 col-md-6 special-grid prestamosTodos">
-                                    <div class="products-single fix">
+                                <div  th:if="${session.u.id != prestamo.owner.id  }" th:each="prestamo: ${prestamosSinDestinatario}" class="col-lg-4 col-md-6 special-grid prestamosTodos">
+                                    <div   class="products-single fix">
                                         <div class="box-img-hover">
                                             <img th:src="${prestamo.libro.portada}" class="img-fluid" alt="Image">
                                         </div>
@@ -149,6 +149,40 @@
                                             <h6 class="fecha" th:text="${prestamo.libro.fecha}"> Fecha</h6>
                                         </div>
                                     </div>
+
+                                    <form class="text-right" style="width:70px;" th:action="@{/prestamo/__${prestamo.id}__}" method="POST">
+                                        <button id="buttonPrestamo" class="btn btn-sm btn-success"  type="submit">Pedir</button>
+                                    </form>
+
+                                </div>
+        
+                            </div>
+
+                            <div class="title-all ">
+                                <h4>Prestamos Hechos</h4>
+                            </div>       
+                            <div class="row special-list" id="prestamoD">                              
+                                <div th:each="prestamo: ${prestamosConDestinatario}" class="col-lg-4 col-md-6 special-grid prestamosTodos">
+                                    <div  th:if="${session.u.id != prestamo.owner.id  }"  class="products-single fix">
+                                        <div class="box-img-hover">
+                                            <img th:src="${prestamo.libro.portada}" class="img-fluid" alt="Image">
+                                        </div>
+                                        <div class="why-text">
+                                            <h5 class="booktitle" th:text="${prestamo.libro.titulo}"> Título </h5>
+                                            <h6  class="autorL" th:text="${prestamo.libro.autor}"> Autor</h6>
+                                            <h6 class="userD" th:text="${prestamo.owner.username}"> Propietario</h6>
+                                            <h6 class="fecha" th:text="${prestamo.libro.fecha}"> Fecha</h6>
+                                            <h5 > Prestado a: </h5>
+                                            <h6  th:text="${prestamo.destinatario.username}"> Dest</h6>
+                                            <h5 > Fecha Inicio: </h5>
+                                            <h6  th:text="${prestamo.fechaPrestamo}"> Fecha</h6>
+                                            <h5 > Fecha Inicio: </h5>
+                                            <h6  th:text="${prestamo.fechaDevolucion}"> Hasta</h6>
+                                        </div>
+                                    </div>
+
+                                    
+
                                 </div>
         
                             </div>
@@ -247,6 +281,7 @@
                     </div>
                 </div>
             </div>-->
+
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"   integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 

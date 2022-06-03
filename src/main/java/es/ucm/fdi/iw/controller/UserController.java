@@ -27,7 +27,9 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -456,7 +458,7 @@ public class UserController {
 
         log.info("published post with id {} by user with id {}", post.getId(), u.getId());
 
-        return "user";
+        return "redirect:user";
     }
 
     @PostMapping("postProgress")
@@ -546,6 +548,9 @@ public class UserController {
            
         return lIDPost;
     }
+
+ 
+    
 
     @ModelAttribute("prestamosMios")
     public List getPhysicalBooksNoDestList(Model model, HttpSession session) {
@@ -647,7 +652,9 @@ public class UserController {
         return "redirect:../libro?id=" + id;
     }
 
-
+    
+    
+    
     
 
 	/*
