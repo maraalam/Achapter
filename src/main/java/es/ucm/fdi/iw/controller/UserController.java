@@ -27,9 +27,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.security.SecureRandom;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -101,7 +99,7 @@ public class UserController {
      */
     @GetMapping("{id}")
     @Transactional
-    public String index(@PathVariable long id,@RequestParam(defaultValue = "posts") String tab, Model model, HttpSession session) {
+    public String index(@PathVariable long id, @RequestParam(defaultValue = "posts") String tab, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
 
         model.addAttribute("tab", tab); // tab.toUpperCase());
@@ -352,13 +350,13 @@ public class UserController {
         model.addAttribute("user", u);
 
         long userId = ((User) session.getAttribute("u")).getId();
-        List<Message> l= entityManager.createNamedQuery("Message.byUsers", Message.class)
-        .setParameter("userId", userId).setParameter("senderId", id)
-        .getResultList();
+        List<Message> l = entityManager.createNamedQuery("Message.byUsers", Message.class)
+                .setParameter("userId", userId).setParameter("senderId", id)
+                .getResultList();
 
         l.addAll(entityManager.createNamedQuery("Message.byUsers", Message.class)
-        .setParameter("userId", id).setParameter("senderId", userId)
-        .getResultList());
+                .setParameter("userId", id).setParameter("senderId", userId)
+                .getResultList());
 
         Collections.sort(l);
         model.addAttribute("messages", l);
@@ -375,17 +373,17 @@ public class UserController {
         model.addAttribute("user", u);
 
         long userId = ((User) session.getAttribute("u")).getId();
-        List<Message> l= entityManager.createNamedQuery("Message.byUsers", Message.class)
-        .setParameter("userId", userId).setParameter("senderId", id)
-        .getResultList();
+        List<Message> l = entityManager.createNamedQuery("Message.byUsers", Message.class)
+                .setParameter("userId", userId).setParameter("senderId", id)
+                .getResultList();
 
         l.addAll(entityManager.createNamedQuery("Message.byUsers", Message.class)
-        .setParameter("userId", id).setParameter("senderId", userId)
-        .getResultList());
+                .setParameter("userId", id).setParameter("senderId", userId)
+                .getResultList());
 
         Collections.sort(l);
         model.addAttribute("messages", l);
-        
+
 
         return "chat.html";
     }
@@ -419,18 +417,18 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}/state")
-	public String profileEdit(Model model, HttpSession session, @RequestParam(defaultValue = "posts") String tab, @PathVariable long id) {
+    public String profileEdit(Model model, HttpSession session, @RequestParam(defaultValue = "posts") String tab, @PathVariable long id) {
         User user = entityManager.find(User.class, id);
-		model.addAttribute("user", user);
+        model.addAttribute("user", user);
         model.addAttribute("tab", tab);
-		return "redirect:/user/" + id + "?tab=settings";
-	}
+        return "redirect:/user/" + id + "?tab=settings";
+    }
 
     @PostMapping(value = "/{id}/state")
     @Transactional
     public String postState(@RequestParam("state") String state, @PathVariable long id, HttpSession session, Model model) {
         User user = entityManager.find(User.class, id);
-        user.setAbout(state); 
+        user.setAbout(state);
         entityManager.persist(user);
         entityManager.flush();
 
@@ -463,8 +461,8 @@ public class UserController {
 
     @PostMapping("postProgress")
     @Transactional
-    public String publishPostProgress(Model model, HttpSession session,  @RequestParam("query")String texto,
-    @RequestParam Long paginas, @RequestParam Long bookId, HttpServletRequest request) {
+    public String publishPostProgress(Model model, HttpSession session, @RequestParam("query") String texto,
+                                      @RequestParam Long paginas, @RequestParam Long bookId, HttpServletRequest request) {
         User u = entityManager.find(
                 User.class, ((User) session.getAttribute("u")).getId());
         model.addAttribute("user", u);
@@ -476,8 +474,8 @@ public class UserController {
         Post post = new Post();
         post.setAuthor(u);
         post.setTitle("this is a post and you couldn't edit the title");
-        String final_text = "[PROGRESS]Ha avanzado el libro [BOOK]"+ bookId +"[BOOK] hasta la página " + paginas.toString() + " de " + entityManager.find(Book.class, bookId).getNumpaginas();
-        final_text += "[PROGRESS]" + texto;  
+        String final_text = "[PROGRESS]Ha avanzado el libro [BOOK]" + bookId + "[BOOK] hasta la página " + paginas.toString() + " de " + entityManager.find(Book.class, bookId).getNumpaginas();
+        final_text += "[PROGRESS]" + texto;
         post.setText(final_text);
         post.setLikes(0);
         post.setDateSent(LocalDateTime.now());
@@ -486,86 +484,45 @@ public class UserController {
 
         log.info("published post with id {} by user with id {}", post.getId(), u.getId());
 
-        return "redirect:"+ request.getHeader("Referer");
+        return "redirect:" + request.getHeader("Referer");
     }
 
 
-    
-    @PostMapping("/register")
-    @Transactional
-    public String registerUser(
-            HttpServletResponse response,
-            @ModelAttribute User user, 
-            Model model) throws IOException {
 
-
-        log.info("registrando usuario:  " + user.getUsername());
-
-        User target = null;
-
-        target = new User();
-        target.setUsername(user.getUsername());
-        target.setPassword(encodePassword(user.getPassword()));
-        target.setFirstName(user.getFirstName());
-        target.setLastName(user.getLastName());
-        target.setRoles("USER");
-        target.setEnabled(true);
-        entityManager.persist(target);
-        entityManager.flush(); // forces DB to add user & assign valid id
-        long id = target.getId();   // retrieve assigned id from DB
-
-        target = entityManager.find(User.class, id);
-        model.addAttribute("user", target);
-        /*
-        	User u = entityManager.createNamedQuery("User.byUsername", User.class)
-			.setParameter("username", user.getUsername())
-			.getSingleResult();			*/
-        //User requester = (User)session.getAttribute("u");
-
-        log.info("Registrado usuario:  " + target.getUsername());
-
-        model.addAttribute("user", target);
-
-
-        return "login";
-    }
-    
     @ModelAttribute("likesPost")
-    public List<Long> getBooksList( Model model, HttpSession session) {
+    public List<Long> getBooksList(Model model, HttpSession session) {
 
-            User self = entityManager.find(
-                    User.class, ((User) session.getAttribute("u")).getId());
-            
-            List<Likes> lLikes= entityManager.createNamedQuery("Likes.byUser", Likes.class)
+        User self = entityManager.find(
+                User.class, ((User) session.getAttribute("u")).getId());
+
+        List<Likes> lLikes = entityManager.createNamedQuery("Likes.byUser", Likes.class)
                 .setParameter("userId", self.getId())
                 .getResultList();
-            List<Long> lIDPost = new ArrayList<Long>();
-    
-            for(Likes like: lLikes){
-                lIDPost.add(like.getPost().getId());
-            }
-    
-           
+        List<Long> lIDPost = new ArrayList<Long>();
+
+        for (Likes like : lLikes) {
+            lIDPost.add(like.getPost().getId());
+        }
+
+
         return lIDPost;
     }
 
- 
-    
 
     @ModelAttribute("prestamosMios")
     public List getPhysicalBooksNoDestList(Model model, HttpSession session) {
         return entityManager.createNamedQuery("PhysicalBook.allBookFromUserSinDest")
-        .setParameter("id", ((User) session.getAttribute("u")).getId())
-        .setMaxResults(10)
-        .getResultList();
+                .setParameter("id", ((User) session.getAttribute("u")).getId())
+                .setMaxResults(10)
+                .getResultList();
     }
 
     @ModelAttribute("prestamosMiosHechos")
     public List getPhysicalBookHechosMios(Model model, HttpSession session) {
         return entityManager.createNamedQuery("PhysicalBook.allBookFromUserConDest")
-        .setParameter("id", ((User) session.getAttribute("u")).getId())
-        .setMaxResults(10)
-        .getResultList();
+                .setParameter("id", ((User) session.getAttribute("u")).getId())
+                .setMaxResults(10)
+                .getResultList();
     }
 
     /**
@@ -581,17 +538,17 @@ public class UserController {
     }
 
     @ModelAttribute("following")
-    public List<User> getUsuariosfollowingList( Model model, HttpSession session) {
+    public List<User> getUsuariosfollowingList(Model model, HttpSession session) {
         log.info("Obteniendo following");
-        
-        User requester = (User)session.getAttribute("u");
-        if(requester!=null){
-        log.info(requester.getId());
-        User u = entityManager.createNamedQuery("User.byId", User.class)
+
+        User requester = (User) session.getAttribute("u");
+        if (requester != null) {
+            log.info(requester.getId());
+            User u = entityManager.createNamedQuery("User.byId", User.class)
                     .setParameter("id", requester.getId())
                     .getSingleResult();
 
-        return u.getFollowed();
+            return u.getFollowed();
         }
         return new ArrayList<User>();
     }
@@ -599,22 +556,21 @@ public class UserController {
 
     @PostMapping("/addFollow")
     @Transactional
-    public String addFollow(@RequestBody  JsonNode data, Model model){
+    public String addFollow(@RequestBody JsonNode data, Model model) {
         log.info("En funcion addFollow: " + data.get("usernameFollowed").asText() + " quiere seguir a " + data.get("usernameFollowing").asText());
         User usernameFollowed = entityManager.createNamedQuery("User.byUsername", User.class)
-        .setParameter("username", data.get("usernameFollowed").asText())
-        .getSingleResult();
+                .setParameter("username", data.get("usernameFollowed").asText())
+                .getSingleResult();
         User usernameFollowing = entityManager.createNamedQuery("User.byUsername", User.class)
-        .setParameter("username", data.get("usernameFollowing").asText())
-        .getSingleResult();
-        
-        if(!(usernameFollowed.getFollowers().contains(usernameFollowing)&&  
-            usernameFollowing.getFollowed().contains(usernameFollowed))){
-            
+                .setParameter("username", data.get("usernameFollowing").asText())
+                .getSingleResult();
+
+        if (!(usernameFollowed.getFollowers().contains(usernameFollowing) &&
+                usernameFollowing.getFollowed().contains(usernameFollowed))) {
+
             usernameFollowed.getFollowers().add(usernameFollowing); //es que es seguido
             usernameFollowing.getFollowed().add(usernameFollowed); //el que esta siguiendo 
-        }
-        else{
+        } else {
             usernameFollowed.getFollowers().remove(usernameFollowing); //es que es seguido
             usernameFollowing.getFollowed().remove(usernameFollowed); //el que esta siguiendo 
         }
@@ -623,17 +579,17 @@ public class UserController {
         entityManager.persist(usernameFollowing);
         entityManager.flush();
 
-        
-        model.addAttribute("usuarios",  entityManager.createNamedQuery("User.all", User.class).getResultList());
-        
+
+        model.addAttribute("usuarios", entityManager.createNamedQuery("User.all", User.class).getResultList());
+
 
         return "index";
     }
 
     @PostMapping("review")
     @Transactional
-    public String publishReview(Model model, HttpSession session,  @RequestParam("query")String texto,  @RequestParam long id) {
-       log.info("Enn funcion publishReview  {}", id);
+    public String publishReview(Model model, HttpSession session, @RequestParam("query") String texto, @RequestParam long id) {
+        log.info("Enn funcion publishReview  {}", id);
         User u = entityManager.find(
                 User.class, ((User) session.getAttribute("u")).getId());
         model.addAttribute("user", u);
@@ -690,5 +646,44 @@ public class UserController {
             return "You failed to upload a photo for " + id + ": empty?";
         }
         return "You successfully uploaded " + id + " into " + f.getAbsolutePath() + "!";
+    }*/
+
+    /*@PostMapping("/register")
+    @Transactional
+    public String registerUser(
+            HttpServletResponse response,
+            @ModelAttribute User user,
+            Model model) throws IOException {
+
+
+        log.info("registrando usuario:  " + user.getUsername());
+
+        User target = null;
+
+        target = new User();
+        target.setUsername(user.getUsername());
+        target.setPassword(encodePassword(user.getPassword()));
+        target.setFirstName(user.getFirstName());
+        target.setLastName(user.getLastName());
+        target.setRoles("USER");
+        target.setEnabled(true);
+        entityManager.persist(target);
+        entityManager.flush(); // forces DB to add user & assign valid id
+        long id = target.getId();   // retrieve assigned id from DB
+
+        target = entityManager.find(User.class, id);
+        model.addAttribute("user", target);
+
+        //	User u = entityManager.createNamedQuery("User.byUsername", User.class)
+		//	.setParameter("username", user.getUsername())
+		//	.getSingleResult();
+        //User requester = (User)session.getAttribute("u");
+
+        log.info("Registrado usuario:  " + target.getUsername());
+
+        model.addAttribute("user", target);
+
+
+        return "login";
     }*/
 }
