@@ -212,15 +212,45 @@
                 </div>
             </div>
 
-            <div th:case="stats" class="tab-pane fade show active" id="stats">
-                <p>Estadísticas</p>
+            <div th:case="stats" class="tab-pane fade show active container" id="stats">
+                <div class="row col-lg-12 title-all">
+                    <h4>Estadísticas</h4>
+                </div>   
   
                 <div class="container" style = "width: 25%; margin: 15px auto;">
                     
                     <div>
                       <canvas id="myChart"></canvas>
                     </div>
-                  </div>
+                </div>
+                <div class="pt-5 d-flex justify-content-center" th:if="${user.library} != null">
+
+                    <table class="pt-5 table">
+                        <thead>
+                            <tr>
+                                <th>Libro</th>
+                                <th>Estado</th>
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+
+                            <th:block th:each="entry, stat: ${user.library.books}">
+                                
+
+                                <th:block th:each="estadosOriginales: ${ {leyendo:'#2ecc71',quieroLeer:'#3498db',pausados:'#95a5a6',terminados:'#9b59b6',abandonados:'#f1c40f'} }">
+
+                                    <tr th:if="${estadosOriginales.key}==${entry.value.estado}" th:style="'background-color:'+ ${estadosOriginales.value}+';'">
+                                        <td th:text="${user.library.books.get(entry.key).book.titulo}">Libro</td>
+                                        <td th:text="${entry.value.estado}">Estado</td>
+                                    </tr>
+
+                                </th:block>
+                                
+                            </th:block>
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
 
