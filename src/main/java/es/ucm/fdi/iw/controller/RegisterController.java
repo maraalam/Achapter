@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("register")
@@ -52,20 +53,28 @@ public class RegisterController {
 
         User target = null;
 
-        target = new User();
-        target.setUsername(user.getUsername());
-        target.setPassword(encodePassword(user.getPassword()));
-        target.setFirstName(user.getFirstName());
-        target.setLastName(user.getLastName());
-        target.setRoles("USER");
-        target.setEnabled(true);
-        entityManager.persist(target);
-        entityManager.flush(); // forces DB to add user & assign valid id
-        long id = target.getId();   // retrieve assigned id from DB
+        List<User> u = entityManager.createNamedQuery("User.byUsername", User.class)
+                .setParameter("username", user.getUsername())
+                .getResultList(); //como es clave primaria, la lista tiene 0 o 1 elementos.
 
-        target = entityManager.find(User.class, id);
-        // model.addAttribute("user", target);
-        log.info("Registrado usuario:  " + target.getUsername());
+        if (u.isEmpty()) {
+            target = new User();
+            target.setUsername(user.getUsername());
+            target.setPassword(encodePassword(user.getPassword()));
+            target.setFirstName(user.getFirstName());
+            target.setLastName(user.getLastName());
+            target.setRoles("USER");
+            target.setEnabled(true);
+            entityManager.persist(target);
+            entityManager.flush(); // forces DB to add user & assign valid id
+            long id = target.getId();   // retrieve assigned id from DB
+
+            target = entityManager.find(User.class, id);
+            // model.addAttribute("user", target);
+            log.info("Registrado usuario:  " + target.getUsername());
+        }
+        else
+            log.info("No se pudo registrar. Usuario duplicado: " + u.get(0).getUsername());
 
         return "redirect:/login";
     }

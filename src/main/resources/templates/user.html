@@ -22,6 +22,7 @@
             <div class="mx-3 w-100">
                 <div class="mx-4">
                     <h1 class="mt-5">@ <span id="usernameUser" th:text="${user.username}">Paco</span></h1>
+                    <p id="fullName" th:text="${user.firstName} + ' ' + ${user.lastName}">Benito Martinez</p>
                     <p id="userState" th:text="${user.about}">About me...</p>
                 </div>
 
