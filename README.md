@@ -4,14 +4,14 @@ Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuad
 
 ## Mejoras
 - El registro de usuario funciona bien sin null pointer y si el usuario ya existe, se vuelve a la misma pantalla de registro (Se planea agregar un anuncio que notifique el porqué)
-- Se agregó la opción de pedir préstamos a libros en la vista préstamos (de una semana) y aparecen solo aquellos libros que uno puede pedir prestado. Los préstamos que hice y que tengo disponibles para hacer se pueden ver en la vista user (perfil del usuario)
-- En el perfil se puede cambiar la foto de perfil y cambiar el estado que se despliega en el perfil del usuario.
+- Se agregó la opción de pedir préstamos a libros en la vista [préstamos](http://localhost:8080/prestamos) (de una semana) y aparecen solo aquellos libros que uno puede pedir prestado. Los préstamos que hice y que tengo disponibles para hacer se pueden ver en la vista user (perfil del usuario)
+- En el perfil se puede cambiar la foto de perfil y cambiar el estado que se despliega en el perfil del [usuario](http://localhost:8080/user/2#).
 - En el  [índice](http://localhost:8080/) y al buscar un libro en la vista de  [buscar](http://localhost:8080/buscar?), si el libro fue agregado a la bilioteca del usuario, se le puede añadir un progreso. Este progreso será publicado como un post y se podrá ver en la vista de  [posts](http://localhost:8080/posts). 
-- En la vista de un libro ahora se pueden hacer reviews y otros usuarios lo pueden ver y podemos hacer reviews en esa misma página también. 
-- Ahora se puede cambiar fácil la biblioteca a la que pertence un libro en la vista de la biblioteca en el perfil del usuario.
+- En la vista de un  [libro](http://localhost:8080/libro) ahora se pueden hacer reviews y otros usuarios lo pueden ver y podemos hacer reviews en esa misma página también. 
+- Ahora se puede cambiar fácil la biblioteca a la que pertence un libro en la vista de la biblioteca en el perfil del [usuario](http://localhost:8080/user/2#)..
 - En estadísticas se puede ver un cuadro con los libros que estan en la biblioteca actual del usuario y la biblioteca a la que pertenecen.
 - Mensajería fue editada y ahora parece un chat de mensajería. 
-- Cambios en el index: Se mejoró la vista y ahora al acceder a los géneros de la parte inferior, se buscan libros de ese género usando la vista "buscar"
+- Cambios en el [índice](http://localhost:8080/): Se mejoró la vista y ahora al acceder a los géneros de la parte inferior, se buscan libros de ese género usando la vista "buscar"
 - En posts el like ahora funciona perfectamente.
 
 ## Participantes en las mejoras: 
