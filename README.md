@@ -2,17 +2,19 @@
 
 Las plataformas para descubrir y compartir tus gustos sobre lectura son anticuadas, limitadas en funcionamiento y complicadas de utilizar. ¿Quieres encontrar tu próxima lectura, o tal vez compartir con tus amigos el progreso de tu actual lectura? ¿Tienes una lista de libros pendientes de la que siempre te olvidas? Proponemos una nueva aplicación amigable y divertida en la que encontrar tus libros favoritos y expresarte en una comunidad con tus mismos intereses.
 
-## En desarrollo
-- Que el uso API de Google se vea correctamente
-- Faltas algunas pruebas Karate 
-- Falta que el usuario pueda marcar como objetivos como cuántos libros quiere leer en el año. Esto puede ser en estadísticas. 
-- Que en libros.html muestre libros solo de la saga. (Falta relacion en el modelo)
+## Mejoras
+- El registro de usuario funciona ahora bien sin null pointer y si el usuario ya existe, se vuelve a la misma pantalla de registro (Se planea agregar un anuncio que notifique el porqué)
+- Se agregó la opción de pedir préstamos a libros en la vista préstamos (de una semana) y aparecen solo aquellos libros que uno puede pedir prestado. Los préstamos que hice y que tengo disponibles para hacer se pueden ver en la vista user (perfil del usuario)
+- En el perfil se puede cambiar la foto de perfil y cambiar el estado que se despliega en el perfil del usuario.
+- En el index y al buscar un libro en la vista de buscar, si el libro fue agregado a la bilioteca del usuario, se le puede añadir un progreso. Este progreso será publicado como un post y se podrá ver en la vista de posts. 
+- En la vista de un libro ahora se pueden hacer reviews y otros usuarios lo pueden ver y podemos hacer reviews en esa misma página también. 
+- Ahora se puede cambiar fácil la biblioteca a la que pertence un libro en la vista de la biblioteca en el perfil del usuario.
+- En estadísticas se puede ser un cuadro con los libros que estan en la biblioteca actual del usuario y la biblioteca a la que pertenecen.
+- Mensajería fue editada y ahora parece un chat de mensajería. 
+- Cambios en el index: Se mejoró la vista y ahora al acceder a los géneros de la parte inferior, se buscan libros de ese género usando la vista "buscar"
 
-En administrador se puede agregar que pueda:
-- Modificar la información de un libro.
-- Modificar los libros disponibles.
-- Ver reportes
-  
+- En posts el like ahora funciona perfectamente.
+
 
 ## Usuarios
 - Se puede registrar un usuario en la aplicación. Con estos datos luego se puede hacer login. 
@@ -223,3 +225,13 @@ A esta vista se puede acceder mediante el botón con un niño en la parte superi
   
 
 
+## En un Futuro
+- Que el uso API de Google se vea correctamente
+- Faltas algunas pruebas Karate 
+- Falta que el usuario pueda marcar como objetivos como cuántos libros quiere leer en el año. Esto puede ser en estadísticas. 
+- Que en libros.html muestre libros solo de la saga. (Falta relacion en el modelo)
+
+En administrador se puede agregar que pueda:
+- Modificar la información de un libro.
+- Modificar los libros disponibles.
+- Ver reportes

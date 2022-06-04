@@ -11,6 +11,7 @@ import es.ucm.fdi.iw.model.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
@@ -73,10 +74,36 @@ public class RegisterController {
             // model.addAttribute("user", target);
             log.info("Registrado usuario:  " + target.getUsername());
         }
-        else
+        else{
             log.info("No se pudo registrar. Usuario duplicado: " + u.get(0).getUsername());
+            return "redirect:../register";
+        }
 
         return "redirect:/login";
+    }
+
+
+
+    @PostMapping("/username")
+    @Transactional
+    public String userExists2(@RequestBody  JsonNode data, Model model) throws Exception {
+
+        // data.get("username").asText()
+    
+
+        User u = entityManager.createNamedQuery("User.byUsername", User.class)
+                .setParameter("username", data.get("username").asText())
+                .getResultStream().findFirst().orElse(null); //como es clave primaria, la lista tiene 0 o 1 elementos.
+
+       if(u!=null){
+        log.info("Existe usuario:  " + data.get("username").asText());
+            throw new Exception("existe");
+       }
+       else
+        log.info("No existe" );
+       
+
+        return "register";
     }
 
 }
